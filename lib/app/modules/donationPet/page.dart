@@ -1,8 +1,8 @@
 import 'package:app_adota_fish/app/modules/donationPet/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
-
+import 'package:flutter/src/material/badge.dart';
 import 'package:get/get.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -68,6 +68,23 @@ class DonationPetPage extends GetView<DonationPetController> {
                                   placeholder: kTransparentImage,
                                   image: state!.pet!.photo!)),
                         ),
+                         Container(
+                          alignment: Alignment.centerLeft,
+                          child: badges.Badge(
+                            badgeStyle: const badges.BadgeStyle(
+                            badgeColor: Colors.grey,
+                            shape: badges.BadgeShape.square,
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              topLeft: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
+                            ),),
+                            //toAnimate: true,
+                            badgeContent: Text(
+                             "Anunciante: ${state!.clientDonor!.name}",
+                            ),
+                          ),
+                        ),/*
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Badge(
@@ -84,6 +101,7 @@ class DonationPetPage extends GetView<DonationPetController> {
                             ),
                           ),
                         ),
+                        */
                       ],
                     ),
                   ],
@@ -241,7 +259,7 @@ class DonationPetPage extends GetView<DonationPetController> {
                                           fontFamily: 'Roboto'))),
                             ),
                             ListTile(
-                              leading: const Icon(Icons.whatsapp),
+                              leading: const Icon(Icons.whatshot),
                               title: Text(state.clientDonor.phone),
                               onTap: () =>
                                   openWhatsApp(state.clientDonor.phone),

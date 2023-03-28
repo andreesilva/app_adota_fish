@@ -92,6 +92,7 @@ class RegisterPetController extends GetxController
 
     print("Teste 1: ${profilePicPath.value}");
     print("Teste 2: ${specieName.value!}");
+    
 
     if (observationController.text == '') {
       observation = ' ';

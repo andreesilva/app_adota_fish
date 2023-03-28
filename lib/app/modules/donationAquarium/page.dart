@@ -1,6 +1,7 @@
 import 'package:app_adota_fish/app/modules/donationAquarium/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -72,17 +73,19 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                                   placeholder: kTransparentImage,
                                   image: state!.aquarium!.photo!)),
                         ),
+                        
                         Container(
                           alignment: Alignment.centerLeft,
-                          child: Badge(
+                          child: badges.Badge(
+                            badgeStyle: const badges.BadgeStyle(
                             badgeColor: Colors.grey,
-                            shape: BadgeShape.square,
-                            borderRadius: const BorderRadius.only(
+                            shape: badges.BadgeShape.square,
+                            borderRadius: BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10),
                               bottomLeft: Radius.circular(10),
-                            ),
-                            toAnimate: true,
+                            ),),
+                            //toAnimate: true,
                             badgeContent: Text(
                               "Anunciante: ${state!.clientDonor!.name}",
                             ),
@@ -212,7 +215,7 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                                           fontFamily: 'Roboto'))),
                             ),
                             ListTile(
-                              leading: const Icon(Icons.whatsapp),
+                              leading: const Icon(Icons.abc_outlined),
                               title: Text(state!.clientDonor!.phone),
                               onTap: () =>
                                   openWhatsApp(state!.clientDonor!.phone),
