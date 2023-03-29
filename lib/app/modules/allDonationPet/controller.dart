@@ -19,9 +19,15 @@ class AllDonationPetController extends GetxController
   void onInit() {
     loading(true);
 
-    _repository.getDonationsPets().then((data) {
-      print(data);
-      print("pulo");
+     int id = 0;
+  
+    if(Get.parameters.isNotEmpty){
+        
+        id = int.parse(Get.parameters["id"]!);
+    }
+
+    _repository.getDonationsPets(id).then((data) {
+      
       if (data.isEmpty) {
         print("Msg 1");
         change([], status: RxStatus.empty());

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class AllDonationPetPage extends GetView<AllDonationPetController> {
   @override
   Widget build(BuildContext context) {
+    int i = 0;
     return Scaffold(
         appBar: AppBar(
           title: const Center(
@@ -14,12 +15,24 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
                   fontSize: 17,
                   fontFamily: 'Roboto',
                 )),
+                
           ),
+          actions: [
+          IconButton(
+            onPressed: () => Get.toNamed(Routes.selectState),
+            icon: const Icon(Icons.location_pin),
+            tooltip: 'Alterar cidade',
+            color: Colors.blueAccent,
+          )
+        ],
         ),
         body: controller.obx(
           (state) => ListView(
             children: [
               for (var donation in state!)
+
+              if((donation.clientDonor.address.city.state != null))
+            
                 Card(
                   margin:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -63,7 +76,7 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 5, left: 20),
                           child: Text(
-                              "${donation.clientDonor!.address.city.name} / ${donation.clientDonor!.address.city.state.name}",
+                              "${donation.clientDonor!.address.city.name} / ${donation.clientDonor!.address.city.state?.name}",
                               textAlign: TextAlign.center),
                         ),
                       ),
@@ -100,8 +113,10 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
                     ],
                   ),
                 ),
+                
             ],
           ),
+          
           onEmpty: Center(
             child: Text(
               "Ainda não há nenhum anúncio publicado",

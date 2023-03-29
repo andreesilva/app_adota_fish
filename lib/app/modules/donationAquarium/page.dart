@@ -104,7 +104,7 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                       padding:
                           const EdgeInsets.only(top: 0, left: 20, bottom: 0),
                       child: Text(
-                          "${state!.clientDonor!.address.city.name} / ${state!.clientDonor!.address.city.state.name}",
+                          "${state!.clientDonor!.address.city.name} / ${state!.clientDonor!.address.city.state!.name}",
                           textAlign: TextAlign.center),
                     ),
                   ),

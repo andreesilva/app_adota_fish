@@ -26,6 +26,8 @@ import 'package:app_adota_fish/app/modules/forgotPassword/binding.dart';
 import 'package:app_adota_fish/app/modules/forgotPassword/page.dart';
 import 'package:app_adota_fish/app/modules/resetPassword/binding.dart';
 import 'package:app_adota_fish/app/modules/resetPassword/page.dart';
+import 'package:app_adota_fish/app/modules/select_state/binding.dart';
+import 'package:app_adota_fish/app/modules/select_state/page.dart';
 import 'package:app_adota_fish/app/modules/splash/binding.dart';
 import 'package:app_adota_fish/app/modules/splash/page.dart';
 import 'package:app_adota_fish/app/modules/user_address/binding.dart';
@@ -48,7 +50,14 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.dashboard,
-      page: () => DashboardPage(),
+      page: () => const DashboardPage(),
+      binding: DashboardBinding(),
+      //middlewares: [RedirectMiddleware()]
+    ),
+    
+    GetPage(
+      name: Routes.pets,
+      page: () =>  const DashboardPage(),
       binding: DashboardBinding(),
       //middlewares: [RedirectMiddleware()]
     ),
@@ -132,6 +141,11 @@ abstract class AppPages {
       page: () => ResetPasswordPage(),
       binding: ResetPasswordBinding(),
     ),
+    GetPage(
+        name: Routes.selectState,
+        page: () => SelectStatePage(),
+        binding: SelectStateBinding(),
+        fullscreenDialog: true),
   ];
 }
 

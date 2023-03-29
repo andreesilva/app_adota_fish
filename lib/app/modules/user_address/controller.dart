@@ -59,7 +59,7 @@ class UserAddressController extends GetxController
         referenceController.text = data.address.referencePoint!;
         complementController.text = data.address.complement!;
         cityController = data.address.city.name;
-        stateController = data.address.city.state.name;
+        stateController = data.address.city.state!.name;
         loading(false);
       }, onError: (error) {
         loading(false);

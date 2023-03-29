@@ -1,5 +1,6 @@
 abstract class Routes {
   static const dashboard = "/";
+  static const pets = "/pets/:id";
   static const splash = "/splash";
   static const donationAquarium = "/donation-aquarium/:id";
   static const donationPet = "/donation-pet/:id";
@@ -19,4 +20,5 @@ abstract class Routes {
   static const userAddressList = "/user-address-lis";
   static const account = "/account";
   static const resetPassword = "/reset-password/:email";
+  static const selectState = '/select-state';
 }

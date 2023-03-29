@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends GetView<LoginController> {
-  const LoginPage({super.key});
-
+  //const LoginPage({super.key});
+GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,7 @@ class LoginPage extends GetView<LoginController> {
             SingleChildScrollView(
                 padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
                 child: Form(
-                  key: controller.formKey,
+                  key:formKey,
                   child: Column(
                     children: [
                       Container(

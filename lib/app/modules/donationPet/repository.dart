@@ -8,5 +8,5 @@ class DonationPetRepository {
 
   Future<DonationPetModel> getDonationPet(int id) => _api.getDonationPet(id);
 
-  Future<List<DonationPetModel>> getDonations() => _api.getDonationsPet();
+  //Future<List<DonationPetModel>> getDonations() => _api.getDonationsPet();
 }

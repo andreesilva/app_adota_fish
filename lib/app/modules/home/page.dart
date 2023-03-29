@@ -63,7 +63,7 @@ class HomePage extends GetView<HomeController> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 5, left: 20),
                           child: Text(
-                              "${donation.clientDonor!.address.city.name} / ${donation.clientDonor!.address.city.state.name}",
+                              "${donation.clientDonor!.address.city.name} / ${donation.clientDonor!.address.city.state!.name}",
                               textAlign: TextAlign.center),
                         ),
                       ),

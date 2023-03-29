@@ -284,8 +284,8 @@ class Api extends GetConnect {
     return data;
   }
 
-  Future<List<DonationPetModel>> getDonationsPet() async {
-    var response = _errorHandler(await get('doacoes-pet'));
+  Future<List<DonationPetModel>> getDonationsPet(int id) async {
+    var response = _errorHandler(await get('doacoes-pet/$id'));
 
     List<DonationPetModel> data = [];
 
