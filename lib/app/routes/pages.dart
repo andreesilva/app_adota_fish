@@ -26,8 +26,10 @@ import 'package:app_adota_fish/app/modules/forgotPassword/binding.dart';
 import 'package:app_adota_fish/app/modules/forgotPassword/page.dart';
 import 'package:app_adota_fish/app/modules/resetPassword/binding.dart';
 import 'package:app_adota_fish/app/modules/resetPassword/page.dart';
-import 'package:app_adota_fish/app/modules/select_state/binding.dart';
-import 'package:app_adota_fish/app/modules/select_state/page.dart';
+import 'package:app_adota_fish/app/modules/select_state_aquarium/binding.dart';
+import 'package:app_adota_fish/app/modules/select_state_aquarium/page.dart';
+import 'package:app_adota_fish/app/modules/select_state_pet/binding.dart';
+import 'package:app_adota_fish/app/modules/select_state_pet/page.dart';
 import 'package:app_adota_fish/app/modules/splash/binding.dart';
 import 'package:app_adota_fish/app/modules/splash/page.dart';
 import 'package:app_adota_fish/app/modules/user_address/binding.dart';
@@ -54,8 +56,13 @@ abstract class AppPages {
       binding: DashboardBinding(),
       //middlewares: [RedirectMiddleware()]
     ),
-    
     GetPage(
+      name: Routes.pets,
+      page: () =>  const DashboardPage(),
+      binding: DashboardBinding(),
+      //middlewares: [RedirectMiddleware()]
+    ),
+     GetPage(
       name: Routes.pets,
       page: () =>  const DashboardPage(),
       binding: DashboardBinding(),
@@ -142,10 +149,15 @@ abstract class AppPages {
       binding: ResetPasswordBinding(),
     ),
     GetPage(
-        name: Routes.selectState,
-        page: () => SelectStatePage(),
-        binding: SelectStateBinding(),
+        name: Routes.selectStatePet,
+        page: () => SelectStatePetPage(),
+        binding: SelectStatePetBinding(),
         fullscreenDialog: true),
+    GetPage(
+        name: Routes.selectStateAquarium,
+        page: () => SelectStateAquariumPage(),
+        binding: SelectStateAquariumBinding(),
+        fullscreenDialog: true),    
   ];
 }
 

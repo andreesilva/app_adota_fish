@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class AllDonationPetPage extends GetView<AllDonationPetController> {
   @override
   Widget build(BuildContext context) {
-    int i = 0;
+    
     return Scaffold(
         appBar: AppBar(
           title: const Center(
@@ -19,9 +19,9 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
           ),
           actions: [
           IconButton(
-            onPressed: () => Get.toNamed(Routes.selectState),
+            onPressed: () => Get.toNamed(Routes.selectStatePet),
             icon: const Icon(Icons.location_pin),
-            tooltip: 'Alterar cidade',
+            tooltip: 'Alterar o estado',
             color: Colors.blueAccent,
           )
         ],

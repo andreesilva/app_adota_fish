@@ -6,6 +6,6 @@ class HomeRepository {
 
   HomeRepository(this._api);
 
-  Future<List<DonationAquariumModel>> getDonations() =>
-      _api.getDonationsAquarium();
+  Future<List<DonationAquariumModel>> getDonations(int id) =>
+      _api.getDonationsAquarium(id);
 }

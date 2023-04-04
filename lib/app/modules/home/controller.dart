@@ -19,7 +19,14 @@ class HomeController extends GetxController
   void onInit() {
     loading(true);
 
-    _repository.getDonations().then((data) {
+    int id = 0;
+  
+    if(Get.parameters.isNotEmpty){
+        
+        id = int.parse(Get.parameters["id"]!);
+    }
+
+    _repository.getDonations(id).then((data) {
       print(data);
       print("pulo");
       if (data.isEmpty) {

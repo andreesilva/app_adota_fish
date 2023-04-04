@@ -9,6 +9,6 @@ class DonationAquariumRepository {
   Future<DonationAquariumModel> getDonationAquarium(int id) =>
       _api.getDonationAquarium(id);
 
-  Future<List<DonationAquariumModel>> getDonations() =>
-      _api.getDonationsAquarium();
+  Future<List<DonationAquariumModel>> getDonations(int id) =>
+      _api.getDonationsAquarium(id);
 }

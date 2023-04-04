@@ -29,14 +29,14 @@ import 'package:get/get_connect/http/src/request/request.dart';
 class Api extends GetConnect {
   final _storageService = Get.find<StorageService>();
 
-  final firebaseFolderOcc = "MEDIAS/occurrences/tech";
-  final firebaseFolder = "TECHWEB";
+  //final firebaseFolderOcc = "MEDIAS/occurrences/tech";
+  //final firebaseFolder = "TECHWEB";
 
   @override
   void onInit() {
     //Local
     httpClient.baseUrl = "http://10.0.0.230:3333/";
-    //httpClient.baseUrl = "http://192.168.234.19:3333/";
+    //httpClient.baseUrl = "http://192.168.192.19:3333/";
 
     //Produção
     //httpClient.baseUrl = "http://52.67.106.1:3333/";
@@ -259,8 +259,8 @@ class Api extends GetConnect {
     return ForgotPasswordResponseModel.fromJson(response.body);
   }
 
-  Future<List<DonationAquariumModel>> getDonationsAquarium() async {
-    var response = _errorHandler(await get('doacoes-aquario'));
+  Future<List<DonationAquariumModel>> getDonationsAquarium(int id) async {
+    var response = _errorHandler(await get('doacoes-aquario/$id'));
     print("getDonationsAquarium - inicio");
     List<DonationAquariumModel> data = [];
 
@@ -268,18 +268,6 @@ class Api extends GetConnect {
       data.add(DonationAquariumModel.fromJson(donation));
     }
     print("getDonationsAquarium - final");
-
-    return data;
-  }
-
-  Future<List<DonationAquariumModel>> getMyDonationsAquarium() async {
-    var response = _errorHandler(await get('doacao/lista-aquario'));
-
-    List<DonationAquariumModel> data = [];
-
-    for (var donation in response.body) {
-      data.add(DonationAquariumModel.fromJson(donation));
-    }
 
     return data;
   }
@@ -292,6 +280,18 @@ class Api extends GetConnect {
     for (var donation in response.body) {
       data.add(DonationPetModel.fromJson(donation));
     }
+    return data;
+  }
+
+  Future<List<DonationAquariumModel>> getMyDonationsAquarium() async {
+    var response = _errorHandler(await get('doacao/lista-aquario'));
+
+    List<DonationAquariumModel> data = [];
+
+    for (var donation in response.body) {
+      data.add(DonationAquariumModel.fromJson(donation));
+    }
+
     return data;
   }
 

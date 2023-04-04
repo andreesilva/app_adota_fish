@@ -8,7 +8,7 @@ class SplashPage extends GetView<SplashController> {
     return Scaffold(
       body: Container(
         color: Colors.white,
-        child: Center(child: Image.asset('assets/logo_adota_fish.jpg')),
+        child: Center(child: Image.asset('assets/splash_adota_fish.jpg')),
       ),
     );
   }

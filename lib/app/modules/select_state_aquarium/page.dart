@@ -1,8 +1,8 @@
-import 'package:app_adota_fish/app/modules/select_state/controller.dart';
+import 'package:app_adota_fish/app/modules/select_state_aquarium/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SelectStatePage extends GetView<SelectStateController> {
+class SelectStateAquariumPage extends GetView<SelectStateAquariumController> {
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +16,7 @@ class SelectStatePage extends GetView<SelectStateController> {
                     'Todos',
                     textAlign: TextAlign.center,
                   ),
+                  
                    onTap: ()=>controller.onSelected(0),
                 ),
                 ListTile(

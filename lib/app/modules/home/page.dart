@@ -15,11 +15,20 @@ class HomePage extends GetView<HomeController> {
                   fontFamily: 'Roboto',
                 )),
           ),
+           actions: [
+          IconButton(
+            onPressed: () => Get.toNamed(Routes.selectStateAquarium),
+            icon: const Icon(Icons.location_pin),
+            tooltip: 'Alterar o estado',
+            color: Colors.blueAccent,
+          )
+        ],
         ),
         body: controller.obx(
           (state) => ListView(
             children: [
               for (var donation in state!)
+              if((donation.clientDonor.address.city.state != null))
                 Card(
                   margin:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),

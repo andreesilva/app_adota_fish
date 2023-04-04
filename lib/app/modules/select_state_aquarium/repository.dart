@@ -1,8 +1,8 @@
 import 'package:app_adota_fish/app/data/providers/api.dart';
 
-class SelectStateRepository {
+class SelectStateAquariumRepository {
 
   final Api _api;
 
-  SelectStateRepository(this._api);
+  SelectStateAquariumRepository(this._api);
 }
