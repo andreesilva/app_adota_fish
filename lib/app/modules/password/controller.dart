@@ -15,7 +15,6 @@ class PasswordController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final _authService = Get.find<AuthService>();
 
-  //var passwordController = TextEditingController();
   final loading = true.obs;
   bool get isLogged => _authService.isLogged;
 
@@ -28,10 +27,7 @@ class PasswordController extends GetxController {
 
   @override
   void onInit() {
-    //ever(_authService.user, (_) => fetchUser());
-
-    //fetchUser();
-
+  
     super.onInit();
   }
 

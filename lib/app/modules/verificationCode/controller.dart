@@ -23,10 +23,7 @@ class VerificationCodeController extends GetxController {
 
   void submit() {
     _repository.getVerificationCode(int.parse(code.text)).then((data) {
-      print('Sucesso!');
-      //Get.offAllNamed(Routes.resetPassword, arguments: data.email);
       Get.toNamed(Routes.resetPassword.replaceFirst(':email', data.email!));
-      print(data.email);
     }, onError: (error) {
       print(error.toString());
       showAlertError(QuickAlertType.error);

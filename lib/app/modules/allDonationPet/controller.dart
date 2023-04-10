@@ -37,7 +37,6 @@ class AllDonationPetController extends GetxController
       }
     }, onError: (error) {
       print("Msg 3");
-      print(error.toString());
       change(null, status: RxStatus.error(error.toString()));
     });
 

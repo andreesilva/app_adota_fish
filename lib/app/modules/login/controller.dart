@@ -7,8 +7,7 @@ import 'package:get/get.dart';
 
 class LoginController extends GetxController {
   LoginController();
-  //GlobalKey<FormState> formKey = GlobalKey<FormState>();
-//GlobalKey<FormState> formKey = GlobalKey<FormState>(debugLabel: '_homeScreenkey');
+
   final formKey = GlobalKey<FormState>();
   final _authService = Get.find<AuthService>();
   var emailController = TextEditingController();
@@ -37,8 +36,6 @@ class LoginController extends GetxController {
           title: Text("Email ou senha incorretos"),
         ),
       );
-
-      //Get.dialog(AlertDialog(title: Text(error.toString())));
     });
   }
 }

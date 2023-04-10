@@ -31,8 +31,8 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
             children: [
               for (var donation in state!)
 
+              if((donation != null))
               if((donation.clientDonor.address.city.state != null))
-            
                 Card(
                   margin:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -119,7 +119,7 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
           
           onEmpty: Center(
             child: Text(
-              "Ainda não há nenhum anúncio publicado",
+              "Não há nenhum anúncio publicado",
               textAlign: TextAlign.center,
               style: Get.textTheme.bodyMedium?.copyWith(color: Colors.black),
             ),

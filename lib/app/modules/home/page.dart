@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePage extends GetView<HomeController> {
+  int number = 0;
+
   @override
   Widget build(BuildContext context) {
+    String uppercaseLetters = "";
+    
     return Scaffold(
         appBar: AppBar(
           title: const Center(
@@ -25,9 +29,14 @@ class HomePage extends GetView<HomeController> {
         ],
         ),
         body: controller.obx(
-          (state) => ListView(
+          
+          (state) => 
+          
+          ListView(
             children: [
               for (var donation in state!)
+              
+              if((donation != null))
               if((donation.clientDonor.address.city.state != null))
                 Card(
                   margin:
@@ -76,7 +85,7 @@ class HomePage extends GetView<HomeController> {
                               textAlign: TextAlign.center),
                         ),
                       ),
-                      if (donation.aquarium.capacity! == 0) ...[
+                      if (donation.aquarium!.capacity! == 0) ...[
                         Container(
                           alignment: Alignment.centerLeft,
                           child: const Padding(
@@ -97,7 +106,7 @@ class HomePage extends GetView<HomeController> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, left: 20),
                             child: Text(
-                              "${donation.aquarium.capacity!} litros",
+                              "${donation.aquarium!.capacity!} litros",
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -129,7 +138,7 @@ class HomePage extends GetView<HomeController> {
           ),
           onEmpty: Center(
             child: Text(
-              "Ainda não há nenhum anúncio publicado",
+              "Não há nenhum anúncio publicado",
               textAlign: TextAlign.center,
               style: Get.textTheme.bodyMedium?.copyWith(color: Colors.black),
             ),

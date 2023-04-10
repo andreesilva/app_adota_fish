@@ -15,6 +15,8 @@ class HomeController extends GetxController
 
   final loading = true.obs;
 
+  
+
   @override
   void onInit() {
     loading(true);
@@ -34,7 +36,7 @@ class HomeController extends GetxController
         change([], status: RxStatus.empty());
       } else {
         print("Msg 2");
-        change(data, status: RxStatus.success());
+        change(data.cast<DonationAquariumModel>(), status: RxStatus.success());
       }
     }, onError: (error) {
       print("Msg 3");

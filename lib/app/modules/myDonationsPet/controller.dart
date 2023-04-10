@@ -20,8 +20,7 @@ class MyDonationsPetController extends GetxController
   @override
   void onInit() {
     _repository.getMyDonationsPet().then((data) {
-      print(data);
-      print("pulo");
+      
       if (data.isEmpty) {
         print("Msg 1");
         change([], status: RxStatus.empty());

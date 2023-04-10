@@ -5,31 +5,33 @@ import 'package:get/get.dart';
 class UserAddressPage extends GetView<UserAddressController> {
   final _valores = [
     'Selecione o estado',
-    'Acre',
-    'Alagoas',
-    'Amazonas',
-    'Amapá',
-    'Bahia',
-    'Ceará',
-    'Distrito Federal',
-    'Espírito Santo',
-    'Goiás',
-    'Maranhão',
-    'Minas Gerais',
-    'Mato Grosso do Sul',
-    'Mato Grosso',
-    'Pará',
-    'Paraíba',
-    'Pernambuco',
-    'Piauí',
-    'Paraná',
-    'Rio de Janeiro',
-    'Rio Grande do Norte',
-    'Rondônia',
-    'Roraima',
-    'Rio Grande do Sul',
-    'Santa Catarina',
-    'Sergipe',
+     'Acre',
+'Alagoas',
+'Amazonas',
+'Amapá',
+'Bahia',
+'Ceará',
+'Distrito Federal',
+'Espírito Santo',
+'Goiás',
+'Maranhão',
+'Minas Gerais',
+'Mato Grosso do Sul',
+'Mato Grosso',
+'Pará',
+'Paraíba',
+'Pernambuco',
+'Piauí',
+'Paraná',
+'Rio de Janeiro',
+'Rio Grande do Norte',
+'Rondônia',
+'Roraima',
+'Rio Grande do Sul',
+'Santa Catarina',
+'Sergipe',
+'São Paulo',
+'Tocantins',
   ];
 
   @override
@@ -95,12 +97,6 @@ class UserAddressPage extends GetView<UserAddressController> {
                   decoration: const InputDecoration(
                     labelText: "Ponto de referência",
                   ),
-                  validator: (String? value) {
-                    if (value != null && value.isEmpty) {
-                      return 'informe um ponto de referência para o entregador';
-                    }
-                    return null;
-                  },
                 ),
                 TextFormField(
                   controller: controller.complementController,
@@ -118,7 +114,7 @@ class UserAddressPage extends GetView<UserAddressController> {
                       .toList(),
                   onChanged: controller.changeState,
                   decoration:
-                      const InputDecoration(labelText: 'Selecione um estado'),
+                      const InputDecoration(labelText: 'Estado'),
                   validator: (int? value) {
                     if (value == null) {
                       return 'Selecione um estado';
@@ -134,7 +130,7 @@ class UserAddressPage extends GetView<UserAddressController> {
                       .toList(),
                   onChanged: controller.changeCity,
                   decoration: const InputDecoration(
-                    labelText: 'Selecione uma cidade',
+                    labelText: 'Cidade',
                   ),
                   validator: (int? value) {
                     if (value == null) {

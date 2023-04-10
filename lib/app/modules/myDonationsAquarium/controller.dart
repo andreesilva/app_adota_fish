@@ -19,8 +19,7 @@ class MyDonationsAquariumController extends GetxController
   @override
   void onInit() {
     _repository.getMyDonationsAquarium().then((data) {
-      print(data);
-      print("pulo");
+      
       if (data.isEmpty) {
         print("Msg 1");
         change([], status: RxStatus.empty());
@@ -30,7 +29,6 @@ class MyDonationsAquariumController extends GetxController
       }
     }, onError: (error) {
       print("Msg 3");
-      print(error.toString());
       change(null, status: RxStatus.error(error.toString()));
     });
 

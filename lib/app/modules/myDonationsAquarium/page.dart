@@ -70,7 +70,7 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                           child: Text('Capacidade'),
                         ),
                       ),
-                      if (donation.aquarium.capacity! == 0) ...[
+                      if (donation.aquarium!.capacity! == 0) ...[
                         Container(
                           alignment: Alignment.centerLeft,
                           child: const Padding(
@@ -91,7 +91,7 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, left: 20),
                             child: Text(
-                              "${donation.aquarium.capacity!} litros",
+                              "${donation.aquarium!.capacity!} litros",
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,

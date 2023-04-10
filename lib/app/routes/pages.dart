@@ -4,6 +4,7 @@ import 'package:app_adota_fish/app/modules/myDonationsAquarium/binding.dart';
 import 'package:app_adota_fish/app/modules/myDonationsAquarium/page.dart';
 import 'package:app_adota_fish/app/modules/dashboard/binding.dart';
 import 'package:app_adota_fish/app/modules/dashboard/page.dart';
+import 'package:app_adota_fish/app/modules/dashboard/page_aquarium.dart';
 import 'package:app_adota_fish/app/modules/donationAquarium/binding.dart';
 import 'package:app_adota_fish/app/modules/donationAquarium/page.dart';
 import 'package:app_adota_fish/app/modules/donationPet/binding.dart';
@@ -63,8 +64,8 @@ abstract class AppPages {
       //middlewares: [RedirectMiddleware()]
     ),
      GetPage(
-      name: Routes.pets,
-      page: () =>  const DashboardPage(),
+      name: Routes.aquariums,
+      page: () =>  const DashboardAquariumPage(),
       binding: DashboardBinding(),
       //middlewares: [RedirectMiddleware()]
     ),

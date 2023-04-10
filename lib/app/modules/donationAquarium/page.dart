@@ -1,7 +1,7 @@
 import 'package:app_adota_fish/app/modules/donationAquarium/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:badges/badges.dart' as badges;
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -110,7 +110,7 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                   ),
                 ],
               ),
-              if (state.aquarium.description!.isNotEmpty)
+              if (state.aquarium!.description!.isNotEmpty)
                 Card(
                   margin:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -168,7 +168,7 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                   children: [
                     Row(
                       children: [
-                        if (state.aquarium.capacity == 0) ...[
+                        if (state.aquarium!.capacity == 0) ...[
                           Container(
                             alignment: Alignment.centerLeft,
                             child: const Padding(
@@ -183,7 +183,7 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 5, left: 20),
                               child: Text(
-                                  "Capacidade: ${state.aquarium.capacity} litros",
+                                  "Capacidade: ${state.aquarium!.capacity} litros",
                                   textAlign: TextAlign.center),
                             ),
                           ),
@@ -215,17 +215,40 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                                           fontFamily: 'Roboto'))),
                             ),
                             ListTile(
-                              leading: const Icon(Icons.abc_outlined),
+                              leading: const FaIcon(FontAwesomeIcons.whatsapp),
                               title: Text(state!.clientDonor!.phone),
                               onTap: () =>
                                   openWhatsApp(state!.clientDonor!.phone),
                             ),
                             ListTile(
-                              leading: const Icon(Icons.mail),
-                              title: Text(state.clientDonor!.user.email),
-                              onTap: () => _launchLink(
-                                  'mailto:${state.clientDonor!.user.email}'),
-                            ),
+                                leading: const Icon(Icons.mail),
+                                title: Text(state.clientDonor!.user.email),
+                                onTap: () async {
+                                  String email =
+                                      state.clientDonor!.user.email.toString();
+                                  String subject = "Adoção de aquário";
+                                  String body = "";
+
+                                  String? encodeQueryParameters(
+                                      Map<String, String> params) {
+                                    return params.entries
+                                        .map((e) =>
+                                            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                        .join('&');
+                                  }
+
+                                  final Uri emaillUri = Uri(
+                                    scheme: 'mailto',
+                                    path: email,
+                                    query:
+                                        encodeQueryParameters(<String, String>{
+                                      'subject': subject,
+                                      'body': body
+                                    }),
+                                  );
+                                  // ignore: deprecated_member_use
+                                  launch(emaillUri.toString());
+                                }),
                           ],
                         );
                       },
@@ -247,8 +270,7 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
   openWhatsApp(phone) {
     return launchUrl(
       Uri.parse(
-        //'https://wa.me/1234567890' //you use this url also
-        'whatsapp://send?phone=+55$phone&text=Olá, gostaria de adotar esse áquário', //put your number here
+        'whatsapp://send?phone=+55$phone&text=Olá, vi o anúncio no Adota Fish, e gostario de adotar esse aquário.', //put your number here
       ),
     );
   }

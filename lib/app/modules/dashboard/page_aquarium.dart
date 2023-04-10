@@ -10,8 +10,8 @@ import 'package:get/get.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class DashboardPage extends GetView<DashboardController> {
-  const DashboardPage({super.key});
+class DashboardAquariumPage extends GetView<DashboardAquariumController> {
+  const DashboardAquariumPage({super.key});
 
   @override
   Widget build(BuildContext context) {

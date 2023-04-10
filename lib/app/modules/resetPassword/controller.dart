@@ -15,7 +15,6 @@ class ResetPasswordController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final _authService = Get.find<AuthService>();
 
-  //var passwordController = TextEditingController();
   final loading = true.obs;
   bool get isLogged => _authService.isLogged;
 

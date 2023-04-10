@@ -110,10 +110,6 @@ class RegisterAquariumController extends GetxController
         break;
     }
 
-    print("Teste 1: ${profilePicPath.value}");
-    print("Teste 2: ${litrageValue}");
-    print("Teste 3: ${descriptionController.text}");
-
     if (descriptionController.text == '') {
       description = ' ';
     } else {

@@ -18,7 +18,7 @@ class SelectStateAquariumController extends GetxController with StateMixin<List<
 
   void onSelected(int idState) async {
 
-    Get.offAllNamed('/pets/$idState');
+    Get.offAllNamed('/aquariums/$idState');
     
   }
 }

@@ -11,18 +11,21 @@ class DonationPetController extends GetxController
   DonationPetController(this._repository);
   bool get isLogged => _authService.isLogged;
 
+  final loading = true.obs;
+
   @override
   void onInit() {
+    
+    loading(true);
+
     int id = int.parse(Get.parameters['id']!);
 
-    //if (isLogged) {
     print("Msg 1");
     _repository.getDonationPet(id).then((data) {
       change(data, status: RxStatus.success());
     }, onError: (error) {
       change(null, status: RxStatus.error(error.toString()));
     });
-    //}
     super.onInit();
   }
 }

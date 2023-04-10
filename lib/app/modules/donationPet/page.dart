@@ -6,6 +6,7 @@ import 'package:flutter/src/material/badge.dart';
 import 'package:get/get.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DonationPetPage extends GetView<DonationPetController> {
   const DonationPetPage({super.key});
@@ -84,24 +85,7 @@ class DonationPetPage extends GetView<DonationPetController> {
                              "Anunciante: ${state!.clientDonor!.name}",
                             ),
                           ),
-                        ),/*
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Badge(
-                            badgeColor: Colors.grey,
-                            shape: BadgeShape.square,
-                            borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10),
-                            ),
-                            toAnimate: true,
-                            badgeContent: Text(
-                              "Anunciante: ${state!.clientDonor!.name}",
-                            ),
-                          ),
                         ),
-                        */
                       ],
                     ),
                   ],
@@ -259,7 +243,7 @@ class DonationPetPage extends GetView<DonationPetController> {
                                           fontFamily: 'Roboto'))),
                             ),
                             ListTile(
-                              leading: const Icon(Icons.whatshot),
+                              leading: const FaIcon(FontAwesomeIcons.whatsapp),
                               title: Text(state.clientDonor.phone),
                               onTap: () =>
                                   openWhatsApp(state.clientDonor.phone),
@@ -270,8 +254,8 @@ class DonationPetPage extends GetView<DonationPetController> {
                                 onTap: () async {
                                   String email =
                                       state.clientDonor.user.email.toString();
-                                  String subject = "Título do email";
-                                  String body = "Corpo da mensagem";
+                                  String subject = "Adoção de pet aquático";
+                                  String body = "";
 
                                   String? encodeQueryParameters(
                                       Map<String, String> params) {
@@ -314,8 +298,7 @@ class DonationPetPage extends GetView<DonationPetController> {
   openWhatsApp(phone) {
     return launchUrl(
       Uri.parse(
-        //'https://wa.me/1234567890' //you use this url also
-        'whatsapp://send?phone=+55$phone&text=Olá, gostaria de adotar esse áquário', //put your number here
+        'whatsapp://send?phone=+55$phone&text=Olá, vi o anúncio no Adota Fish, e gostario de adotar esse pet.', //put your number here
       ),
     );
   }

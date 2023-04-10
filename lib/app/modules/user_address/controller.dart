@@ -65,8 +65,6 @@ class UserAddressController extends GetxController
         loading(false);
       });
 
-      print(idCliente);
-      print(idCliente);
       loading(false);
     }, onError: (error) {
       loading(false);

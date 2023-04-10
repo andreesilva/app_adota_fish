@@ -10,7 +10,7 @@ class UserProfilePage extends GetView<UserProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    //var editing = controller.editing.isTrue;
+    
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -54,7 +54,12 @@ class UserProfilePage extends GetView<UserProfileController> {
                   }
                   return null;
                 },
-              ),
+               
+              onChanged: (value) {
+                
+                    print('First text field: ');
+                  }),
+              
               MaskedTextField(
                 textFieldController: controller.phoneController,
                 inputDecoration: const InputDecoration(
