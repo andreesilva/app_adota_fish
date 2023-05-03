@@ -27,16 +27,18 @@ class AllDonationPetController extends GetxController
     }
 
     _repository.getDonationsPets(id).then((data) {
-      
+     
       if (data.isEmpty) {
-        print("Msg 1");
+        print("Msg pet 1");
         change([], status: RxStatus.empty());
       } else {
-        print("Msg 2");
-        change(data, status: RxStatus.success());
+        print("Msg pet 2");
+        //change(data, status: RxStatus.success());
+        change(data.cast<DonationPetModel>(), status: RxStatus.success());
       }
     }, onError: (error) {
-      print("Msg 3");
+      print("Msg pet 3");
+      print(error.toString());
       change(null, status: RxStatus.error(error.toString()));
     });
 

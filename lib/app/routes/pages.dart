@@ -3,7 +3,7 @@ import 'package:app_adota_fish/app/modules/account/page.dart';
 import 'package:app_adota_fish/app/modules/myDonationsAquarium/binding.dart';
 import 'package:app_adota_fish/app/modules/myDonationsAquarium/page.dart';
 import 'package:app_adota_fish/app/modules/dashboard/binding.dart';
-import 'package:app_adota_fish/app/modules/dashboard/page.dart';
+import 'package:app_adota_fish/app/modules/dashboard/page_pet.dart';
 import 'package:app_adota_fish/app/modules/dashboard/page_aquarium.dart';
 import 'package:app_adota_fish/app/modules/donationAquarium/binding.dart';
 import 'package:app_adota_fish/app/modules/donationAquarium/page.dart';
@@ -53,13 +53,13 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.dashboard,
-      page: () => const DashboardPage(),
+      page: () => const DashboardPetPage(),
       binding: DashboardBinding(),
       //middlewares: [RedirectMiddleware()]
     ),
     GetPage(
       name: Routes.pets,
-      page: () =>  const DashboardPage(),
+      page: () =>  const DashboardPetPage(),
       binding: DashboardBinding(),
       //middlewares: [RedirectMiddleware()]
     ),

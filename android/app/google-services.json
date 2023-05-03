@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:700757569335:android:381cd08a9ab162cd6a74b2",
         "android_client_info": {
-          "package_name": "com.example.app_adota_fish"
+          "package_name": "com.app.app_adota_fish"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "700757569335-a569nre2bn9k9f0e3d24h6bllpr8022q.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.appAdotaFish"
+                "bundle_id": "com.app.appAdotaFish"
               }
             }
           ]

@@ -31,6 +31,9 @@ class PhotoClientPage extends GetView<PhotoClientController> {
                         child: Column(
                           children: [
                             Center(
+                               child: CircleAvatar(
+                              radius: 81,
+                              backgroundColor: Colors.blue,
                               child: CircleAvatar(
                                 backgroundImage:
                                     controller.isProficPicPath.value == true
@@ -40,6 +43,7 @@ class PhotoClientPage extends GetView<PhotoClientController> {
                                         : AssetImage("assets/Vector_1.png"),
                                 radius: 80,
                               ),
+                               ),
                             ),
                           ],
                         ),

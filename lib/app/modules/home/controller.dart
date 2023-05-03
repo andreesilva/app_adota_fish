@@ -15,8 +15,6 @@ class HomeController extends GetxController
 
   final loading = true.obs;
 
-  
-
   @override
   void onInit() {
     loading(true);
@@ -30,16 +28,16 @@ class HomeController extends GetxController
 
     _repository.getDonations(id).then((data) {
       print(data);
-      print("pulo");
+      print("pulo aquario");
       if (data.isEmpty) {
-        print("Msg 1");
+        print("Msg aquario 1");
         change([], status: RxStatus.empty());
       } else {
-        print("Msg 2");
+        print("Msg aquario 2");
         change(data.cast<DonationAquariumModel>(), status: RxStatus.success());
       }
     }, onError: (error) {
-      print("Msg 3");
+      print("Msg aquario 3");
       print(error.toString());
       change(null, status: RxStatus.error(error.toString()));
     });

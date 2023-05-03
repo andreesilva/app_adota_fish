@@ -242,8 +242,7 @@ class AccountPage extends GetView<AccountController> {
   }
 
   Future<void> takePhoto(ImageSource source) async {
-    final pickedImage =
-        await imagePicker.pickImage(source: source, imageQuality: 100);
+    final pickedImage =  await imagePicker.pickImage(source: source, imageQuality: 100);
 
     pickedFile = File(pickedImage!.path);
 

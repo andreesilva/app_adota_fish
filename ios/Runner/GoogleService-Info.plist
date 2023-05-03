@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.appAdotaFish</string>
+	<string>com.app.appAdotaFish</string>
 	<key>PROJECT_ID</key>
 	<string>app-adota-fish</string>
 	<key>STORAGE_BUCKET</key>

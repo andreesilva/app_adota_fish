@@ -3,6 +3,7 @@ import 'package:app_adota_fish/app/modules/option_donation/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:giff_dialog/giff_dialog.dart';
 
@@ -27,11 +28,13 @@ class OptionDonationPage extends GetView<OptionDonationController> {
         ),
       ),
       body: AlertDialog(
+        
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(6),
         ),
+        
         content: SizedBox(
-            width: double.minPositive,
+            width: double.maxFinite,
             height: 170,
             child: ListView(
               padding: const EdgeInsets.all(5),
@@ -40,11 +43,15 @@ class OptionDonationPage extends GetView<OptionDonationController> {
                   title: const Center(
                       child: Text("QUERO DOAR:",
                           style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Roboto',
-                          ))),
-                  onTap: () {},
+                            fontSize: 27,  
+                            //fontFamily: 'Roboto',
+                            fontStyle: FontStyle.italic,
+                            color: Colors.black45
+                          )
+                          )),
+                  onTap: () {
+                    
+                  },
                 ),
                 ListTile(
                   leading: Icon(Icons.crop_5_4, color: Colors.blue[800]),

@@ -1,8 +1,8 @@
 import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:get/get.dart';
 
-class DashboardAquariumController extends GetxController {
-  var currentPageIndex = 1.obs;
+class DashboardPetController extends GetxController {
+  var currentPageIndex = 0.obs;
 
   final _authService = Get.find<AuthService>();
 

@@ -7,7 +7,15 @@ class SelectStateAquariumPage extends GetView<SelectStateAquariumController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Selecione um estado')),
+       appBar: AppBar(
+        title: const Center(
+          child: Text('Selecione um estado',
+              style: TextStyle(
+                fontSize: 17,
+                fontFamily: 'Roboto',
+              )),
+        ),
+      ),
       body:  SingleChildScrollView(
           child: Column(
             children: [

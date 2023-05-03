@@ -1,4 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:get/get_connect/sockets/src/socket_notifier.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:app_adota_fish/app/data/models/address.dart';
 import 'package:app_adota_fish/app/data/models/aquarium.dart';
@@ -27,19 +32,46 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 
 class Api extends GetConnect {
-  final _storageService = Get.find<StorageService>();
+ final _storageService = Get.find<StorageService>();
+  
+ final _client  = http.Client();
+ dynamic _url = '';
+ bool isInternet = false;
+  
 
-  //final firebaseFolderOcc = "MEDIAS/occurrences/tech";
-  //final firebaseFolder = "TECHWEB";
+  Future<bool> _isInternetConnected() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+      
+        isInternet = true;
+      //return res;
+    } on SocketException catch (_) {
 
+        isInternet = false;
+    }
+     return isInternet;
+  }
   @override
   void onInit() {
-    //Local
-    httpClient.baseUrl = "http://10.0.0.230:3333/";
+
+   
+    
+
+
+    _isInternetConnected().then((value) {
+      
+      if(value == false){
+        print("Sem conexão com a rede");
+        _client.close();
+      }
+      else{
+           //httpClient.baseUrl = "http://10.0.0.230:3333/";
     //httpClient.baseUrl = "http://192.168.192.19:3333/";
 
     //Produção
-    //httpClient.baseUrl = "http://52.67.106.1:3333/";
+    httpClient.baseUrl = "http://3.133.141.235:3333/";
+     _url = httpClient.baseUrl = "http://3.133.141.235:3333";
 
     httpClient.addRequestModifier((Request request) {
       request.headers['Accept'] = 'application/json';
@@ -56,8 +88,10 @@ class Api extends GetConnect {
 
       return request;
     });
+      }
+    });
 
-    super.onInit();
+     super.onInit();
   }
 
   Future<List<CityModel>> getCities() async {
@@ -95,22 +129,20 @@ class Api extends GetConnect {
   }
 
   Future<List<StateModel>> getStates() async {
+
     var response = _errorHandler(await get('estados'));
 
     List<StateModel> data = [];
-
-    print("${response.bodyString} estados");
 
     for (var state in response.body) {
       data.add(StateModel.from(state));
     }
     return data;
+    
   }
 
   Future<UserLoginResponseModel> login(UserLoginRequestModel data) async {
     var response = _errorHandler(await post('login', jsonEncode(data)));
-
-    print("${response.bodyString} login");
 
     return UserLoginResponseModel.fromJson(response.body);
   }
@@ -120,7 +152,7 @@ class Api extends GetConnect {
     var response =
         _errorHandler(await post('forgot-password', jsonEncode(data)));
 
-    print("${response.bodyString} forgot-password");
+    //print("${response.bodyString} forgot-password");
 
     return ForgotPasswordResponseModel.fromJson(response.body);
   }
@@ -129,7 +161,7 @@ class Api extends GetConnect {
     var response =
         _errorHandler(await post('cliente/cadastro', jsonEncode(data)));
 
-    print(UserModel.fromJson(response.body));
+    //print(UserModel.fromJson(response.body));
 
     return UserModel.fromJson(response.body);
   }
@@ -138,17 +170,12 @@ class Api extends GetConnect {
     var response =
         _errorHandler(await post('doacao/cadastro-aquario', jsonEncode(data)));
 
-    print(AquariumModel.fromJson(response.body));
-
     return AquariumModel.fromJson(response.body);
   }
 
   Future<PetModel> registerPet(PetRequestModel data) async {
     var response =
         _errorHandler(await post('doacao/cadastro-pet', jsonEncode(data)));
-
-    print("Cadastro pet");
-    print(PetModel.fromJson(response.body));
 
     return PetModel.fromJson(response.body);
   }
@@ -160,7 +187,7 @@ class Api extends GetConnect {
   Future<UserModel> getUser() async {
     var response = _errorHandler(await get('auth/me'));
 
-    print("${response.bodyString} getUser");
+    //print("${response.bodyString} getUser");
 
     return UserModel.fromJson(response.body);
   }
@@ -172,12 +199,12 @@ class Api extends GetConnect {
   }
 
   Future<void> putPassword(PasswordModel data) async {
-    print('${data.password} - Senha');
+    //print('${data.password} - Senha');
     var response = _errorHandler(await put('cliente/senha', jsonEncode(data)));
   }
 
   Future<void> putResetPassword(PasswordModel data) async {
-    print('${data.password} - Senha');
+    //print('${data.password} - Senha');
     var response = _errorHandler(await put('reset-password', jsonEncode(data)));
   }
 
@@ -207,7 +234,7 @@ class Api extends GetConnect {
   Future<DonationAquariumModel> getDonationAquarium(int id) async {
     var response = _errorHandler(await get('doacao/aquario/$id'));
 
-    print("${response.bodyString} getDonationsAquarium - detalhe");
+    //print("${response.bodyString} getDonationsAquarium - detalhe");
 
     return DonationAquariumModel.fromJson(response.body);
   }
@@ -239,13 +266,11 @@ class Api extends GetConnect {
   Future<DonationPetModel> getDonationPet(int id) async {
     var response = _errorHandler(await get('doacao/pet/$id'));
 
-    print("${response.bodyString} getDonationsAquarium - detalhe");
-
     return DonationPetModel.fromJson(response.body);
   }
 
   Future<SpecieModel> getSpecie(SpecieRequestModel data) async {
-    print("${data.name} - iD ESPECIE");
+    //print("${data.name} - iD ESPECIE");
 
     var response =
         _errorHandler(await post('especie/especieId', jsonEncode(data)));
@@ -261,25 +286,62 @@ class Api extends GetConnect {
 
   Future<List<DonationAquariumModel>> getDonationsAquarium(int id) async {
     var response = _errorHandler(await get('doacoes-aquario/$id'));
-    print("getDonationsAquarium - inicio");
+  
     List<DonationAquariumModel> data = [];
 
     for (var donation in response.body) {
       data.add(DonationAquariumModel.fromJson(donation));
     }
-    print("getDonationsAquarium - final");
 
     return data;
   }
 
   Future<List<DonationPetModel>> getDonationsPet(int id) async {
-    var response = _errorHandler(await get('doacoes-pet/$id'));
+   
+   /*
+     try{
+    var response = await get('doacoes-pet/$id');
 
     List<DonationPetModel> data = [];
 
-    for (var donation in response.body) {
+    for (var donation in jsonDecode(response.body)) {
       data.add(DonationPetModel.fromJson(donation));
     }
+  
+    return data;
+
+    }catch(e){
+      
+       rethrow;
+    }
+    */
+
+      
+    //var url = httpClient.baseUrl = "http://3.133.141.235:3333";
+
+    
+    
+    //try{
+      
+      
+  
+    
+    
+    //}catch(e){
+      //return print(e.toString());
+    // throw e.toString();
+    //}
+    
+    List<DonationPetModel> data = [];
+   
+     var response =  await _client.get(
+        Uri.parse('$_url/doacoes-pet/$id'),
+        );
+
+        for (var donation in jsonDecode(response.body)) {
+          data.add(DonationPetModel.fromJson(donation));
+         }
+  
     return data;
   }
 
@@ -314,7 +376,7 @@ class Api extends GetConnect {
 
   Response _errorHandler(Response response) {
     //print("${response.bodyString} asasass");
-    switch (response.statusCode) {
+      switch (response.statusCode) {
       case 200:
       case 202:
       case 204:

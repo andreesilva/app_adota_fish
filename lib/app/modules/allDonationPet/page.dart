@@ -32,7 +32,7 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
               for (var donation in state!)
 
               if((donation != null))
-              if((donation.clientDonor.address.city.state != null))
+              if((donation.clientDonor!.address.city.state != null))
                 Card(
                   margin:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),

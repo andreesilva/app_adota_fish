@@ -20,7 +20,6 @@ class DonationAquariumController extends GetxController
 
     int id = int.parse(Get.parameters['id']!);
 
-    print("Msg 1");
     _repository.getDonationAquarium(id).then((data) {
       change(data, status: RxStatus.success());
     }, onError: (error) {

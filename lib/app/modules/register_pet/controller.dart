@@ -2,7 +2,7 @@ import 'package:app_adota_fish/app/data/models/specie_request.dart';
 import 'package:app_adota_fish/app/data/models/pet_request.dart';
 import 'package:app_adota_fish/app/data/models/photo.dart';
 import 'package:app_adota_fish/app/data/models/specie.dart';
-import 'package:app_adota_fish/app/data/services/auth/service.dart';
+//import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/register_pet/repository.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:app_adota_fish/app/util/firebase_util.dart';

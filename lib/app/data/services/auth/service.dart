@@ -1,5 +1,3 @@
-import 'package:app_adota_fish/app/data/models/forgot_password_request.dart';
-import 'package:app_adota_fish/app/data/models/forgot_password_response.dart';
 import 'package:app_adota_fish/app/data/models/user.dart';
 import 'package:app_adota_fish/app/data/models/user_login_request.dart';
 import 'package:app_adota_fish/app/data/services/auth/repository.dart';

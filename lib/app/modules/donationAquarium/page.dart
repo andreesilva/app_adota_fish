@@ -270,7 +270,7 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
   openWhatsApp(phone) {
     return launchUrl(
       Uri.parse(
-        'whatsapp://send?phone=+55$phone&text=Olá, vi o anúncio no Adota Fish, e gostario de adotar esse aquário.', //put your number here
+        'whatsapp://send?phone=+55$phone&text=Olá, vi o anúncio no Adota Fish, e gostaria de adotar esse aquário.', //put your number here
       ),
     );
   }

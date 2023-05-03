@@ -1,7 +1,6 @@
 import 'package:app_adota_fish/app/modules/account/page.dart';
 import 'package:app_adota_fish/app/modules/allDonationPet/page.dart';
-import 'package:app_adota_fish/app/modules/dashboard/controller.dart';
-import 'package:app_adota_fish/app/modules/dashboard/controller_aquarium.dart';
+import 'package:app_adota_fish/app/modules/dashboard/controller_pet.dart';
 import 'package:app_adota_fish/app/modules/home/page.dart';
 import 'package:app_adota_fish/app/modules/login/page.dart';
 import 'package:app_adota_fish/app/modules/option_donation/page.dart';
@@ -10,8 +9,8 @@ import 'package:get/get.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class DashboardPage extends GetView<DashboardController> {
-  const DashboardPage({super.key});
+class DashboardPetPage extends GetView<DashboardPetController> {
+  const DashboardPetPage({super.key});
 
   @override
   Widget build(BuildContext context) {

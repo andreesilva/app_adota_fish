@@ -1,11 +1,10 @@
 import 'package:app_adota_fish/app/data/providers/api.dart';
 import 'package:app_adota_fish/app/modules/account/controller.dart';
 import 'package:app_adota_fish/app/modules/account/repository.dart';
+import 'package:app_adota_fish/app/modules/dashboard/controller_pet.dart';
 import 'package:app_adota_fish/app/modules/dashboard/controller_aquarium.dart';
-import 'package:app_adota_fish/app/modules/myDonationsAquarium/repository.dart';
 import 'package:app_adota_fish/app/modules/allDonationPet/controller.dart';
 import 'package:app_adota_fish/app/modules/allDonationPet/repository.dart';
-import 'package:app_adota_fish/app/modules/dashboard/controller.dart';
 import 'package:app_adota_fish/app/modules/home/controller.dart';
 import 'package:app_adota_fish/app/modules/home/repository.dart';
 import 'package:app_adota_fish/app/modules/login/controller.dart';
@@ -19,8 +18,8 @@ import 'package:get/get.dart';
 class DashboardBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<DashboardController>(() => DashboardController());
     Get.lazyPut<DashboardAquariumController>(() => DashboardAquariumController());
+    Get.lazyPut<DashboardPetController>(() => DashboardPetController());
     Get.lazyPut<HomeController>(
         () => HomeController(HomeRepository(Get.find<Api>())));
     Get.lazyPut<AllDonationPetController>(() =>

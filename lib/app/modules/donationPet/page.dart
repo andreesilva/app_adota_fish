@@ -99,7 +99,7 @@ class DonationPetPage extends GetView<DonationPetController> {
                       padding:
                           const EdgeInsets.only(top: 0, left: 20, bottom: 0),
                       child: Text(
-                          "${state.clientDonor.address.city.name} / ${state.clientDonor.address.city.state!.name}",
+                          "${state.clientDonor!.address.city.name} / ${state.clientDonor!.address.city.state!.name}",
                           textAlign: TextAlign.center),
                     ),
                   ),
@@ -176,7 +176,7 @@ class DonationPetPage extends GetView<DonationPetController> {
                   ],
                 ),
               ),
-              if (state.pet.observation!.isNotEmpty)
+              if (state.pet!.observation!.isNotEmpty)
                 Card(
                   margin:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -205,7 +205,7 @@ class DonationPetPage extends GetView<DonationPetController> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 5, left: 20),
                               child: Text(
-                                state.pet.observation!,
+                                state.pet!.observation!,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 15,
@@ -244,16 +244,16 @@ class DonationPetPage extends GetView<DonationPetController> {
                             ),
                             ListTile(
                               leading: const FaIcon(FontAwesomeIcons.whatsapp),
-                              title: Text(state.clientDonor.phone),
+                              title: Text(state.clientDonor!.phone),
                               onTap: () =>
-                                  openWhatsApp(state.clientDonor.phone),
+                                  openWhatsApp(state.clientDonor!.phone),
                             ),
                             ListTile(
                                 leading: const Icon(Icons.mail),
-                                title: Text(state.clientDonor.user.email),
+                                title: Text(state.clientDonor!.user.email),
                                 onTap: () async {
                                   String email =
-                                      state.clientDonor.user.email.toString();
+                                      state.clientDonor!.user.email.toString();
                                   String subject = "Adoção de pet aquático";
                                   String body = "";
 
@@ -298,7 +298,7 @@ class DonationPetPage extends GetView<DonationPetController> {
   openWhatsApp(phone) {
     return launchUrl(
       Uri.parse(
-        'whatsapp://send?phone=+55$phone&text=Olá, vi o anúncio no Adota Fish, e gostario de adotar esse pet.', //put your number here
+        'whatsapp://send?phone=+55$phone&text=Olá, vi o anúncio no Adota Fish, e gostaria de adotar esse pet.', //put your number here
       ),
     );
   }

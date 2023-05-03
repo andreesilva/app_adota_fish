@@ -44,7 +44,6 @@ class UserProfilePage extends GetView<UserProfileController> {
               ),
               TextFormField(
                 controller: controller.emailController,
-                readOnly: true,
                 decoration: const InputDecoration(
                   labelText: "Email",
                 ),
@@ -53,12 +52,8 @@ class UserProfilePage extends GetView<UserProfileController> {
                     return 'Preencha o email';
                   }
                   return null;
-                },
-               
-              onChanged: (value) {
-                
-                    print('First text field: ');
-                  }),
+                }, 
+              ),
               
               MaskedTextField(
                 textFieldController: controller.phoneController,

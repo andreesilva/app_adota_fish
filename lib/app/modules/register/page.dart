@@ -133,6 +133,7 @@ class RegisterPage extends GetView<RegisterController> {
                         return null;
                       },
                     ),
+                    
                     TextFormField(
                       controller: controller.neighborhoodController,
                       decoration: const InputDecoration(

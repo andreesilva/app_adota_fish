@@ -24,8 +24,8 @@ class AccountController extends GetxController
   var isProficPicPath = false.obs;
   var profilePicPath = "".obs;
 
-  var photoClient =
-      "https://firebasestorage.googleapis.com/v0/b/app-adota-fish.appspot.com/o/images%2Fimg-2023-02-13%2015%3A00%3A16.710888.jpg?alt=media&token=04591d46-aae3-437a-a40b-9c18c9fcf904";
+  var photoClient = 
+      "https://firebasestorage.googleapis.com/v0/b/app-adota-fish.appspot.com/o/images%2Faccount%2FVector_1.png?alt=media&token=a8237bea-4fe5-4a17-9080-8117b78b7458";
 
   @override
   void onInit() {
@@ -33,7 +33,7 @@ class AccountController extends GetxController
 
     fetchUser();
 
-    print(photoClient);
+    //print(photoClient);
 
     super.onInit();
   }
@@ -50,8 +50,6 @@ class AccountController extends GetxController
     }, onError: (error) {
       loading(false);
     });
-
-    //print(user.photo);
   }
 
   Future<void> setProfileImagePath(String path) async {
@@ -66,7 +64,7 @@ class AccountController extends GetxController
     _repository.putPhotoClient(photoClientRequestModel).then((value) {
       showAlertSuccess(QuickAlertType.success);
     }, onError: (error) {
-      print(error.toString());
+      //print(error.toString());
       showAlertError(QuickAlertType.error);
     });
   }
