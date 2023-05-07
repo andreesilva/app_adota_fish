@@ -25,7 +25,7 @@ class RegisterPetController extends GetxController
   var passwordController = TextEditingController();
   var amountController = TextEditingController();
 
-  var descriptionController = TextEditingController();
+  //var descriptionController = TextEditingController();
 
   int litrageValue = 0;
   int specieId = 0;
@@ -89,7 +89,6 @@ class RegisterPetController extends GetxController
     if (!formKey.currentState!.validate()) {
       return;
     }
-
 
     if (observationController.text == '') {
       observation = ' ';

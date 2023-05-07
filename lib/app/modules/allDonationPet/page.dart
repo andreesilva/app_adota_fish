@@ -5,8 +5,32 @@ import 'package:get/get.dart';
 
 class AllDonationPetPage extends GetView<AllDonationPetController> {
   @override
+
+  //bool _status = true;
+
   Widget build(BuildContext context) {
-    
+    /*
+    controller.isInternet_.then((value) {
+      if (value == false){
+        print(value);
+      return Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () => Get.toNamed(Routes.login),
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6),
+              ),
+            ),
+            child: const Text('Entrar com a minha conta 1'),
+          ),
+        ),
+      );
+    }
+    });
+    */
+
     return Scaffold(
         appBar: AppBar(
           title: const Center(
@@ -15,108 +39,105 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
                   fontSize: 17,
                   fontFamily: 'Roboto',
                 )),
-                
           ),
           actions: [
-          IconButton(
-            onPressed: () => Get.toNamed(Routes.selectStatePet),
-            icon: const Icon(Icons.location_pin),
-            tooltip: 'Alterar o estado',
-            color: Colors.blueAccent,
-          )
-        ],
+            IconButton(
+              onPressed: () => Get.toNamed(Routes.selectStatePet),
+              icon: const Icon(Icons.location_pin),
+              tooltip: 'Alterar o estado',
+              color: Colors.blueAccent,
+            )
+          ],
         ),
         body: controller.obx(
           (state) => ListView(
             children: [
               for (var donation in state!)
-
-              if((donation != null))
-              if((donation.clientDonor!.address.city.state != null))
-                Card(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      Stack(
+                if ((donation != null))
+                  if ((donation.clientDonor!.address.city.state != null))
+                    Card(
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 20),
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
                         children: [
-                          Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Container(
-                                height: 195,
-                                child: Column(
-                                  children: [
-                                    Image.network(donation.pet!.photo!,
-                                        fit: BoxFit.fill,
-                                        width: 400.0,
-                                        height: 185.0),
-                                    const Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 0,
-                                            left: 6,
-                                            right: 6,
-                                            bottom: 10),
-                                        child: SizedBox(
-                                          width: double.infinity,
-                                        )),
-                                    const SizedBox(
-                                      width: 20,
+                          Stack(
+                            children: [
+                              Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: Container(
+                                    height: 195,
+                                    child: Column(
+                                      children: [
+                                        Image.network(donation.pet!.photo!,
+                                            fit: BoxFit.fill,
+                                            width: 400.0,
+                                            height: 185.0),
+                                        const Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 0,
+                                                left: 6,
+                                                right: 6,
+                                                bottom: 10),
+                                            child: SizedBox(
+                                              width: double.infinity,
+                                            )),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              )),
-                        ],
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 5, left: 20),
-                          child: Text(
-                              "${donation.clientDonor!.address.city.name} / ${donation.clientDonor!.address.city.state?.name}",
-                              textAlign: TextAlign.center),
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 5, left: 20),
-                          child: Text(
-                            donation.pet!.specie!.name!,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Roboto',
+                                  )),
+                            ],
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 5, left: 20),
+                              child: Text(
+                                  "${donation.clientDonor!.address.city.name} / ${donation.clientDonor!.address.city.state?.name}",
+                                  textAlign: TextAlign.center),
                             ),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 205, top: 5),
-                        child: SizedBox(
-                          width: 140,
-                          child: ElevatedButton(
-                            onPressed: () => Get.toNamed(Routes.donationPet
-                                .replaceFirst(':id', donation.id.toString())),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 5, left: 20),
+                              child: Text(
+                                donation.pet!.specie!.name!,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Roboto',
+                                ),
                               ),
                             ),
-                            child: const Text("Ver Mais >>"),
                           ),
-                        ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 205, top: 5),
+                            child: SizedBox(
+                              width: 140,
+                              child: ElevatedButton(
+                                onPressed: () => Get.toNamed(Routes.donationPet
+                                    .replaceFirst(
+                                        ':id', donation.id.toString())),
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                ),
+                                child: const Text("Ver Mais >>"),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                
+                    ),
             ],
           ),
-          
           onEmpty: Center(
             child: Text(
               "Não há nenhum anúncio publicado",

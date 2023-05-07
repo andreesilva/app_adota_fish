@@ -69,20 +69,21 @@ class DonationPetPage extends GetView<DonationPetController> {
                                   placeholder: kTransparentImage,
                                   image: state!.pet!.photo!)),
                         ),
-                         Container(
+                        Container(
                           alignment: Alignment.centerLeft,
                           child: badges.Badge(
                             badgeStyle: const badges.BadgeStyle(
-                            badgeColor: Colors.grey,
-                            shape: badges.BadgeShape.square,
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10),
-                            ),),
+                              badgeColor: Colors.grey,
+                              shape: badges.BadgeShape.square,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10),
+                              ),
+                            ),
                             //toAnimate: true,
                             badgeContent: Text(
-                             "Anunciante: ${state!.clientDonor!.name}",
+                              "Anunciante: ${state!.clientDonor!.name}",
                             ),
                           ),
                         ),
@@ -205,7 +206,7 @@ class DonationPetPage extends GetView<DonationPetController> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 5, left: 20),
                               child: Text(
-                                state.pet!.observation!,
+                                state!.pet!.observation!,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 15,

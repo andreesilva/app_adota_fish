@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:masked_text_field/masked_text_field.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:flutter_pw_validator/Resource/Strings.dart';
+import 'package:search_choices/search_choices.dart';
 
 class FrenchStrings extends FlutterPwValidatorStrings {
   @override
@@ -19,36 +20,34 @@ class FrenchStrings extends FlutterPwValidatorStrings {
 class RegisterPage extends GetView<RegisterController> {
   final _valores = [
     'Selecione o estado',
-     'Acre',
-'Alagoas',
-'Amazonas',
-'Amapá',
-'Bahia',
-'Ceará',
-'Distrito Federal',
-'Espírito Santo',
-'Goiás',
-'Maranhão',
-'Minas Gerais',
-'Mato Grosso do Sul',
-'Mato Grosso',
-'Pará',
-'Paraíba',
-'Pernambuco',
-'Piauí',
-'Paraná',
-'Rio de Janeiro',
-'Rio Grande do Norte',
-'Rondônia',
-'Roraima',
-'Rio Grande do Sul',
-'Santa Catarina',
-'Sergipe',
-'São Paulo',
-'Tocantins',
+    'Acre',
+    'Alagoas',
+    'Amazonas',
+    'Amapá',
+    'Bahia',
+    'Ceará',
+    'Distrito Federal',
+    'Espírito Santo',
+    'Goiás',
+    'Maranhão',
+    'Minas Gerais',
+    'Mato Grosso do Sul',
+    'Mato Grosso',
+    'Pará',
+    'Paraíba',
+    'Pernambuco',
+    'Piauí',
+    'Paraná',
+    'Rio de Janeiro',
+    'Rio Grande do Norte',
+    'Rondônia',
+    'Roraima',
+    'Rio Grande do Sul',
+    'Santa Catarina',
+    'Sergipe',
+    'São Paulo',
+    'Tocantins',
   ];
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +132,6 @@ class RegisterPage extends GetView<RegisterController> {
                         return null;
                       },
                     ),
-                    
                     TextFormField(
                       controller: controller.neighborhoodController,
                       decoration: const InputDecoration(
@@ -158,41 +156,45 @@ class RegisterPage extends GetView<RegisterController> {
                         labelText: "Complemento",
                       ),
                     ),
-                    DropdownButtonFormField(
-                      value: controller.stateId.value,
-                      items: _valores
-                          .asMap()
-                          .entries
-                          .map((state) => DropdownMenuItem<int>(
-                              value: state.key, child: Text(state.value)))
-                          .toList(),
-                      onChanged: controller.changeState,
-                      decoration: const InputDecoration(
-                        labelText: 'Estado',
+                    Obx(
+                      () => DropdownButtonFormField(
+                        value: controller.stateId.value,
+                        items: _valores
+                            .asMap()
+                            .entries
+                            .map((state) => DropdownMenuItem<int>(
+                                value: state.key, child: Text(state.value)))
+                            .toList(),
+                        onChanged: controller.changeState,
+                        decoration: const InputDecoration(
+                          labelText: 'Estado',
+                        ),
+                        validator: (int? value) {
+                          if (value == null) {
+                            return 'Selecione um estado';
+                          }
+                          return null;
+                        },
                       ),
-                      validator: (int? value) {
-                        if (value == null) {
-                          return 'Selecione um estado';
-                        }
-                        return null;
-                      },
                     ),
-                    DropdownButtonFormField(
-                      value: controller.cityId.value,
-                      items: state!
-                          .map((state) => DropdownMenuItem<int>(
-                              value: state.id, child: Text(state.name)))
-                          .toList(),
-                      onChanged: controller.changeCity,
-                      decoration: const InputDecoration(
-                        labelText: 'Cidade',
+                    Obx(
+                      () => DropdownButtonFormField(
+                        value: controller.cityId.value,
+                        items: state!
+                            .map((state) => DropdownMenuItem<int>(
+                                value: state.id, child: Text(state.name)))
+                            .toList(),
+                        onChanged: controller.changeCity,
+                        decoration: const InputDecoration(
+                          labelText: 'Cidade',
+                        ),
+                        validator: (int? value) {
+                          if (value == null) {
+                            return 'Selecione uma cidade';
+                          }
+                          return null;
+                        },
                       ),
-                      validator: (int? value) {
-                        if (value == null) {
-                          return 'Selecione uma cidade';
-                        }
-                        return null;
-                      },
                     ),
                     TextFormField(
                       controller: controller.newPassword,

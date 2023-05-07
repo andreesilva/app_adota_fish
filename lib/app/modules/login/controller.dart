@@ -37,13 +37,13 @@ class LoginController extends GetxController {
         email: emailController.text, password: passwordController.text);
 
     _authService.login(userLoginRequestModel).then((value) {
-     // if (Get.routing.previous == Routes.checkout) {
-        Get.back(result: true);
-     // } else {
-        Get.offAllNamed(Routes.dashboard, arguments: 0);
+      // if (Get.routing.previous == Routes.checkout) {
+      //Get.back(result: true);
+      // } else {
+      Get.offAllNamed(Routes.dashboard, arguments: 0);
       //}
     }, onError: (error) {
-     showAlertError(QuickAlertType.error);
+      showAlertError(QuickAlertType.error);
     });
   }
 }

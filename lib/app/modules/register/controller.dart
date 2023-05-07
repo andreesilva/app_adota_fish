@@ -1,4 +1,5 @@
 import 'package:app_adota_fish/app/data/models/city_full.dart';
+import 'package:app_adota_fish/app/data/models/city_request.dart';
 import 'package:app_adota_fish/app/data/models/user_address_request.dart';
 import 'package:app_adota_fish/app/data/models/user_login_request.dart';
 import 'package:app_adota_fish/app/data/models/user_profile_request.dart';
@@ -7,6 +8,8 @@ import 'package:app_adota_fish/app/modules/register/repository.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../data/models/specie_request.dart';
 
 class RegisterController extends GetxController
     with StateMixin<List<CityFullModel>> {
@@ -37,8 +40,10 @@ class RegisterController extends GetxController
   @override
   void onInit() {
     _repository.getCitiesState(0).then((data) {
+      print("Cidade 1");
       change(data, status: RxStatus.success());
     }, onError: (error) {
+      print("Cidade 2");
       change(null, status: RxStatus.error(error.toString()));
     });
 
@@ -107,12 +112,11 @@ class RegisterController extends GetxController
     stateId.value = stateIdSelected;
 
     _repository.getCitiesState(stateIdSelected!).then((data) {
-      loading(false);
       change(data, status: RxStatus.success());
     }, onError: (error) {
-      loading(false);
       change(null, status: RxStatus.error(error.toString()));
     });
+    loading(false);
   }
 
   void changeCity(int? cityIdSelected) {

@@ -1,7 +1,10 @@
 import 'package:app_adota_fish/app/data/models/donations_pet.dart';
 import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/allDonationPet/repository.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class AllDonationPetController extends GetxController
     with StateMixin<List<DonationPetModel>> {
@@ -15,6 +18,7 @@ class AllDonationPetController extends GetxController
 
   final loading = true.obs;
 
+  
   @override
   void onInit() {
     loading(true);
@@ -37,11 +41,20 @@ class AllDonationPetController extends GetxController
         change(data.cast<DonationPetModel>(), status: RxStatus.success());
       }
     }, onError: (error) {
+    
       print("Msg pet 3");
-      print(error.toString());
-      change(null, status: RxStatus.error(error.toString()));
+      print(error);
+      
+     if(error.toString() == 'Connection failed'){
+        
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
+         const SnackBar(content: Text('Sem conexão de rede'),backgroundColor: Colors.red, duration: Duration(seconds: 300 ),)
+        );
+     } else{
+        change(null, status: RxStatus.error(error.toString()));
+     }
     });
 
-    super.onInit();
+    super.onInit();    
   }
 }

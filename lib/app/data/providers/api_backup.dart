@@ -39,6 +39,15 @@ class Api extends GetConnect {
   dynamic _url = 'http://3.133.141.235:3333';
   bool isInternet = false;
 
+  //final token = _storageService.token;
+
+  /*
+  final _baseHeader = {
+    HttpHeaders.authorizationHeader: token(),
+    HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8'
+  };
+  */
+
   @override
   void onInit() {
     //LOCAL
@@ -48,6 +57,7 @@ class Api extends GetConnect {
 
     //Produção
     httpClient.baseUrl = "http://3.133.141.235:3333/";
+    //_url = httpClient.baseUrl = "http://3.133.141.235:3333";
 
     httpClient.addRequestModifier((Request request) {
       request.headers['Accept'] = 'application/json';
@@ -69,6 +79,18 @@ class Api extends GetConnect {
   }
 
   Future<List<CityModel>> getCities() async {
+    /*
+    var response = _errorHandler(await get('cidades'));
+
+    List<CityModel> data = [];
+
+    for (var city in response.body) {
+      data.add(CityModel.from(city));
+    }
+
+    return data;
+    */
+
     List<CityModel> data = [];
 
     var response = await _client.get(
@@ -82,6 +104,17 @@ class Api extends GetConnect {
   }
 
   Future<List<CityFullModel>> getCitiesState(int id) async {
+    /*
+    var response = _errorHandler(await get('cidades/$id'));
+
+    List<CityFullModel> data = [];
+
+    for (var city in response.body) {
+      data.add(CityFullModel.from(city));
+    }
+    return data;
+    */
+
     List<CityFullModel> data = [];
 
     var response = await _client.get(
@@ -95,6 +128,17 @@ class Api extends GetConnect {
   }
 
   Future<List<SpecieModel>> getSpecies(int id) async {
+    /*
+    var response = _errorHandler(await get('especie/$id'));
+
+    List<SpecieModel> data = [];
+
+    for (var city in response.body) {
+      data.add(SpecieModel.fromJson(city));
+    }
+    return data;
+    */
+
     try {
       List<SpecieModel> data = [];
 
@@ -117,6 +161,17 @@ class Api extends GetConnect {
   }
 
   Future<List<StateModel>> getStates() async {
+    /*
+    var response = _errorHandler(await get('estados'));
+
+    List<StateModel> data = [];
+
+    for (var state in response.body) {
+      data.add(StateModel.from(state));
+    }
+    return data;
+    */
+
     List<StateModel> data = [];
 
     var response = await _client.get(
@@ -130,6 +185,12 @@ class Api extends GetConnect {
   }
 
   Future<UserLoginResponseModel> login(UserLoginRequestModel data) async {
+    /*
+    var response = _errorHandler(await post('login', jsonEncode(data)));
+
+    return UserLoginResponseModel.fromJson(response.body);
+    */
+
     try {
       var response = await _client.post(
         Uri.parse('$_url/login'),
@@ -148,6 +209,13 @@ class Api extends GetConnect {
 
   Future<ForgotPasswordResponseModel> forgotPassword(
       ForgotPasswordRequestModel data) async {
+    /*
+    var response =
+        _errorHandler(await post('forgot-password', jsonEncode(data)));
+
+
+    return ForgotPasswordResponseModel.fromJson(response.body);
+*/
     try {
       var response = await _client.post(
         Uri.parse('$_url/forgot-password'),
@@ -164,6 +232,13 @@ class Api extends GetConnect {
   }
 
   Future<UserModel> register(UserProfileRequestModel data) async {
+    /*
+    var response =
+        _errorHandler(await post('cliente/cadastro', jsonEncode(data)));
+
+    return UserModel.fromJson(response.body);
+    */
+
     try {
       var response = await _client.post(
         Uri.parse('$_url/cliente/cadastro'),
@@ -180,6 +255,13 @@ class Api extends GetConnect {
   }
 
   Future<AquariumModel> registerAquarium(AquariumRequestModel data) async {
+    /*
+    var response =
+        _errorHandler(await post('doacao/cadastro-aquario', jsonEncode(data)));
+
+    return AquariumModel.fromJson(response.body);
+    */
+
     try {
       var response = await _client.post(
         Uri.parse('$_url/doacao/cadastro-aquario'),
@@ -197,6 +279,12 @@ class Api extends GetConnect {
   }
 
   Future<PetModel> registerPet(PetRequestModel data) async {
+    /*
+    var response =
+        _errorHandler(await post('doacao/cadastro-pet', jsonEncode(data)));
+
+    return PetModel.fromJson(response.body);
+    */
     try {
       var response = await _client.post(
         Uri.parse('$_url/doacao/cadastro-pet'),
@@ -214,14 +302,13 @@ class Api extends GetConnect {
   }
 
   Future<void> putPhotoClient(PhotoClientRequestModel data) async {
-    //_errorHandler(await put('cliente/foto', jsonEncode(data)));
+    _errorHandler(await put('cliente/foto', jsonEncode(data)));
 
     try {
       await _client.put(
         Uri.parse('$_url/cliente/foto'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
-          'authorization': 'Bearer ${_storageService.token}',
         },
         body: jsonEncode(data),
       );
