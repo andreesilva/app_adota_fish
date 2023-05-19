@@ -4,7 +4,7 @@ import 'package:app_adota_fish/app/modules/allDonationPet/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickalert/models/quickalert_type.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:app_adota_fish/app/widgets/message_general_error.dart';
 
 class AllDonationPetController extends GetxController
     with StateMixin<List<DonationPetModel>> {
@@ -18,20 +18,17 @@ class AllDonationPetController extends GetxController
 
   final loading = true.obs;
 
-  
   @override
   void onInit() {
     loading(true);
 
-     int id = 0;
-  
-    if(Get.parameters.isNotEmpty){
-        
-        id = int.parse(Get.parameters["id"]!);
+    int id = 0;
+
+    if (Get.parameters.isNotEmpty) {
+      id = int.parse(Get.parameters["id"]!);
     }
 
     _repository.getDonationsPets(id).then((data) {
-     
       if (data.isEmpty) {
         print("Msg pet 1");
         change([], status: RxStatus.empty());
@@ -41,20 +38,26 @@ class AllDonationPetController extends GetxController
         change(data.cast<DonationPetModel>(), status: RxStatus.success());
       }
     }, onError: (error) {
-    
       print("Msg pet 3");
       print(error);
-      
-     if(error.toString() == 'Connection failed'){
-        
-        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
-         const SnackBar(content: Text('Sem conexão de rede'),backgroundColor: Colors.red, duration: Duration(seconds: 300 ),)
-        );
-     } else{
+
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else if (error.toString() == 'Connection refused') {
+        change(null, status: RxStatus.error('Falha no servidor'));
+      } else {
+        print(error.toString());
+
         change(null, status: RxStatus.error(error.toString()));
-     }
+      }
     });
 
-    super.onInit();    
+    super.onInit();
   }
 }

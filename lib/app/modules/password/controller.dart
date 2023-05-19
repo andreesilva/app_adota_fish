@@ -25,9 +25,10 @@ class PasswordController extends GetxController {
   var isObscure = true.obs;
   var isObscure2 = true.obs;
 
+  final loadingCircular = ValueNotifier<bool>(false);
+
   @override
   void onInit() {
-  
     super.onInit();
   }
 
@@ -82,9 +83,23 @@ class PasswordController extends GetxController {
 
     _repository.putPassword(newPassword_).then((value) {
       showAlertSuccess(QuickAlertType.success);
+
+      loadingCircular.value = false;
     }, onError: (error) {
-      print(error.toString());
-      showAlertError(QuickAlertType.error);
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else {
+        print(error.toString());
+        showAlertError(QuickAlertType.error);
+
+        loadingCircular.value = false;
+      }
     });
   }
 }

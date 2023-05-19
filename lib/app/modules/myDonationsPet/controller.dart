@@ -3,6 +3,8 @@ import 'package:app_adota_fish/app/data/models/donations_pet.dart';
 import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/myDonationsPet/repository.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
+import 'package:app_adota_fish/app/widgets/message_general_error.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
@@ -20,7 +22,6 @@ class MyDonationsPetController extends GetxController
   @override
   void onInit() {
     _repository.getMyDonationsPet().then((data) {
-      
       if (data.isEmpty) {
         print("Msg 1");
         change([], status: RxStatus.empty());
@@ -31,7 +32,18 @@ class MyDonationsPetController extends GetxController
     }, onError: (error) {
       print("Msg 3");
       print(error.toString());
-      change(null, status: RxStatus.error(error.toString()));
+
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else {
+        print(error.toString());
+        MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
+      }
     });
 
     super.onInit();

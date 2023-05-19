@@ -214,8 +214,6 @@ class Api extends GetConnect {
   }
 
   Future<void> putPhotoClient(PhotoClientRequestModel data) async {
-    //_errorHandler(await put('cliente/foto', jsonEncode(data)));
-
     try {
       await _client.put(
         Uri.parse('$_url/cliente/foto'),
@@ -232,12 +230,6 @@ class Api extends GetConnect {
   }
 
   Future<UserModel> getUser() async {
-    /*
-    var response = _errorHandler(await get('auth/me'));
-
-    return UserModel.fromJson(response.body);
-    */
-
     try {
       final response = await http.get(
         Uri.parse('$_url/auth/me'),
@@ -253,12 +245,6 @@ class Api extends GetConnect {
   }
 
   Future<UserModel> putUser(UserProfileRequestModel data) async {
-    /*
-    var response = _errorHandler(await put('cliente/editar', jsonEncode(data)));
-
-    return UserModel.fromJson(response.body);
-    */
-
     try {
       var response = await _client.put(
         Uri.parse('$_url/cliente/editar'),
@@ -277,9 +263,6 @@ class Api extends GetConnect {
   }
 
   Future<void> putPassword(PasswordModel data) async {
-    //print('${data.password} - Senha');
-    //var response = _errorHandler(await put('cliente/senha', jsonEncode(data)));
-
     try {
       await _client.put(
         Uri.parse('$_url/cliente/senha'),
@@ -296,9 +279,6 @@ class Api extends GetConnect {
   }
 
   Future<void> putResetPassword(PasswordModel data) async {
-    //print('${data.password} - Senha');
-    //var response = _errorHandler(await put('reset-password', jsonEncode(data)));
-
     try {
       await _client.put(
         Uri.parse('$_url/reset-password'),
@@ -314,17 +294,6 @@ class Api extends GetConnect {
   }
 
   Future<List<AddressModel>> getUserAddresses() async {
-    /*
-    var response = _errorHandler(await get('enderecos'));
-
-    List<AddressModel> data = [];
-
-    for (var address in response.body) {
-      data.add(AddressModel.fromJson(address));
-    }
-    return data;
-    */
-
     try {
       List<AddressModel> data = [];
 
@@ -347,8 +316,6 @@ class Api extends GetConnect {
   }
 
   Future<void> postAddress(UserAddressRequestModel data) async {
-    //_errorHandler(await post('endereco', jsonEncode(data)));
-
     try {
       var response = await _client.post(
         Uri.parse('$_url/endereco'),
@@ -364,8 +331,6 @@ class Api extends GetConnect {
   }
 
   Future<void> putAddress(UserAddressRequestModel data) async {
-    //_errorHandler(await put('endereco/${data.id}', jsonEncode(data)));
-
     try {
       await _client.put(
         Uri.parse('$_url/endereco/${data.id}'),
@@ -381,16 +346,7 @@ class Api extends GetConnect {
     }
   }
 
-  Future<void> deleteAddress(int id) async {
-    _errorHandler(await delete('enderecos/$id'));
-  }
-
   Future<DonationAquariumModel> getDonationAquarium(int id) async {
-    /*
-    var response = _errorHandler(await get('doacao/aquario/$id'));
-
-    return DonationAquariumModel.fromJson(response.body);
-    */
     try {
       final response = await http.get(
         Uri.parse('$_url/doacao/aquario/$id'),
@@ -406,8 +362,6 @@ class Api extends GetConnect {
   }
 
   Future<void> putActivateAquarium(int id) async {
-    //_errorHandler(await put('doacao/ativacao/aquario/$id', jsonEncode));
-
     try {
       await _client.put(
         Uri.parse('$_url/doacao/ativacao/aquario/$id'),
@@ -415,7 +369,6 @@ class Api extends GetConnect {
           'Content-Type': 'application/json; charset=UTF-8',
           'authorization': 'Bearer ${_storageService.token}',
         },
-        //body: jsonEncode(id),
       );
     } catch (e) {
       print(e);
@@ -424,8 +377,6 @@ class Api extends GetConnect {
   }
 
   Future<void> putAquariumInactivate(int id) async {
-    //_errorHandler(await put('doacao/inativacao/aquario/$id', jsonEncode));
-
     try {
       await _client.put(
         Uri.parse('$_url/doacao/inativacao/aquario/$id'),
@@ -441,8 +392,6 @@ class Api extends GetConnect {
   }
 
   Future<void> deleteAquarium(int id) async {
-    //_errorHandler(await put('doacao/excluir/aquario/$id', jsonEncode));
-
     try {
       await _client.put(
         Uri.parse('$_url/doacao/excluir/aquario/$id'),
@@ -458,8 +407,6 @@ class Api extends GetConnect {
   }
 
   Future<void> putActivatePet(int id) async {
-    //_errorHandler(await put('doacao/ativacao/pet/$id', jsonEncode));
-
     try {
       await _client.put(
         Uri.parse('$_url/doacao/ativacao/pet/$id'),
@@ -475,8 +422,6 @@ class Api extends GetConnect {
   }
 
   Future<void> putPetInactivate(int id) async {
-    //_errorHandler(await put('doacao/inativacao/pet/$id', jsonEncode));
-
     try {
       await _client.put(
         Uri.parse('$_url/doacao/inativacao/pet/$id'),
@@ -492,8 +437,6 @@ class Api extends GetConnect {
   }
 
   Future<void> deletePet(int id) async {
-    //_errorHandler(await put('doacao/excluir/pet/$id', jsonEncode));
-
     try {
       await _client.put(
         Uri.parse('$_url/doacao/excluir/pet/$id'),
@@ -509,11 +452,6 @@ class Api extends GetConnect {
   }
 
   Future<DonationPetModel> getDonationPet(int id) async {
-    /*
-    var response = _errorHandler(await get('doacao/pet/$id'));
-
-    return DonationPetModel.fromJson(response.body);
-    */
     try {
       final response = await http.get(
         Uri.parse('$_url/doacao/pet/$id'),
@@ -526,24 +464,9 @@ class Api extends GetConnect {
     } catch (e) {
       throw e.toString();
     }
-/*
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-      return DonationPetModel.fromJson(json.decode(response.body));
-    } else {
-      throw Exception(Exception().toString());
-    }
-    */
   }
 
   Future<SpecieModel> getSpecie(SpecieRequestModel data) async {
-    //print("${data.name} - iD ESPECIE");
-    /*
-    var response =
-        _errorHandler(await post('especie/especieId', jsonEncode(data)));
-
-    return SpecieModel.fromJson(response.body);
-    */
     try {
       var response = await _client.post(
         Uri.parse('$_url/especie/especieId'),
@@ -561,12 +484,6 @@ class Api extends GetConnect {
   }
 
   Future<ForgotPasswordResponseModel> getVerificationCode(int codigo) async {
-    /*
-    var response = _errorHandler(await get('verificacao-codigo/$codigo'));
-
-    return ForgotPasswordResponseModel.fromJson(response.body);
-  */
-
     try {
       var response = await http.get(
         Uri.parse('$_url/verificacao-codigo/$codigo'),
@@ -579,64 +496,23 @@ class Api extends GetConnect {
   }
 
   Future<List<DonationAquariumModel>> getDonationsAquarium(int id) async {
-    /*
-    var response = _errorHandler(await get('doacoes-aquario/$id'));
-  
-    List<DonationAquariumModel> data = [];
+    try {
+      List<DonationAquariumModel> data = [];
 
-    for (var donation in response.body) {
-      data.add(DonationAquariumModel.fromJson(donation));
+      var response = await _client.get(
+        Uri.parse('$_url/doacoes-aquario/$id'),
+      );
+
+      for (var donation in jsonDecode(response.body)) {
+        data.add(DonationAquariumModel.fromJson(donation));
+      }
+      return data;
+    } catch (e) {
+      throw e.toString();
     }
-
-    return data;
-    */
-
-    List<DonationAquariumModel> data = [];
-
-    var response = await _client.get(
-      Uri.parse('$_url/doacoes-aquario/$id'),
-    );
-
-    for (var donation in jsonDecode(response.body)) {
-      data.add(DonationAquariumModel.fromJson(donation));
-    }
-    return data;
   }
 
   Future<List<DonationPetModel>> getDonationsPet(int id) async {
-    /*
-     try{
-    var response = await get('doacoes-pet/$id');
-
-    List<DonationPetModel> data = [];
-
-    for (var donation in jsonDecode(response.body)) {
-      data.add(DonationPetModel.fromJson(donation));
-    }
-  
-    return data;
-
-    }catch(e){
-      
-       rethrow;
-    }
-    */
-
-    //try{
-
-/*
-    List<DonationPetModel> data = [];
-
-    var response = await _client.get(
-      Uri.parse('$_url/doacoes-pet/$id'),
-    );
-
-    for (var donation in jsonDecode(response.body)) {
-      data.add(DonationPetModel.fromJson(donation));
-    }
-    return data;
-    */
-
     try {
       List<DonationPetModel> data = [];
 
@@ -656,18 +532,6 @@ class Api extends GetConnect {
   }
 
   Future<List<DonationAquariumModel>> getMyDonationsAquarium() async {
-    /*
-    var response = _errorHandler(await get('doacao/lista-aquario'));
-
-    List<DonationAquariumModel> data = [];
-
-    for (var donation in response.body) {
-      data.add(DonationAquariumModel.fromJson(donation));
-    }
-
-    return data;
-    */
-
     try {
       List<DonationAquariumModel> data = [];
 
@@ -690,17 +554,6 @@ class Api extends GetConnect {
   }
 
   Future<List<DonationPetModel>> getMyDonationsPet() async {
-    /*
-    var response = _errorHandler(await get('doacao/lista-pet'));
-
-    List<DonationPetModel> data = [];
-
-    for (var donation in response.body) {
-      data.add(DonationPetModel.fromJson(donation));
-    }
-    return data;
-    */
-
     try {
       List<DonationPetModel> data = [];
 
@@ -723,12 +576,6 @@ class Api extends GetConnect {
   }
 
   Future<ClientModel> getClient(int id) async {
-    /*
-    var response = _errorHandler(await get('cliente/$id'));
-
-    return ClientModel.fromJson(response.body);
-
-    */
     try {
       final response = await http.get(
         Uri.parse('$_url/cliente/$id'),
@@ -740,20 +587,6 @@ class Api extends GetConnect {
       return ClientModel.fromJson(jsonDecode(response.body));
     } catch (e) {
       throw e.toString();
-    }
-  }
-
-  Response _errorHandler(Response response) {
-    //print("${response.bodyString} asasass");
-    switch (response.statusCode) {
-      case 200:
-      case 202:
-      case 204:
-        return response;
-      case 422:
-        throw response.body['errors'];
-      default:
-        throw response.body['errors'];
     }
   }
 }

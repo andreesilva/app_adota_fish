@@ -1,22 +1,23 @@
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/login/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends GetView<LoginController> {
-  const LoginPage({super.key});
-//GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text('ACESSAR',
-              style: TextStyle(
-                fontSize: 17,
-                fontFamily: 'Roboto',
-              )),
-        ),
+        title: const Text('ACESSAR',
+            style: TextStyle(
+                fontSize: 17, fontFamily: 'Roboto', color: ColorsApp.appTitle)),
+        centerTitle: true,
+        backgroundColor: ColorsApp.appBackground,
+        shape: const Border(
+            bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
       ),
       body: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -24,7 +25,7 @@ class LoginPage extends GetView<LoginController> {
             SingleChildScrollView(
                 padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
                 child: Form(
-                  key:controller.formKey,
+                  key: controller.formKey,
                   child: Column(
                     children: [
                       Container(
@@ -81,13 +82,31 @@ class LoginPage extends GetView<LoginController> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 16.0),
                               child: ElevatedButton(
-                                onPressed: controller.login,
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
+                                    borderRadius: BorderRadius.circular(3),
                                   ),
                                 ),
-                                child: const Text("Entrar"),
+                                child: AnimatedBuilder(
+                                  animation: controller.loadingCircular,
+                                  builder: (context, _) {
+                                    return controller.loadingCircular.value
+                                        ? const SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator(),
+                                          )
+                                        : const Text('Entrar');
+                                  },
+                                ),
+                                onPressed: () => {
+                                  if (controller.formKey.currentState!
+                                      .validate())
+                                    {
+                                      controller.loadingCircular.value = true,
+                                      controller.login(),
+                                    },
+                                },
                               ),
                             ),
                           ),
@@ -106,8 +125,7 @@ class LoginPage extends GetView<LoginController> {
                                   child: const Text(
                                     "Esqueçeu a sua senha?",
                                     style: TextStyle(
-                                      color: Colors.blueGrey,
-                                    ),
+                                        color: Colors.blueGrey, fontSize: 10.5),
                                   )),
                             ),
                           ),
@@ -120,7 +138,7 @@ class LoginPage extends GetView<LoginController> {
                               onPressed: () => Get.toNamed(Routes.register),
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
+                                  borderRadius: BorderRadius.circular(3),
                                 ),
                               ),
                               child: const Text('Quero criar a minha conta'),

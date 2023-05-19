@@ -5,6 +5,7 @@ import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/account/repository.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:app_adota_fish/app/util/firebase_util.dart';
+import 'package:app_adota_fish/app/widgets/message_general_error.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickalert/quickalert.dart';
@@ -24,7 +25,7 @@ class AccountController extends GetxController
   var isProficPicPath = false.obs;
   var profilePicPath = "".obs;
 
-  var photoClient = 
+  var photoClient =
       "https://firebasestorage.googleapis.com/v0/b/app-adota-fish.appspot.com/o/images%2Faccount%2FVector_1.png?alt=media&token=a8237bea-4fe5-4a17-9080-8117b78b7458";
 
   @override
@@ -49,6 +50,19 @@ class AccountController extends GetxController
       loading(false);
     }, onError: (error) {
       loading(false);
+
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else {
+        print(error.toString());
+        //MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
+      }
     });
   }
 

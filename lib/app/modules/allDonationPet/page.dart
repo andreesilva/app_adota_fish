@@ -1,51 +1,31 @@
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/allDonationPet/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class AllDonationPetPage extends GetView<AllDonationPetController> {
   @override
-
-  //bool _status = true;
-
   Widget build(BuildContext context) {
-    /*
-    controller.isInternet_.then((value) {
-      if (value == false){
-        print(value);
-      return Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: ElevatedButton(
-            onPressed: () => Get.toNamed(Routes.login),
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-            child: const Text('Entrar com a minha conta 1'),
-          ),
-        ),
-      );
-    }
-    });
-    */
-
     return Scaffold(
         appBar: AppBar(
-          title: const Center(
-            child: Text('ADOTA FISH',
-                style: TextStyle(
+          title: const Text('ADOTA FISH',
+              style: TextStyle(
                   fontSize: 17,
                   fontFamily: 'Roboto',
-                )),
-          ),
+                  color: ColorsApp.appTitle)),
+          backgroundColor: ColorsApp.appBackground,
+          centerTitle: true,
+          shape: const Border(
+              bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
           actions: [
             IconButton(
               onPressed: () => Get.toNamed(Routes.selectStatePet),
               icon: const Icon(Icons.location_pin),
               tooltip: 'Alterar o estado',
-              color: Colors.blueAccent,
+              color: Colors.white,
             )
           ],
         ),
@@ -60,52 +40,50 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
                           vertical: 10, horizontal: 20),
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
+                        side: const BorderSide(
+                          color: Colors.grey,
+                          width: 0.5,
+                        ),
                       ),
+                      elevation: 3,
                       child: Column(
                         children: [
                           Stack(
                             children: [
                               Padding(
-                                  padding: const EdgeInsets.only(bottom: 10),
-                                  child: Container(
-                                    height: 195,
-                                    child: Column(
-                                      children: [
-                                        Image.network(donation.pet!.photo!,
-                                            fit: BoxFit.fill,
-                                            width: 400.0,
-                                            height: 185.0),
-                                        const Padding(
-                                            padding: EdgeInsets.only(
-                                                top: 0,
-                                                left: 6,
-                                                right: 6,
-                                                bottom: 10),
-                                            child: SizedBox(
-                                              width: double.infinity,
-                                            )),
-                                        const SizedBox(
-                                          width: 20,
-                                        ),
-                                      ],
-                                    ),
-                                  )),
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: SizedBox(
+                                  width: 400.0,
+                                  height: 270.0,
+                                  child: ClipRRect(
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(5),
+                                        topRight: Radius.circular(5),
+                                      ),
+                                      child: FadeInImage.memoryNetwork(
+                                          fit: BoxFit.fill,
+                                          placeholder: kTransparentImage,
+                                          image: donation.pet!.photo!)),
+                                ),
+                              ),
                             ],
                           ),
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 5, left: 20),
+                              padding: const EdgeInsets.only(
+                                  top: 5, left: 20, right: 20),
                               child: Text(
                                   "${donation.clientDonor!.address.city.name} / ${donation.clientDonor!.address.city.state?.name}",
-                                  textAlign: TextAlign.center),
+                                  textAlign: TextAlign.left),
                             ),
                           ),
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 5, left: 20),
+                              padding: const EdgeInsets.only(
+                                  top: 5, left: 20, right: 20),
                               child: Text(
                                 donation.pet!.specie!.name!,
                                 style: const TextStyle(
@@ -116,8 +94,35 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
                               ),
                             ),
                           ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 5, left: 15),
+                                  child: Icon(Icons.calendar_month,
+                                      color: Colors.blueGrey),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 10, left: 5),
+                                  child: Text(
+                                    'Publicado em ${DateFormat.yMd().format(donation.createdAt)}',
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                      fontFamily: 'Roboto',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 205, top: 5),
+                            padding: const EdgeInsets.only(
+                                left: 0, top: 5, bottom: 6),
                             child: SizedBox(
                               width: 140,
                               child: ElevatedButton(
@@ -126,10 +131,10 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
                                         ':id', donation.id.toString())),
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
+                                    borderRadius: BorderRadius.circular(3),
                                   ),
                                 ),
-                                child: const Text("Ver Mais >>"),
+                                child: const Text("Ver Mais"),
                               ),
                             ),
                           ),

@@ -1,3 +1,4 @@
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/register/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,21 +49,21 @@ class RegisterPage extends GetView<RegisterController> {
     'São Paulo',
     'Tocantins',
   ];
+  final key_dropdown = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Center(
-            child: Padding(
-              padding: EdgeInsets.only(right: 55),
-              child: Text('CRIAR CONTA',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontFamily: 'Roboto',
-                  )),
-            ),
-          ),
+          title: const Text('CRIAR CONTA',
+              style: TextStyle(
+                  fontSize: 17,
+                  fontFamily: 'Roboto',
+                  color: ColorsApp.appTitle)),
+          centerTitle: true,
+          backgroundColor: ColorsApp.appBackground,
+          shape: const Border(
+              bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
         ),
         body: controller.obx(
           (state) => SingleChildScrollView(
@@ -78,6 +79,7 @@ class RegisterPage extends GetView<RegisterController> {
                       decoration: const InputDecoration(
                         labelText: 'Nome',
                       ),
+                      maxLength: 200,
                       validator: (String? value) {
                         if (value != null && value.isEmpty) {
                           return 'Preencha o seu nome';
@@ -91,6 +93,7 @@ class RegisterPage extends GetView<RegisterController> {
                       decoration: const InputDecoration(
                         labelText: 'Email',
                       ),
+                      maxLength: 200,
                       validator: (String? value) {
                         if (value != null && value.isEmpty) {
                           return 'Preencha o seu email';
@@ -137,6 +140,7 @@ class RegisterPage extends GetView<RegisterController> {
                       decoration: const InputDecoration(
                         labelText: "Bairro",
                       ),
+                      maxLength: 200,
                       validator: (String? value) {
                         if (value != null && value.isEmpty) {
                           return 'Preencha o nome do bairro';
@@ -149,12 +153,14 @@ class RegisterPage extends GetView<RegisterController> {
                       decoration: const InputDecoration(
                         labelText: "Ponto de referência",
                       ),
+                      maxLength: 254,
                     ),
                     TextFormField(
                       controller: controller.complementController,
                       decoration: const InputDecoration(
                         labelText: "Complemento",
                       ),
+                      maxLength: 254,
                     ),
                     Obx(
                       () => DropdownButtonFormField(
@@ -179,12 +185,16 @@ class RegisterPage extends GetView<RegisterController> {
                     ),
                     Obx(
                       () => DropdownButtonFormField(
+                        key: controller.key_dropdown,
                         value: controller.cityId.value,
                         items: state!
                             .map((state) => DropdownMenuItem<int>(
                                 value: state.id, child: Text(state.name)))
                             .toList(),
-                        onChanged: controller.changeCity,
+                        onChanged:
+                            // reset();
+
+                            controller.changeCity,
                         decoration: const InputDecoration(
                           labelText: 'Cidade',
                         ),
@@ -268,10 +278,22 @@ class RegisterPage extends GetView<RegisterController> {
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: controller.submit,
+                              onPressed: () => {
+                                if (controller.formKey.currentState!.validate())
+                                  {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return const Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        }),
+                                  },
+                                controller.submit(),
+                              },
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
+                                  borderRadius: BorderRadius.circular(3),
                                 ),
                               ),
                               child: const Text('Continuar'),

@@ -18,16 +18,32 @@ class VerificationCodeController extends GetxController {
   VerificationCodeController(this._repository);
 
   final formKey = GlobalKey<FormState>();
+
   final _authService = Get.find<AuthService>();
   var code = TextEditingController();
 
+  bool hasError = false;
+
+  var currentText = "".obs;
+  final loadingCircular = ValueNotifier<bool>(false);
+
   void submit() {
-    _repository.getVerificationCode(int.parse(code.text)).then((data) {
-      Get.toNamed(Routes.resetPassword.replaceFirst(':email', data.email!));
-    }, onError: (error) {
-      print(error.toString());
-      showAlertError(QuickAlertType.error);
-    });
+    Get.focusScope!.unfocus();
+
+    if (currentText.value.length != 6) {
+      hasError = true;
+
+      loadingCircular.value = false;
+    } else {
+      hasError = false;
+      loadingCircular.value = false;
+      _repository.getVerificationCode(int.parse(code.text)).then((data) {
+        Get.toNamed(Routes.resetPassword.replaceFirst(':email', data.email!));
+      }, onError: (error) {
+        print(error.toString());
+        showAlertError(QuickAlertType.error);
+      });
+    }
   }
 
   void showAlertError(QuickAlertType quickAlertType) {

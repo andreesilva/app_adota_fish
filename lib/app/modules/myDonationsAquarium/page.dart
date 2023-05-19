@@ -1,7 +1,9 @@
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/myDonationsAquarium/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
   const MyDonationsAquariumPage({super.key});
@@ -10,16 +12,15 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Center(
-            child: Padding(
-              padding: EdgeInsets.only(right: 55),
-              child: Text('MINHAS DOAÇÕES - AQUÁRIO',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontFamily: 'Roboto',
-                  )),
-            ),
-          ),
+          title: const Text('MINHAS DOAÇÕES - AQÚARIO',
+              style: TextStyle(
+                  fontSize: 17,
+                  fontFamily: 'Roboto',
+                  color: ColorsApp.appTitle)),
+          centerTitle: true,
+          backgroundColor: ColorsApp.appBackground,
+          shape: const Border(
+              bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
         ),
         body: controller.obx(
           (state) => ListView(
@@ -30,35 +31,43 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   child: Column(
                     children: [
                       Stack(
                         children: [
                           Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.only(bottom: 0),
                               child: SizedBox(
-                                height: 195,
-                                child: Column(
-                                  children: [
-                                    Image.network(donation.aquarium!.photo!,
+                                height: 285,
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Image.network(
+                                        donation.aquarium!.photo!,
                                         fit: BoxFit.fill,
                                         width: 400.0,
-                                        height: 185.0),
-                                    const Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 0,
-                                            left: 6,
-                                            right: 6,
-                                            bottom: 10),
-                                        child: SizedBox(
-                                          width: double.infinity,
-                                        )),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                  ],
+                                        height: 270.0,
+                                      ),
+                                      const Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 0,
+                                              left: 6,
+                                              right: 6,
+                                              bottom: 10),
+                                          child: SizedBox(
+                                            width: double.infinity,
+                                          )),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               )),
                         ],
@@ -100,6 +109,68 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                             ),
                           ),
                         ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: const Padding(
+                              padding: EdgeInsets.only(top: 5, left: 20),
+                              child: Text("Descrição",
+                                  textAlign: TextAlign.center),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 5, left: 20, right: 20),
+                                child: Text(
+                                  donation.aquarium.description!,
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Roboto',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(top: 5, left: 15),
+                              child: Icon(Icons.calendar_month,
+                                  color: Colors.blueGrey),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10, left: 5),
+                              child: Text(
+                                'Publicado em ${DateFormat.yMd().format(donation.createdAt)}',
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  fontFamily: 'Roboto',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       if (donation.status == 1) ...[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -138,10 +209,11 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.grey,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6),
+                                      borderRadius: BorderRadius.circular(3),
                                     ),
                                   ),
-                                  child: const Text("Inativar"),
+                                  child: const Text("Inativar",
+                                      style: TextStyle(fontSize: 13)),
                                 ),
                               ),
                             ),
@@ -179,10 +251,13 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.red,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6),
+                                      borderRadius: BorderRadius.circular(3),
                                     ),
                                   ),
-                                  child: const Text("Excluir"),
+                                  child: const Text(
+                                    "Excluir",
+                                    style: TextStyle(fontSize: 13),
+                                  ),
                                 ),
                               ),
                             ),
@@ -225,7 +300,7 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                                       }),
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6),
+                                      borderRadius: BorderRadius.circular(3),
                                     ),
                                   ),
                                   child: const Text("Ativar"),
@@ -266,7 +341,7 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.red,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6),
+                                      borderRadius: BorderRadius.circular(3),
                                     ),
                                   ),
                                   child: const Text("Excluir"),

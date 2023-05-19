@@ -2,10 +2,10 @@ import 'package:app_adota_fish/app/data/models/specie_request.dart';
 import 'package:app_adota_fish/app/data/models/pet_request.dart';
 import 'package:app_adota_fish/app/data/models/photo.dart';
 import 'package:app_adota_fish/app/data/models/specie.dart';
-//import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/register_pet/repository.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:app_adota_fish/app/util/firebase_util.dart';
+import 'package:app_adota_fish/app/widgets/message_general_error.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,8 +24,6 @@ class RegisterPetController extends GetxController
   var phoneController = TextEditingController();
   var passwordController = TextEditingController();
   var amountController = TextEditingController();
-
-  //var descriptionController = TextEditingController();
 
   int litrageValue = 0;
   int specieId = 0;
@@ -47,7 +45,18 @@ class RegisterPetController extends GetxController
     _repository.getSpecies(0).then((data) {
       change(data, status: RxStatus.success());
     }, onError: (error) {
-      change(null, status: RxStatus.error(error.toString()));
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else {
+        print(error.toString());
+        // MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
+      }
     });
 
     super.onInit();

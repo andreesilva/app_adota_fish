@@ -2,6 +2,7 @@ import 'package:app_adota_fish/app/data/models/user_profile_request.dart';
 import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/user_profile/repository.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
+import 'package:app_adota_fish/app/widgets/message_general_error.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickalert/quickalert.dart';
@@ -19,6 +20,8 @@ class UserProfileController extends GetxController {
   var passwordController = TextEditingController();
   final loading = true.obs;
   bool get isLogged => _authService.isLogged;
+
+  final loadingCircular = ValueNotifier<bool>(false);
 
   @override
   void onInit() {
@@ -40,6 +43,18 @@ class UserProfileController extends GetxController {
       loading(false);
     }, onError: (error) {
       loading(false);
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else {
+        print(error.toString());
+        //MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
+      }
     });
   }
 
@@ -85,9 +100,11 @@ class UserProfileController extends GetxController {
       showAlertSuccess(QuickAlertType.success);
 
       passwordController.text = '';
+      loadingCircular.value = false;
     }, onError: (error) {
       print(error.toString());
       showAlertError(QuickAlertType.error);
+      loadingCircular.value = false;
     });
   }
 }

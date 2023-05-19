@@ -1,3 +1,4 @@
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/forgotPassword/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +11,13 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Padding(
-            padding: EdgeInsets.only(right: 55),
-            child: Text('RECUPERAÇÃO DE CONTA',
-                style: TextStyle(
-                  fontSize: 17,
-                  fontFamily: 'Roboto',
-                )),
-          ),
-        ),
+        title: const Text('RECUPERAÇÃO DE CONTA',
+            style: TextStyle(
+                fontSize: 17, fontFamily: 'Roboto', color: ColorsApp.appTitle)),
+        centerTitle: true,
+        backgroundColor: ColorsApp.appBackground,
+        shape: const Border(
+            bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
       ),
       body: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -66,7 +64,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                                 onPressed: controller.submit,
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
+                                    borderRadius: BorderRadius.circular(3),
                                   ),
                                 ),
                                 child: const Text("Receber instruções"),

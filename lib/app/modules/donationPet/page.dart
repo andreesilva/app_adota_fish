@@ -1,9 +1,11 @@
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/donationPet/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter/src/material/badge.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,13 +17,21 @@ class DonationPetPage extends GetView<DonationPetController> {
   Widget build(BuildContext context) {
     if (!controller.isLogged) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: const Text('ADOTA FISH',
+              style: TextStyle(
+                  fontSize: 17,
+                  fontFamily: 'Roboto',
+                  color: ColorsApp.appTitle)),
+          centerTitle: true,
+          backgroundColor: ColorsApp.appBackground,
+        ),
         body: Center(
           child: ElevatedButton(
             onPressed: () => Get.toNamed(Routes.login),
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
+                borderRadius: BorderRadius.circular(3),
               ),
             ),
             child: const Text('Entrar com a minha conta'),
@@ -32,16 +42,13 @@ class DonationPetPage extends GetView<DonationPetController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Padding(
-            padding: EdgeInsets.only(right: 55),
-            child: Text('DETALHE DA DOAÇÃO',
-                style: TextStyle(
-                  fontSize: 17,
-                  fontFamily: 'Roboto',
-                )),
-          ),
-        ),
+        title: const Text('DETALHE DA DOAÇÃO',
+            style: TextStyle(
+                fontSize: 17, fontFamily: 'Roboto', color: ColorsApp.appTitle)),
+        centerTitle: true,
+        backgroundColor: ColorsApp.appBackground,
+        shape: const Border(
+            bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
       ),
       body: controller.obx(
         (state) => SingleChildScrollView(
@@ -63,7 +70,10 @@ class DonationPetPage extends GetView<DonationPetController> {
                           width: 400.0,
                           height: 270.0,
                           child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(6),
+                                topRight: Radius.circular(6),
+                              ),
                               child: FadeInImage.memoryNetwork(
                                   fit: BoxFit.fill,
                                   placeholder: kTransparentImage,
@@ -76,9 +86,9 @@ class DonationPetPage extends GetView<DonationPetController> {
                               badgeColor: Colors.grey,
                               shape: badges.BadgeShape.square,
                               borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(10),
-                                topLeft: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
+                                topRight: Radius.circular(6),
+                                topLeft: Radius.circular(6),
+                                bottomLeft: Radius.circular(6),
                               ),
                             ),
                             //toAnimate: true,
@@ -94,14 +104,34 @@ class DonationPetPage extends GetView<DonationPetController> {
               ),
               Row(
                 children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 0, left: 20, bottom: 0),
-                      child: Text(
-                          "${state.clientDonor!.address.city.name} / ${state.clientDonor!.address.city.state!.name}",
-                          textAlign: TextAlign.center),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 0, left: 20, bottom: 0, right: 20),
+                        child: Text(
+                            "${state.clientDonor!.address.city.name} / ${state.clientDonor!.address.city.state!.name}",
+                            textAlign: TextAlign.left),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 5, left: 15),
+                    child: Icon(Icons.calendar_month, color: Colors.blueGrey),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 5),
+                    child: Text(
+                      'Publicado em ${DateFormat.yMd().format(state.createdAt)}',
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontFamily: 'Roboto',
+                      ),
                     ),
                   ),
                 ],
@@ -111,7 +141,7 @@ class DonationPetPage extends GetView<DonationPetController> {
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 child: Column(
                   children: [
@@ -120,7 +150,8 @@ class DonationPetPage extends GetView<DonationPetController> {
                         Container(
                           alignment: Alignment.centerLeft,
                           child: const Padding(
-                            padding: EdgeInsets.only(top: 5, left: 20),
+                            padding:
+                                EdgeInsets.only(top: 5, left: 20, right: 20),
                             child: Text("Espécie", textAlign: TextAlign.center),
                           ),
                         ),
@@ -128,17 +159,19 @@ class DonationPetPage extends GetView<DonationPetController> {
                     ),
                     Row(
                       children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 5, left: 20),
-                            child: Text(state.pet!.specie!.name!,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Roboto',
-                                ),
-                                textAlign: TextAlign.center),
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 5, left: 20),
+                              child: Text(state.pet!.specie!.name!,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Roboto',
+                                  ),
+                                  textAlign: TextAlign.left),
+                            ),
                           ),
                         ),
                       ],
@@ -150,11 +183,10 @@ class DonationPetPage extends GetView<DonationPetController> {
                 ),
               ),
               Card(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 child: Column(
                   children: [
@@ -163,10 +195,11 @@ class DonationPetPage extends GetView<DonationPetController> {
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Padding(
-                            padding: EdgeInsets.only(top: 5, left: 20),
+                            padding:
+                                EdgeInsets.only(top: 5, left: 20, right: 20),
                             child: Text(
                                 "Quantidade: ${state.pet!.amount.toString()}",
-                                textAlign: TextAlign.center),
+                                textAlign: TextAlign.left),
                           ),
                         ),
                       ],
@@ -180,38 +213,47 @@ class DonationPetPage extends GetView<DonationPetController> {
               if (state.pet!.observation!.isNotEmpty)
                 Card(
                   margin:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   child: Column(
                     children: [
                       Row(
                         children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: const Padding(
-                              padding: EdgeInsets.only(top: 5, left: 20),
-                              child: Text("Observação",
-                                  textAlign: TextAlign.center),
+                          Stack(children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: const Padding(
+                                padding: EdgeInsets.only(top: 5, left: 20),
+                                child: Text(
+                                  "Observação",
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                             ),
-                          ),
+                          ]),
                         ],
                       ),
                       Row(
                         children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 5, left: 20),
-                              child: Text(
-                                state!.pet!.observation!,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Roboto',
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 5, left: 20, right: 20),
+                                child: Expanded(
+                                  child: Text(
+                                    state!.pet!.observation!,
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Roboto',
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -285,7 +327,7 @@ class DonationPetPage extends GetView<DonationPetController> {
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: BorderRadius.circular(3),
                     ),
                   ),
                   child: const Text("Quero adotar esse pet"),

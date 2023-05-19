@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/option_donation/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -18,21 +19,18 @@ class OptionDonationPage extends GetView<OptionDonationController> {
       key: scaffoldKey,
       backgroundColor: Colors.grey,
       appBar: AppBar(
-        backgroundColor: Colors.grey,
-        title: const Center(
-          child: Text('ADOTA FISH',
-              style: TextStyle(
-                fontSize: 17,
-                fontFamily: 'Roboto',
-              )),
-        ),
+        title: const Text('ADOTA FISH',
+            style: TextStyle(
+                fontSize: 17, fontFamily: 'Roboto', color: ColorsApp.appTitle)),
+        centerTitle: true,
+        backgroundColor: ColorsApp.appBackground,
+        shape: const Border(
+            bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
       ),
       body: AlertDialog(
-        
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(6),
         ),
-        
         content: SizedBox(
             width: double.maxFinite,
             height: 170,
@@ -43,19 +41,14 @@ class OptionDonationPage extends GetView<OptionDonationController> {
                   title: const Center(
                       child: Text("QUERO DOAR:",
                           style: TextStyle(
-                            fontSize: 27,  
-                            //fontFamily: 'Roboto',
-                            fontStyle: FontStyle.italic,
-                            color: Colors.black45
-                          )
-                          )),
-                  onTap: () {
-                    
-                  },
+                              fontSize: 27,
+                              //fontWeight: FontWeight.bold,
+                              fontFamily: 'Roboto'))),
+                  onTap: () {},
                 ),
                 ListTile(
                   leading: Icon(Icons.crop_5_4, color: Colors.blue[800]),
-                  title: const Center(child: Text("Aquário")),
+                  title: const Center(child: Text("AQUÁRIO")),
                   onTap: () {
                     Get.toNamed(Routes.registerAquarium);
                   },
@@ -63,7 +56,7 @@ class OptionDonationPage extends GetView<OptionDonationController> {
                 ListTile(
                   leading:
                       FaIcon(FontAwesomeIcons.fish, color: Colors.blue[800]),
-                  title: const Center(child: Text("Pet")),
+                  title: const Center(child: Text("PET")),
                   onTap: () {
                     Get.toNamed(Routes.registerPet);
                   },

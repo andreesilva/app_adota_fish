@@ -16,6 +16,8 @@ class LoginController extends GetxController {
   var passwordController = TextEditingController();
   var isObscure = true.obs;
 
+  final loadingCircular = ValueNotifier<bool>(false);
+
   void showAlertError(QuickAlertType quickAlertType) {
     QuickAlert.show(
         barrierDismissible: false,
@@ -44,6 +46,7 @@ class LoginController extends GetxController {
       //}
     }, onError: (error) {
       showAlertError(QuickAlertType.error);
+      loadingCircular.value = false;
     });
   }
 }

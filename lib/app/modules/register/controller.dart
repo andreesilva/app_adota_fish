@@ -6,8 +6,10 @@ import 'package:app_adota_fish/app/data/models/user_profile_request.dart';
 import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/register/repository.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
+import 'package:app_adota_fish/app/widgets/message_general_error.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quickalert/models/quickalert_type.dart';
 
 import '../../data/models/specie_request.dart';
 
@@ -18,6 +20,9 @@ class RegisterController extends GetxController
   RegisterController(this._repository);
 
   final formKey = GlobalKey<FormState>();
+
+  final key_dropdown = GlobalKey<FormState>();
+
   final loading = true.obs;
   final _authService = Get.find<AuthService>();
   var nameController = TextEditingController();
@@ -37,6 +42,9 @@ class RegisterController extends GetxController
   var isObscure = true.obs;
   var isObscure2 = true.obs;
 
+  var reference = '';
+  var complement = '';
+
   @override
   void onInit() {
     _repository.getCitiesState(0).then((data) {
@@ -44,7 +52,17 @@ class RegisterController extends GetxController
       change(data, status: RxStatus.success());
     }, onError: (error) {
       print("Cidade 2");
-      change(null, status: RxStatus.error(error.toString()));
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else {
+        change(null, status: RxStatus.error(error.toString()));
+      }
     });
 
     super.onInit();
@@ -82,21 +100,34 @@ class RegisterController extends GetxController
         password: newPassword.text,
       ));
 
+      if (referenceController.text == '') {
+        reference = ' ';
+      } else {
+        reference = referenceController.text;
+      }
+
+      if (complementController.text == '') {
+        complement = ' ';
+      } else {
+        complement = complementController.text;
+      }
+
       var userAddressRequest = UserAddressRequestModel(
         clientId: value.id!,
         street: streetController.text,
         number: numberController.text,
         neighborhood: neighborhoodController.text,
-        referencePoint: referenceController.text,
+        referencePoint: reference,
         cityId: cityId.value!,
-        complement: complementController.text,
+        complement: complement,
       );
 
       _addAddress(userAddressRequest);
 
       Get.offAllNamed(Routes.photoClient, arguments: 1);
     }, onError: (error) {
-      Get.dialog(AlertDialog(title: Text(error.toString())));
+      print(error.toString());
+      //MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
     });
   }
 
@@ -111,6 +142,10 @@ class RegisterController extends GetxController
     loading(true);
     stateId.value = stateIdSelected;
 
+    cityId.value = null;
+
+    print(stateIdSelected);
+
     _repository.getCitiesState(stateIdSelected!).then((data) {
       change(data, status: RxStatus.success());
     }, onError: (error) {
@@ -122,7 +157,11 @@ class RegisterController extends GetxController
   void changeCity(int? cityIdSelected) {
     loading(true);
 
+    print(cityIdSelected);
+
     cityId.value = cityIdSelected;
+
+    key_dropdown.currentState?.reset();
 
     loading(false);
   }

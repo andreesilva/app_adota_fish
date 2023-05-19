@@ -1,23 +1,24 @@
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/myDonationsPet/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class MyDonationsPetPage extends GetView<MyDonationsPetController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Center(
-            child: Padding(
-              padding: EdgeInsets.only(right: 55),
-              child: Text('MINHAS DOAÇÕES - PET',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontFamily: 'Roboto',
-                  )),
-            ),
-          ),
+          title: const Text('MINHAS DOAÇÕES - PET',
+              style: TextStyle(
+                  fontSize: 17,
+                  fontFamily: 'Roboto',
+                  color: ColorsApp.appTitle)),
+          centerTitle: true,
+          backgroundColor: ColorsApp.appBackground,
+          shape: const Border(
+              bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
         ),
         body: controller.obx(
           (state) => ListView(
@@ -28,35 +29,43 @@ class MyDonationsPetPage extends GetView<MyDonationsPetController> {
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   child: Column(
                     children: [
                       Stack(
                         children: [
                           Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.only(bottom: 0),
                               child: SizedBox(
-                                height: 195,
-                                child: Column(
-                                  children: [
-                                    Image.network(donation.pet!.photo!,
+                                height: 285,
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Image.network(
+                                        donation.pet!.photo!,
                                         fit: BoxFit.fill,
                                         width: 400.0,
-                                        height: 185.0),
-                                    const Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 0,
-                                            left: 6,
-                                            right: 6,
-                                            bottom: 10),
-                                        child: SizedBox(
-                                          width: double.infinity,
-                                        )),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                  ],
+                                        height: 270.0,
+                                      ),
+                                      const Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 0,
+                                              left: 6,
+                                              right: 6,
+                                              bottom: 10),
+                                          child: SizedBox(
+                                            width: double.infinity,
+                                          )),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               )),
                         ],
@@ -83,16 +92,96 @@ class MyDonationsPetPage extends GetView<MyDonationsPetController> {
                         ),
                       ),
                       const SizedBox(
-                        height: 16.0,
+                        height: 20,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: const Padding(
+                          padding: EdgeInsets.only(top: 5, left: 20, bottom: 5),
+                          child:
+                              Text("Quantidade", textAlign: TextAlign.center),
+                        ),
                       ),
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 5, left: 20, bottom: 10),
+                          padding: const EdgeInsets.only(left: 20),
                           child: Text(
-                              "Quantidade: ${donation.pet!.amount.toString()}",
-                              textAlign: TextAlign.center),
+                            donation.pet.amount.toString(),
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Roboto',
+                                color: Colors.black87),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Stack(children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: const Padding(
+                                padding: EdgeInsets.only(top: 5, left: 20),
+                                child: Text(
+                                  "Observação",
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ]),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 5, left: 20, right: 20),
+                                child: Expanded(
+                                  child: Text(
+                                    donation.pet.observation!,
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Roboto',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(top: 5, left: 15),
+                              child: Icon(Icons.calendar_month,
+                                  color: Colors.blueGrey),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10, left: 5),
+                              child: Text(
+                                'Publicado em ${DateFormat.yMd().format(donation.createdAt)}',
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  fontFamily: 'Roboto',
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       if (donation.status == 1) ...[
@@ -133,10 +222,30 @@ class MyDonationsPetPage extends GetView<MyDonationsPetController> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.grey,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6),
+                                      borderRadius: BorderRadius.circular(3),
                                     ),
                                   ),
-                                  child: const Text("Inativar"),
+                                  child: const Text("Inativar",
+                                      style: TextStyle(fontSize: 13)),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: SizedBox(
+                                width: 80,
+                                child: ElevatedButton(
+                                  onPressed: () => Get.toNamed(Routes.updatePet
+                                      .replaceFirst(
+                                          ':id', donation.id.toString())),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.grey,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(3),
+                                    ),
+                                  ),
+                                  child: const Text("Editar",
+                                      style: TextStyle(fontSize: 13)),
                                 ),
                               ),
                             ),
@@ -174,10 +283,11 @@ class MyDonationsPetPage extends GetView<MyDonationsPetController> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.red,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6),
+                                      borderRadius: BorderRadius.circular(3),
                                     ),
                                   ),
-                                  child: const Text("Excluir"),
+                                  child: const Text("Excluir",
+                                      style: TextStyle(fontSize: 13)),
                                 ),
                               ),
                             ),
@@ -220,7 +330,7 @@ class MyDonationsPetPage extends GetView<MyDonationsPetController> {
                                       }),
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6),
+                                      borderRadius: BorderRadius.circular(3),
                                     ),
                                   ),
                                   child: const Text("Ativar"),
@@ -261,7 +371,7 @@ class MyDonationsPetPage extends GetView<MyDonationsPetController> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.red,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6),
+                                      borderRadius: BorderRadius.circular(3),
                                     ),
                                   ),
                                   child: const Text("Excluir"),

@@ -7,13 +7,15 @@ class DonationAquariumModel {
   ClientModel? clientAdopter;
   AquariumModel aquarium;
   int status;
+  DateTime createdAt;
 
   DonationAquariumModel(
       {required this.id,
       required this.clientDonor,
       this.clientAdopter,
       required this.aquarium,
-      required this.status});
+      required this.status,
+      required this.createdAt});
 
   factory DonationAquariumModel.fromJson(Map<String, dynamic> json) =>
       DonationAquariumModel(
@@ -23,5 +25,6 @@ class DonationAquariumModel {
               ? ClientModel.fromJson(json['cliente_adotante'])
               : null,
           aquarium: AquariumModel.fromJson(json['aquario']),
-          status: json['status']);
+          status: json['status'],
+          createdAt: DateTime.parse(json['created_at']));
 }

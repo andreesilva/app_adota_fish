@@ -1,3 +1,4 @@
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/resetPassword/controller.dart';
 import 'package:flutter_pw_validator/Resource/Strings.dart';
 import 'package:flutter/material.dart';
@@ -20,16 +21,13 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Padding(
-            padding: EdgeInsets.only(right: 55),
-            child: Text('NOVA SENHA',
-                style: TextStyle(
-                  fontSize: 17,
-                  fontFamily: 'Roboto',
-                )),
-          ),
-        ),
+        title: const Text('NOVA SENHA',
+            style: TextStyle(
+                fontSize: 17, fontFamily: 'Roboto', color: ColorsApp.appTitle)),
+        centerTitle: true,
+        backgroundColor: ColorsApp.appBackground,
+        shape: const Border(
+            bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -118,7 +116,16 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                                onPressed: controller.submit,
+                                onPressed: () => {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return const Center(
+                                                child:
+                                                    CircularProgressIndicator());
+                                          }),
+                                      controller.submit(),
+                                    },
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(6),

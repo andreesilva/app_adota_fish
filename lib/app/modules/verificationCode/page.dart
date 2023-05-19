@@ -1,3 +1,4 @@
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/verificationCode/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -10,19 +11,15 @@ class VerificationCodePage extends GetView<VerificationCodeController> {
 
   @override
   Widget build(BuildContext context) {
-    String currentText = "";
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Padding(
-            padding: EdgeInsets.only(right: 55),
-            child: Text('VERIFICAÇÃO DE CÓDIGO',
-                style: TextStyle(
-                  fontSize: 17,
-                  fontFamily: 'Roboto',
-                )),
-          ),
-        ),
+        title: const Text('VERIFICAÇÃO DE CÓDIGO',
+            style: TextStyle(
+                fontSize: 17, fontFamily: 'Roboto', color: ColorsApp.appTitle)),
+        centerTitle: true,
+        backgroundColor: ColorsApp.appBackground,
+        shape: const Border(
+            bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
       ),
       body: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -44,11 +41,12 @@ class VerificationCodePage extends GetView<VerificationCodeController> {
                         appContext: context,
                         length: 6,
                         showCursor: true,
+                        keyboardType: TextInputType.number,
                         controller: controller.code,
                         onChanged: (value) => {
                           // debugPrint(value);
                           print(value),
-                          currentText = value,
+                          controller.currentText.value = value,
                         },
                         animationType: AnimationType.fade,
                         autoFocus: true,
@@ -65,6 +63,16 @@ class VerificationCodePage extends GetView<VerificationCodeController> {
                         beforeTextPaste: (text) {
                           return false;
                         },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Text(
+                          controller.hasError
+                              ? "Informe o código de 6 dígitos"
+                              : "",
+                          style: TextStyle(
+                              color: Colors.red.shade300, fontSize: 15),
+                        ),
                       ),
                       InkWell(
                         onTap: () {
@@ -89,10 +97,22 @@ class VerificationCodePage extends GetView<VerificationCodeController> {
                                 onPressed: controller.submit,
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
+                                    borderRadius: BorderRadius.circular(3),
                                   ),
                                 ),
-                                child: const Text("Verificar"),
+                                //child: const Text("Verificar"),
+                                child: AnimatedBuilder(
+                                  animation: controller.loadingCircular,
+                                  builder: (context, _) {
+                                    return controller.loadingCircular.value
+                                        ? const SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator(),
+                                          )
+                                        : const Text('Verificar');
+                                  },
+                                ),
                               ),
                             ),
                           ),

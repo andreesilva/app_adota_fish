@@ -1,8 +1,10 @@
 import 'package:app_adota_fish/app/data/models/donations_aquarium.dart';
 import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/home/repository.dart';
+import 'package:app_adota_fish/app/widgets/message_general_error.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quickalert/models/quickalert_type.dart';
 
 class HomeController extends GetxController
     with StateMixin<List<DonationAquariumModel>> {
@@ -21,10 +23,9 @@ class HomeController extends GetxController
     loading(true);
 
     int id = 0;
-  
-    if(Get.parameters.isNotEmpty){
-        
-        id = int.parse(Get.parameters["id"]!);
+
+    if (Get.parameters.isNotEmpty) {
+      id = int.parse(Get.parameters["id"]!);
     }
 
     _repository.getDonations(id).then((data) {
@@ -40,15 +41,18 @@ class HomeController extends GetxController
     }, onError: (error) {
       print("Msg aquario 3");
       print(error);
-      
-     if(error.toString() == 'Connection failed'){
-        
-        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
-         const SnackBar(content: Text('Sem conexão de rede'),backgroundColor: Colors.red, duration: Duration(seconds: 300 ),)
-        );
-     } else{
+
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else {
         change(null, status: RxStatus.error(error.toString()));
-     }
+      }
     });
 
     super.onInit();

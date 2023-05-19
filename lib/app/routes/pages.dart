@@ -1,3 +1,5 @@
+import 'package:app_adota_fish/app/modules/about/binding.dart';
+import 'package:app_adota_fish/app/modules/about/page.dart';
 import 'package:app_adota_fish/app/modules/account/binding.dart';
 import 'package:app_adota_fish/app/modules/account/page.dart';
 import 'package:app_adota_fish/app/modules/myDonationsAquarium/binding.dart';
@@ -33,6 +35,8 @@ import 'package:app_adota_fish/app/modules/select_state_pet/binding.dart';
 import 'package:app_adota_fish/app/modules/select_state_pet/page.dart';
 import 'package:app_adota_fish/app/modules/splash/binding.dart';
 import 'package:app_adota_fish/app/modules/splash/page.dart';
+import 'package:app_adota_fish/app/modules/update_pet/binding.dart';
+import 'package:app_adota_fish/app/modules/update_pet/page.dart';
 import 'package:app_adota_fish/app/modules/user_address/binding.dart';
 import 'package:app_adota_fish/app/modules/user_address/page.dart';
 import 'package:app_adota_fish/app/modules/user_profile/binding.dart';
@@ -59,13 +63,13 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.pets,
-      page: () =>  const DashboardPetPage(),
+      page: () => const DashboardPetPage(),
       binding: DashboardBinding(),
       //middlewares: [RedirectMiddleware()]
     ),
-     GetPage(
+    GetPage(
       name: Routes.aquariums,
-      page: () =>  const DashboardAquariumPage(),
+      page: () => const DashboardAquariumPage(),
       binding: DashboardBinding(),
       //middlewares: [RedirectMiddleware()]
     ),
@@ -140,6 +144,11 @@ abstract class AppPages {
       binding: MyDonationsPetBinding(),
     ),
     GetPage(
+      name: Routes.updatePet,
+      page: () => UpdatePetPage(),
+      binding: UpdatePetBinding(),
+    ),
+    GetPage(
       name: Routes.account,
       page: () => AccountPage(),
       binding: AccountBinding(),
@@ -158,7 +167,12 @@ abstract class AppPages {
         name: Routes.selectStateAquarium,
         page: () => SelectStateAquariumPage(),
         binding: SelectStateAquariumBinding(),
-        fullscreenDialog: true),    
+        fullscreenDialog: true),
+    GetPage(
+      name: Routes.about,
+      page: () => AboutPage(),
+      binding: AboutBinding(),
+    ),
   ];
 }
 

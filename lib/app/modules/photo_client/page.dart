@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/photo_client/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,9 @@ class PhotoClientPage extends GetView<PhotoClientController> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: ColorsApp.appBackground,
+      ),
       body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: Expanded(
@@ -31,19 +34,19 @@ class PhotoClientPage extends GetView<PhotoClientController> {
                         child: Column(
                           children: [
                             Center(
-                               child: CircleAvatar(
-                              radius: 81,
-                              backgroundColor: Colors.blue,
                               child: CircleAvatar(
-                                backgroundImage:
-                                    controller.isProficPicPath.value == true
-                                        ? FileImage(File(controller
-                                            .profilePicPath
-                                            .value)) as ImageProvider
-                                        : AssetImage("assets/Vector_1.png"),
-                                radius: 80,
+                                radius: 81,
+                                backgroundColor: Colors.blue,
+                                child: CircleAvatar(
+                                  backgroundImage:
+                                      controller.isProficPicPath.value == true
+                                          ? FileImage(File(controller
+                                              .profilePicPath
+                                              .value)) as ImageProvider
+                                          : AssetImage("assets/Vector_1.png"),
+                                  radius: 80,
+                                ),
                               ),
-                               ),
                             ),
                           ],
                         ),
@@ -149,7 +152,21 @@ class PhotoClientPage extends GetView<PhotoClientController> {
                           children: [
                             Expanded(
                               child: ElevatedButton(
-                                  onPressed: controller.submit,
+                                  onPressed: () => {
+                                        if (controller
+                                            .profilePicPath.value.isNotEmpty)
+                                          {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return const Center(
+                                                      child:
+                                                          CircularProgressIndicator());
+                                                }),
+                                          },
+                                        controller.submit(),
+                                      },
                                   child: const Text('Finalizar')),
                             ),
                           ],

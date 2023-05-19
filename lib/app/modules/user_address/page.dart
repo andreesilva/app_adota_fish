@@ -1,3 +1,4 @@
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/user_address/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,49 +6,46 @@ import 'package:get/get.dart';
 class UserAddressPage extends GetView<UserAddressController> {
   final _valores = [
     'Selecione o estado',
-     'Acre',
-'Alagoas',
-'Amazonas',
-'Amapá',
-'Bahia',
-'Ceará',
-'Distrito Federal',
-'Espírito Santo',
-'Goiás',
-'Maranhão',
-'Minas Gerais',
-'Mato Grosso do Sul',
-'Mato Grosso',
-'Pará',
-'Paraíba',
-'Pernambuco',
-'Piauí',
-'Paraná',
-'Rio de Janeiro',
-'Rio Grande do Norte',
-'Rondônia',
-'Roraima',
-'Rio Grande do Sul',
-'Santa Catarina',
-'Sergipe',
-'São Paulo',
-'Tocantins',
+    'Acre',
+    'Alagoas',
+    'Amazonas',
+    'Amapá',
+    'Bahia',
+    'Ceará',
+    'Distrito Federal',
+    'Espírito Santo',
+    'Goiás',
+    'Maranhão',
+    'Minas Gerais',
+    'Mato Grosso do Sul',
+    'Mato Grosso',
+    'Pará',
+    'Paraíba',
+    'Pernambuco',
+    'Piauí',
+    'Paraná',
+    'Rio de Janeiro',
+    'Rio Grande do Norte',
+    'Rondônia',
+    'Roraima',
+    'Rio Grande do Sul',
+    'Santa Catarina',
+    'Sergipe',
+    'São Paulo',
+    'Tocantins',
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Padding(
-            padding: EdgeInsets.only(right: 55),
-            child: Text('EDITAR ENDEREÇO',
-                style: TextStyle(
-                  fontSize: 17,
-                  fontFamily: 'Roboto',
-                )),
-          ),
-        ),
+        title: const Text('EDITAR ENDEREÇO',
+            style: TextStyle(
+                fontSize: 17, fontFamily: 'Roboto', color: ColorsApp.appTitle)),
+        centerTitle: true,
+        backgroundColor: ColorsApp.appBackground,
+        shape: const Border(
+            bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
       ),
       body: controller.obx(
         (state) => SingleChildScrollView(
@@ -61,6 +59,7 @@ class UserAddressPage extends GetView<UserAddressController> {
                   decoration: const InputDecoration(
                     labelText: "Rua",
                   ),
+                  maxLength: 254,
                   validator: (String? value) {
                     if (value != null && value.isEmpty) {
                       return 'Preencha o nome da rua';
@@ -85,6 +84,7 @@ class UserAddressPage extends GetView<UserAddressController> {
                   decoration: const InputDecoration(
                     labelText: "Bairro",
                   ),
+                  maxLength: 254,
                   validator: (String? value) {
                     if (value != null && value.isEmpty) {
                       return 'Preencha o nome do bairro';
@@ -97,47 +97,57 @@ class UserAddressPage extends GetView<UserAddressController> {
                   decoration: const InputDecoration(
                     labelText: "Ponto de referência",
                   ),
+                  maxLength: 254,
                 ),
                 TextFormField(
                   controller: controller.complementController,
                   decoration: const InputDecoration(
                     labelText: "Complemento",
                   ),
+                  maxLength: 254,
                 ),
-                DropdownButtonFormField(
-                  value: controller.stateId.value,
-                  items: _valores
-                      .asMap()
-                      .entries
-                      .map((state) => DropdownMenuItem<int>(
-                          value: state.key, child: Text(state.value)))
-                      .toList(),
-                  onChanged: controller.changeState,
-                  decoration:
-                      const InputDecoration(labelText: 'Estado'),
-                  validator: (int? value) {
-                    if (value == null) {
-                      return 'Selecione um estado';
-                    }
-                    return null;
-                  },
-                ),
-                DropdownButtonFormField(
-                  value: controller.cityId.value,
-                  items: state!
-                      .map((state) => DropdownMenuItem<int>(
-                          value: state.id, child: Text(state.name)))
-                      .toList(),
-                  onChanged: controller.changeCity,
-                  decoration: const InputDecoration(
-                    labelText: 'Cidade',
+                Obx(
+                  () => DropdownButtonFormField(
+                    value: controller.stateIdController.value,
+                    items: _valores
+                        .asMap()
+                        .entries
+                        .map((state) => DropdownMenuItem<int>(
+                            value: state.key,
+                            child: Text(
+                              state.value,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.normal),
+                            )))
+                        .toList(),
+                    onChanged: controller.changeState,
+                    hint: Text(controller.stateController),
+                    validator: (int? value) {
+                      if (value == null) {
+                        return 'Selecione um estado';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (int? value) {
-                    if (value == null) {
-                      return 'Selecione uma cidade';
-                    }
-                    return null;
-                  },
+                ),
+                Obx(
+                  () => DropdownButtonFormField(
+                    key: controller.key_dropdown,
+                    value: controller.cityId.value,
+                    items: state!
+                        .map((state) => DropdownMenuItem<int>(
+                            value: state.id,
+                            child: Text(state.name,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.normal))))
+                        .toList(),
+                    onChanged: controller.changeCity,
+                    hint: Text(
+                      controller.cityController.value,
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.normal),
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 16.0,
@@ -148,13 +158,31 @@ class UserAddressPage extends GetView<UserAddressController> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
-                            onPressed: controller.submit,
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
-                              ),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(3),
                             ),
-                            child: const Text("Salvar")),
+                          ),
+                          child: AnimatedBuilder(
+                            animation: controller.loadingCircular,
+                            builder: (context, _) {
+                              return controller.loadingCircular.value
+                                  ? const SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : const Text('Salvar');
+                            },
+                          ),
+                          onPressed: () => {
+                            if (controller.formKey.currentState!.validate())
+                              {
+                                controller.loadingCircular.value = true,
+                                controller.submit(),
+                              },
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -168,7 +196,7 @@ class UserAddressPage extends GetView<UserAddressController> {
                             onPressed: () => Navigator.of(context).pop(true),
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
+                                borderRadius: BorderRadius.circular(3),
                               ),
                             ),
                             child: const Text("Cancelar")),

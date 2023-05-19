@@ -18,9 +18,11 @@ abstract class Routes {
   static const userPassword = "/user-password";
   static const myDonationsAquarium = "/my-donations-aquarium";
   static const myDonationsPet = "/my-donations-pet";
+  static const updatePet = "/update-pet/:id";
   static const userAddressList = "/user-address-lis";
   static const account = "/account";
   static const resetPassword = "/reset-password/:email";
   static const selectStatePet = '/select-state-pet';
   static const selectStateAquarium = '/select-state-aquarium';
+  static const about = "/about";
 }

@@ -2,10 +2,23 @@ import 'dart:io';
 
 import 'package:app_adota_fish/app/data/models/photo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 
 class FirebaseUtil {
+  File? imageFilePath, resized;
+
   static Future<Photo> uploadAquarium(String path) async {
     File file = File(path);
+
+/*
+     File compressedFile = await FlutterNativeImage.compressImage(
+        file.path,
+        quality: 80,
+        targetWidth: 600,
+        targetHeight: 300);
+        */
+
     Photo photo = Photo(filepath: file.path);
 
     try {

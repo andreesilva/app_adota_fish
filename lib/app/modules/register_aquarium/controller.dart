@@ -43,7 +43,17 @@ class RegisterAquariumController extends GetxController
     _repository.getCitiesState(0).then((data) {
       change(data, status: RxStatus.success());
     }, onError: (error) {
-      change(null, status: RxStatus.error(error.toString()));
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else {
+        change(null, status: RxStatus.error(error.toString()));
+      }
     });
 
     super.onInit();

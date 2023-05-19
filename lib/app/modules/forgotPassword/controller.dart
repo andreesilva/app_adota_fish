@@ -21,16 +21,31 @@ class ForgotPasswordController extends GetxController {
   var email = TextEditingController();
 
   void submit() {
+    Get.focusScope!.unfocus();
+
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
     var forgotPasswordRequestModel =
         ForgotPasswordRequestModel(email: email.text);
 
     _repository.forgotPassword(forgotPasswordRequestModel).then((data) {
-      
-       Get.offAllNamed(Routes.verificationCode, arguments: 1);
+      Get.offAllNamed(Routes.verificationCode, arguments: 1);
       print('Sucesso!');
     }, onError: (error) {
-      print(error.toString());
-      showAlertError(QuickAlertType.error);
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else {
+        print(error.toString());
+        showAlertError(QuickAlertType.error);
+      }
     });
   }
 

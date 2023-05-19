@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/account/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -20,14 +21,20 @@ class AccountPage extends GetView<AccountController> {
         title: const Center(
           child: Text('MINHA CONTA',
               style: TextStyle(
-                fontSize: 17,
-                fontFamily: 'Roboto',
-              )),
+                  fontSize: 17,
+                  fontFamily: 'Roboto',
+                  color: ColorsApp.appTitle)),
         ),
+        backgroundColor: ColorsApp.appBackground,
+        shape: const Border(
+            bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
       ),
       body: ListView(children: [
         Column(
           children: [
+            SizedBox(
+              height: 10,
+            ),
             Stack(
               alignment: Alignment.center,
               children: [
@@ -189,7 +196,7 @@ class AccountPage extends GetView<AccountController> {
                           ListTile(
                             leading:
                                 Icon(Icons.crop_5_4, color: Colors.blue[800]),
-                            title: const Center(child: Text("Aquário")),
+                            title: const Center(child: Text("AQUÁRIO")),
                             onTap: () {
                               Get.toNamed(Routes.myDonationsAquarium);
                             },
@@ -197,7 +204,7 @@ class AccountPage extends GetView<AccountController> {
                           ListTile(
                             leading: FaIcon(FontAwesomeIcons.fish,
                                 color: Colors.blue[800]),
-                            title: const Center(child: Text("Pet")),
+                            title: const Center(child: Text("PET")),
                             onTap: () {
                               Get.toNamed(Routes.myDonationsPet);
                             },
@@ -207,8 +214,15 @@ class AccountPage extends GetView<AccountController> {
                 );
               }),
         ),
-        const SizedBox(
-          height: 25,
+        ListTile(
+          leading: Icon(
+            Icons.book_rounded,
+            color: Colors.blue[800],
+          ),
+          title: const Text("Sobre o Adota Fish"),
+          onTap: () {
+            Get.toNamed(Routes.about);
+          },
         ),
         ListTile(
           leading: const Icon(Icons.arrow_back, color: Colors.red),
@@ -242,7 +256,8 @@ class AccountPage extends GetView<AccountController> {
   }
 
   Future<void> takePhoto(ImageSource source) async {
-    final pickedImage =  await imagePicker.pickImage(source: source, imageQuality: 100);
+    final pickedImage =
+        await imagePicker.pickImage(source: source, imageQuality: 100);
 
     pickedFile = File(pickedImage!.path);
 

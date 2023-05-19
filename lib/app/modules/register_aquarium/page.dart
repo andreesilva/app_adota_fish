@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/register_aquarium/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,16 +28,15 @@ class RegisterAquariumPage extends GetView<RegisterAquariumController> {
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
-          title: const Center(
-            child: Padding(
-              padding: EdgeInsets.only(right: 55),
-              child: Text('QUERO DOAR UM AQUÁRIO',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontFamily: 'Roboto',
-                  )),
-            ),
-          ),
+          title: const Text('QUERO DOAR UM AQÚARIO',
+              style: TextStyle(
+                  fontSize: 17,
+                  fontFamily: 'Roboto',
+                  color: ColorsApp.appTitle)),
+          centerTitle: true,
+          backgroundColor: ColorsApp.appBackground,
+          shape: const Border(
+              bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
         ),
         body: controller.obx(
           (state) => SingleChildScrollView(
@@ -180,10 +180,23 @@ class RegisterAquariumPage extends GetView<RegisterAquariumController> {
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: controller.submit,
+                            onPressed: () => {
+                              if ((controller.formKey.currentState!
+                                      .validate()) &&
+                                  (controller.profilePicPath.value.isNotEmpty))
+                                {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const Center(
+                                            child: CircularProgressIndicator());
+                                      }),
+                                },
+                              controller.submit(),
+                            },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
+                                borderRadius: BorderRadius.circular(3),
                               ),
                             ),
                             child: const Text('Publicar anúncio'),

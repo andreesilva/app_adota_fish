@@ -6,6 +6,7 @@ import 'package:app_adota_fish/app/data/services/storage/service.dart';
 import 'package:app_adota_fish/app/routes/pages.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -26,6 +27,8 @@ void main() async {
   Get.put<AuthService>(AuthService(AuthRepository(Get.find<Api>())));
 
   Intl.defaultLocale = "pt_BR";
+
+  RendererBinding.instance.setSemanticsEnabled(true);
 
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
