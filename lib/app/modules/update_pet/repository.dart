@@ -1,9 +1,12 @@
 import 'package:app_adota_fish/app/data/models/donations_pet.dart';
+import 'package:app_adota_fish/app/data/models/photo_client_request.dart';
 import 'package:app_adota_fish/app/data/models/specie_request.dart';
 import 'package:app_adota_fish/app/data/models/pet.dart';
 import 'package:app_adota_fish/app/data/models/pet_request.dart';
 import 'package:app_adota_fish/app/data/models/specie.dart';
 import 'package:app_adota_fish/app/data/providers/api.dart';
+
+import '../../data/models/photo_donation_request.dart';
 
 class UpdatePetRepository {
   final Api _api;
@@ -19,4 +22,10 @@ class UpdatePetRepository {
 
   Future<SpecieModel> getSpecie(SpecieRequestModel specieRequestModel) =>
       _api.getSpecie(specieRequestModel);
+
+  Future<void> putPhotoPet(
+          PhotoDonationRequestModel photoDonationRequestModel) =>
+      _api.putPhotoPet(photoDonationRequestModel);
+  Future<void> putPet(PetRequestModel petRequestModel) =>
+      _api.putPet(petRequestModel);
 }

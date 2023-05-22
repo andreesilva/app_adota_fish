@@ -33,7 +33,7 @@ class AccountPage extends GetView<AccountController> {
         Column(
           children: [
             SizedBox(
-              height: 10,
+              height: 17,
             ),
             Stack(
               alignment: Alignment.center,
@@ -177,7 +177,13 @@ class AccountPage extends GetView<AccountController> {
                 return AlertDialog(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
+                    side: const BorderSide(
+                      color: Colors.blueGrey,
+                      width: 1.5,
+                    ),
                   ),
+                  elevation: 7,
+                  shadowColor: Colors.blueGrey,
                   content: SizedBox(
                       width: double.minPositive,
                       height: 170,
@@ -188,8 +194,8 @@ class AccountPage extends GetView<AccountController> {
                             title: Center(
                                 child: Text("SELECIONE:",
                                     style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 27,
+                                      color: Colors.black38,
                                       fontFamily: 'Roboto',
                                     ))),
                           ),
@@ -232,17 +238,38 @@ class AccountPage extends GetView<AccountController> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text("Deseja realmente sair do aplicativo?"),
+                  title: const Text(
+                    "Deseja realmente sair do aplicativo?",
+                    style: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'Roboto'),
+                  ),
                   titleTextStyle:
                       const TextStyle(color: Colors.black, fontSize: 16),
                   actionsOverflowButtonSpacing: 20,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  elevation: 7,
                   actions: [
                     ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          elevation: 2.0,
+                        ),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                         child: const Text("Não")),
                     ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
                         onPressed: () {
                           controller.logout();
                         },

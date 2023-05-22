@@ -39,7 +39,7 @@ class HomeController extends GetxController
         change(data.cast<DonationAquariumModel>(), status: RxStatus.success());
       }
     }, onError: (error) {
-      print("Msg aquario 3");
+      print("Msg pet 3");
       print(error);
 
       if ((error.toString() == 'Connection failed') ||
@@ -50,7 +50,11 @@ class HomeController extends GetxController
           backgroundColor: Colors.red,
           duration: Duration(seconds: 15),
         ));
+      } else if (error.toString() == 'Connection refused') {
+        change(null, status: RxStatus.error('Falha no servidor'));
       } else {
+        print(error.toString());
+
         change(null, status: RxStatus.error(error.toString()));
       }
     });

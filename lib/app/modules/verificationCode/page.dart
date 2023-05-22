@@ -1,6 +1,7 @@
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/verificationCode/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -95,12 +96,7 @@ class VerificationCodePage extends GetView<VerificationCodeController> {
                                   const EdgeInsets.symmetric(vertical: 16.0),
                               child: ElevatedButton(
                                 onPressed: controller.submit,
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                ),
-                                //child: const Text("Verificar"),
+                                style: button,
                                 child: AnimatedBuilder(
                                   animation: controller.loadingCircular,
                                   builder: (context, _) {

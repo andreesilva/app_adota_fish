@@ -1,5 +1,6 @@
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/register/controller.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:masked_text_field/masked_text_field.dart';
@@ -78,6 +79,10 @@ class RegisterPage extends GetView<RegisterController> {
                       controller: controller.nameController,
                       decoration: const InputDecoration(
                         labelText: 'Nome',
+                        labelStyle: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
                       ),
                       maxLength: 200,
                       validator: (String? value) {
@@ -92,6 +97,10 @@ class RegisterPage extends GetView<RegisterController> {
                       controller: controller.emailController,
                       decoration: const InputDecoration(
                         labelText: 'Email',
+                        labelStyle: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
                       ),
                       maxLength: 200,
                       validator: (String? value) {
@@ -104,8 +113,13 @@ class RegisterPage extends GetView<RegisterController> {
                     ),
                     MaskedTextField(
                       textFieldController: controller.phoneController,
+                      keyboardType: TextInputType.number,
                       inputDecoration: const InputDecoration(
                         labelText: 'Telefone',
+                        labelStyle: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
                       ),
                       mask: '(xx)xxxxx-xxxx',
                       maxLength: 14,
@@ -115,6 +129,10 @@ class RegisterPage extends GetView<RegisterController> {
                       controller: controller.streetController,
                       decoration: const InputDecoration(
                         labelText: "Rua",
+                        labelStyle: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
                       ),
                       validator: (String? value) {
                         if (value != null && value.isEmpty) {
@@ -127,6 +145,10 @@ class RegisterPage extends GetView<RegisterController> {
                       controller: controller.numberController,
                       decoration: const InputDecoration(
                         labelText: "Número",
+                        labelStyle: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
                       ),
                       validator: (String? value) {
                         if (value != null && value.isEmpty) {
@@ -139,6 +161,10 @@ class RegisterPage extends GetView<RegisterController> {
                       controller: controller.neighborhoodController,
                       decoration: const InputDecoration(
                         labelText: "Bairro",
+                        labelStyle: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
                       ),
                       maxLength: 200,
                       validator: (String? value) {
@@ -152,6 +178,10 @@ class RegisterPage extends GetView<RegisterController> {
                       controller: controller.referenceController,
                       decoration: const InputDecoration(
                         labelText: "Ponto de referência",
+                        labelStyle: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
                       ),
                       maxLength: 254,
                     ),
@@ -159,6 +189,10 @@ class RegisterPage extends GetView<RegisterController> {
                       controller: controller.complementController,
                       decoration: const InputDecoration(
                         labelText: "Complemento",
+                        labelStyle: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
                       ),
                       maxLength: 254,
                     ),
@@ -169,11 +203,20 @@ class RegisterPage extends GetView<RegisterController> {
                             .asMap()
                             .entries
                             .map((state) => DropdownMenuItem<int>(
-                                value: state.key, child: Text(state.value)))
+                                value: state.key,
+                                child: Text(state.value,
+                                    style: const TextStyle(
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: 'Roboto'))))
                             .toList(),
                         onChanged: controller.changeState,
                         decoration: const InputDecoration(
                           labelText: 'Estado',
+                          labelStyle: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: 'Roboto'),
                         ),
                         validator: (int? value) {
                           if (value == null) {
@@ -189,7 +232,12 @@ class RegisterPage extends GetView<RegisterController> {
                         value: controller.cityId.value,
                         items: state!
                             .map((state) => DropdownMenuItem<int>(
-                                value: state.id, child: Text(state.name)))
+                                value: state.id,
+                                child: Text(state.name,
+                                    style: const TextStyle(
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: 'Roboto'))))
                             .toList(),
                         onChanged:
                             // reset();
@@ -197,6 +245,10 @@ class RegisterPage extends GetView<RegisterController> {
                             controller.changeCity,
                         decoration: const InputDecoration(
                           labelText: 'Cidade',
+                          labelStyle: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: 'Roboto'),
                         ),
                         validator: (int? value) {
                           if (value == null) {
@@ -219,6 +271,10 @@ class RegisterPage extends GetView<RegisterController> {
                                   : Icons.visibility),
                             )),
                         labelText: "Nova Senha",
+                        labelStyle: const TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
                       ),
                       validator: (String? value) {
                         if (value != null && value.isEmpty) {
@@ -257,6 +313,10 @@ class RegisterPage extends GetView<RegisterController> {
                                   : Icons.visibility),
                             )),
                         labelText: "Confirmar Senha",
+                        labelStyle: const TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -264,7 +324,7 @@ class RegisterPage extends GetView<RegisterController> {
                           // ignore: unrelated_type_equality_checks
                         } else if (controller.newPassword.text !=
                             controller.confirmPassword.text) {
-                          return controller.confirmPassword.text;
+                          return "As senhas não são iguais";
                         } else {
                           return null;
                         }
@@ -291,11 +351,7 @@ class RegisterPage extends GetView<RegisterController> {
                                   },
                                 controller.submit(),
                               },
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(3),
-                                ),
-                              ),
+                              style: button,
                               child: const Text('Continuar'),
                             ),
                           ),

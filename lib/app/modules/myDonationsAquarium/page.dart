@@ -12,7 +12,7 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('MINHAS DOAÇÕES - AQÚARIO',
+          title: const Text('MINHAS DOAÇÕES - AQUÁRIO',
               style: TextStyle(
                   fontSize: 17,
                   fontFamily: 'Roboto',
@@ -28,11 +28,17 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
               for (var donation in state!)
                 Card(
                   margin:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      const EdgeInsets.symmetric(vertical: 17, horizontal: 20),
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
+                    side: const BorderSide(
+                      color: Colors.grey,
+                      width: 0.5,
+                    ),
                   ),
+                  elevation: 4,
+                  shadowColor: Colors.blueGrey,
                   child: Column(
                     children: [
                       Stack(
@@ -112,43 +118,45 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Row(
-                        children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: const Padding(
-                              padding: EdgeInsets.only(top: 5, left: 20),
-                              child: Text("Descrição",
-                                  textAlign: TextAlign.center),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
+                      if (donation.aquarium.description! != ' ') ...[
+                        Row(
+                          children: [
+                            Container(
                               alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 5, left: 20, right: 20),
-                                child: Text(
-                                  donation.aquarium.description!,
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Roboto',
+                              child: const Padding(
+                                padding: EdgeInsets.only(top: 5, left: 20),
+                                child: Text("Descrição",
+                                    textAlign: TextAlign.center),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 5, left: 20, right: 20),
+                                  child: Text(
+                                    donation.aquarium.description!,
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Roboto',
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Row(
@@ -176,7 +184,7 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(5.0),
+                              padding: const EdgeInsets.fromLTRB(0, 0, 7, 10),
                               child: SizedBox(
                                 width: 80,
                                 child: ElevatedButton(
@@ -186,18 +194,43 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                                       builder: (BuildContext context) {
                                         return AlertDialog(
                                           title: const Text(
-                                              "Deseja realmente inativar este anúncio?"),
+                                            "Deseja realmente inativar este anúncio?",
+                                            style: TextStyle(
+                                                color: Colors.black87,
+                                                fontWeight: FontWeight.normal,
+                                                fontFamily: 'Roboto'),
+                                          ),
                                           titleTextStyle: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 16),
                                           actionsOverflowButtonSpacing: 20,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          elevation: 7,
                                           actions: [
                                             ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4),
+                                                  ),
+                                                  elevation: 2.0,
+                                                ),
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },
                                                 child: const Text("Não")),
                                             ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4),
+                                                  ),
+                                                ),
                                                 onPressed: () {
                                                   controller.inactivateAquarium(
                                                       donation.id);
@@ -207,18 +240,19 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                                         );
                                       }),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.grey,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3),
-                                    ),
-                                  ),
+                                      backgroundColor: Colors.grey,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(3),
+                                      ),
+                                      elevation: 2,
+                                      shadowColor: Colors.blueGrey),
                                   child: const Text("Inativar",
                                       style: TextStyle(fontSize: 13)),
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(5.0),
+                              padding: const EdgeInsets.fromLTRB(0, 0, 15, 10),
                               child: SizedBox(
                                 width: 80,
                                 child: ElevatedButton(
@@ -228,18 +262,43 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                                       builder: (BuildContext context) {
                                         return AlertDialog(
                                           title: const Text(
-                                              "Deseja realmente excluir este anúncio?"),
+                                            "Deseja realmente excluir este anúncio?",
+                                            style: TextStyle(
+                                                color: Colors.black87,
+                                                fontWeight: FontWeight.normal,
+                                                fontFamily: 'Roboto'),
+                                          ),
                                           titleTextStyle: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 16),
                                           actionsOverflowButtonSpacing: 20,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          elevation: 7,
                                           actions: [
                                             ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4),
+                                                  ),
+                                                  elevation: 2.0,
+                                                ),
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },
                                                 child: const Text("Não")),
                                             ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4),
+                                                  ),
+                                                ),
                                                 onPressed: () {
                                                   controller.deleteAquarium(
                                                       donation.id);
@@ -249,11 +308,12 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                                         );
                                       }),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.red,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3),
-                                    ),
-                                  ),
+                                      backgroundColor: Colors.red,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(3),
+                                      ),
+                                      elevation: 2,
+                                      shadowColor: Colors.blueGrey),
                                   child: const Text(
                                     "Excluir",
                                     style: TextStyle(fontSize: 13),
@@ -268,7 +328,7 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(5.0),
+                              padding: const EdgeInsets.fromLTRB(0, 0, 7, 10),
                               child: SizedBox(
                                 width: 80,
                                 child: ElevatedButton(
@@ -278,18 +338,43 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                                       builder: (BuildContext context) {
                                         return AlertDialog(
                                           title: const Text(
-                                              "Deseja realmente ativar este anúncio"),
+                                            "Deseja realmente ativar este anúncio?",
+                                            style: TextStyle(
+                                                color: Colors.black87,
+                                                fontWeight: FontWeight.normal,
+                                                fontFamily: 'Roboto'),
+                                          ),
                                           titleTextStyle: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 16),
                                           actionsOverflowButtonSpacing: 20,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          elevation: 7,
                                           actions: [
                                             ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4),
+                                                  ),
+                                                  elevation: 2.0,
+                                                ),
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },
                                                 child: const Text("Não")),
                                             ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4),
+                                                  ),
+                                                ),
                                                 onPressed: () {
                                                   controller.activateAquarium(
                                                       donation.id);
@@ -299,16 +384,17 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                                         );
                                       }),
                                   style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3),
-                                    ),
-                                  ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(3),
+                                      ),
+                                      elevation: 2,
+                                      shadowColor: Colors.blueGrey),
                                   child: const Text("Ativar"),
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(5.0),
+                              padding: const EdgeInsets.fromLTRB(0, 0, 15, 10),
                               child: SizedBox(
                                 width: 80,
                                 child: ElevatedButton(
@@ -339,11 +425,12 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                                         );
                                       }),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.red,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3),
-                                    ),
-                                  ),
+                                      backgroundColor: Colors.red,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(3),
+                                      ),
+                                      elevation: 2,
+                                      shadowColor: Colors.blueGrey),
                                   child: const Text("Excluir"),
                                 ),
                               ),

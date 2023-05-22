@@ -1,17 +1,17 @@
 class SpecieModel {
   int? id;
   String name;
-  //int? typeWater;
+  int? typeWater;
 
   SpecieModel({
     this.id,
     required this.name,
-    //required this.typeWater,
+    required this.typeWater,
   });
 
   factory SpecieModel.fromJson(Map<String, dynamic> json) => SpecieModel(
         id: json['id'],
         name: json['nome'],
-        //  typeWater: json['tipo_agua'],
+        typeWater: json['tipo_agua'],
       );
 }

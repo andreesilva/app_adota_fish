@@ -1,6 +1,7 @@
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/login/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -42,8 +43,11 @@ class LoginPage extends GetView<LoginController> {
                       TextFormField(
                         controller: controller.emailController,
                         decoration: const InputDecoration(
-                          labelText: "Email",
-                        ),
+                            labelText: "Email",
+                            labelStyle: TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.normal,
+                                fontFamily: 'Roboto')),
                         validator: (String? value) {
                           if (value != null && value.isEmpty) {
                             return 'Informe o seu email';
@@ -55,17 +59,20 @@ class LoginPage extends GetView<LoginController> {
                         () => TextFormField(
                           controller: controller.passwordController,
                           decoration: InputDecoration(
-                            suffixIcon: Obx(() => GestureDetector(
-                                  onTap: () {
-                                    controller.isObscure.value =
-                                        !controller.isObscure.value;
-                                  },
-                                  child: Icon(controller.isObscure.value
-                                      ? Icons.visibility_off
-                                      : Icons.visibility),
-                                )),
-                            labelText: "Senha",
-                          ),
+                              suffixIcon: Obx(() => GestureDetector(
+                                    onTap: () {
+                                      controller.isObscure.value =
+                                          !controller.isObscure.value;
+                                    },
+                                    child: Icon(controller.isObscure.value
+                                        ? Icons.visibility_off
+                                        : Icons.visibility),
+                                  )),
+                              labelText: "Senha",
+                              labelStyle: const TextStyle(
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.normal,
+                                  fontFamily: 'Roboto')),
                           obscureText: controller.isObscure.value,
                           validator: (String? value) {
                             if (value != null && value.isEmpty) {
@@ -82,11 +89,7 @@ class LoginPage extends GetView<LoginController> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 16.0),
                               child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                ),
+                                style: button,
                                 child: AnimatedBuilder(
                                   animation: controller.loadingCircular,
                                   builder: (context, _) {

@@ -1,6 +1,7 @@
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/allDonationPet/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -37,7 +38,7 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
                   if ((donation.clientDonor!.address.city.state != null))
                     Card(
                       margin: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
+                          vertical: 17, horizontal: 20),
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -46,7 +47,7 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
                           width: 0.5,
                         ),
                       ),
-                      elevation: 3,
+                      elevation: 4,
                       child: Column(
                         children: [
                           Stack(
@@ -129,11 +130,7 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
                                 onPressed: () => Get.toNamed(Routes.donationPet
                                     .replaceFirst(
                                         ':id', donation.id.toString())),
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                ),
+                                style: button,
                                 child: const Text("Ver Mais"),
                               ),
                             ),

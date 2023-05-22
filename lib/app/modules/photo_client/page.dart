@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/photo_client/controller.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,7 +23,7 @@ class PhotoClientPage extends GetView<PhotoClientController> {
         backgroundColor: ColorsApp.appBackground,
       ),
       body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 17.0, horizontal: 16.0),
           child: Expanded(
             child: Column(
               children: [
@@ -167,6 +168,7 @@ class PhotoClientPage extends GetView<PhotoClientController> {
                                           },
                                         controller.submit(),
                                       },
+                                  style: button,
                                   child: const Text('Finalizar')),
                             ),
                           ],

@@ -19,8 +19,11 @@ class MyDonationsPetController extends GetxController
 
   bool get isLogged => _authService.isLogged;
 
+  final loading = true.obs;
+
   @override
   void onInit() {
+    loading(true);
     _repository.getMyDonationsPet().then((data) {
       if (data.isEmpty) {
         print("Msg 1");
@@ -45,7 +48,7 @@ class MyDonationsPetController extends GetxController
         MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
       }
     });
-
+    loading(false);
     super.onInit();
   }
 

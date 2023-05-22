@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:giff_dialog/giff_dialog.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OptionDonationPage extends GetView<OptionDonationController> {
@@ -29,8 +29,14 @@ class OptionDonationPage extends GetView<OptionDonationController> {
       ),
       body: AlertDialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(5),
+          side: const BorderSide(
+            color: Colors.blueGrey,
+            width: 1.5,
+          ),
         ),
+        elevation: 7,
+        shadowColor: Colors.blueGrey,
         content: SizedBox(
             width: double.maxFinite,
             height: 170,
@@ -42,7 +48,7 @@ class OptionDonationPage extends GetView<OptionDonationController> {
                       child: Text("QUERO DOAR:",
                           style: TextStyle(
                               fontSize: 27,
-                              //fontWeight: FontWeight.bold,
+                              color: Colors.black38,
                               fontFamily: 'Roboto'))),
                   onTap: () {},
                 ),

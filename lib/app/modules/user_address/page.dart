@@ -1,5 +1,6 @@
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/user_address/controller.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -58,6 +59,10 @@ class UserAddressPage extends GetView<UserAddressController> {
                   controller: controller.streetController,
                   decoration: const InputDecoration(
                     labelText: "Rua",
+                    labelStyle: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'Roboto'),
                   ),
                   maxLength: 254,
                   validator: (String? value) {
@@ -71,6 +76,10 @@ class UserAddressPage extends GetView<UserAddressController> {
                   controller: controller.numberController,
                   decoration: const InputDecoration(
                     labelText: "Número",
+                    labelStyle: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'Roboto'),
                   ),
                   validator: (String? value) {
                     if (value != null && value.isEmpty) {
@@ -83,6 +92,10 @@ class UserAddressPage extends GetView<UserAddressController> {
                   controller: controller.neighborhoodController,
                   decoration: const InputDecoration(
                     labelText: "Bairro",
+                    labelStyle: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'Roboto'),
                   ),
                   maxLength: 254,
                   validator: (String? value) {
@@ -96,6 +109,10 @@ class UserAddressPage extends GetView<UserAddressController> {
                   controller: controller.referenceController,
                   decoration: const InputDecoration(
                     labelText: "Ponto de referência",
+                    labelStyle: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'Roboto'),
                   ),
                   maxLength: 254,
                 ),
@@ -103,6 +120,10 @@ class UserAddressPage extends GetView<UserAddressController> {
                   controller: controller.complementController,
                   decoration: const InputDecoration(
                     labelText: "Complemento",
+                    labelStyle: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'Roboto'),
                   ),
                   maxLength: 254,
                 ),
@@ -158,11 +179,7 @@ class UserAddressPage extends GetView<UserAddressController> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                          ),
+                          style: button,
                           child: AnimatedBuilder(
                             animation: controller.loadingCircular,
                             builder: (context, _) {
@@ -194,11 +211,7 @@ class UserAddressPage extends GetView<UserAddressController> {
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
                             onPressed: () => Navigator.of(context).pop(true),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(3),
-                              ),
-                            ),
+                            style: button,
                             child: const Text("Cancelar")),
                       ),
                     ),

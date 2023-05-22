@@ -1,6 +1,7 @@
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/donationAquarium/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
@@ -33,11 +34,7 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
         body: Center(
           child: ElevatedButton(
             onPressed: () => Get.toNamed(Routes.login),
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(3),
-              ),
-            ),
+            style: button,
             child: const Text('Entrar com a minha conta'),
           ),
         ),
@@ -56,46 +53,55 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
       ),
       body: controller.obx(
         (state) => SingleChildScrollView(
-            padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
             child: Column(children: [
               Card(
                 margin:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 17, horizontal: 20),
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
+                  side: const BorderSide(
+                    color: Colors.grey,
+                    width: 0.5,
+                  ),
                 ),
+                elevation: 4,
+                shadowColor: Colors.blueGrey,
                 child: Column(
                   children: [
                     Stack(
                       children: [
-                        SizedBox(
-                          width: 400.0,
-                          height: 270.0,
-                          child: ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(6),
-                                topRight: Radius.circular(6),
-                              ),
-                              child: FadeInImage.memoryNetwork(
-                                  fit: BoxFit.fill,
-                                  placeholder: kTransparentImage,
-                                  image: state!.aquarium!.photo!)),
+                        Expanded(
+                          child: Center(
+                            child: SizedBox(
+                              width: 400.0,
+                              height: 270,
+                              child: ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(5),
+                                      topRight: Radius.circular(5),
+                                      bottomLeft: Radius.circular(5),
+                                      bottomRight: Radius.circular(5)),
+                                  child: FadeInImage.memoryNetwork(
+                                      fit: BoxFit.fill,
+                                      placeholder: kTransparentImage,
+                                      image: state!.aquarium!.photo!)),
+                            ),
+                          ),
                         ),
                         Container(
                           alignment: Alignment.centerLeft,
                           child: badges.Badge(
                             badgeStyle: const badges.BadgeStyle(
-                              badgeColor: Colors.grey,
+                              badgeColor: ColorsApp.advertiserName,
                               shape: badges.BadgeShape.square,
                               borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(6),
-                                topLeft: Radius.circular(6),
-                                bottomLeft: Radius.circular(6),
-                              ),
+                                  topRight: Radius.circular(2),
+                                  topLeft: Radius.circular(3),
+                                  bottomLeft: Radius.circular(0),
+                                  bottomRight: Radius.circular(3)),
                             ),
-                            //toAnimate: true,
                             badgeContent: Text(
                               "Anunciante: ${state!.clientDonor!.name}",
                             ),
@@ -113,7 +119,7 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                       alignment: Alignment.centerLeft,
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            top: 0, left: 20, bottom: 0, right: 20),
+                            top: 0, left: 22, bottom: 0, right: 20),
                         child: Text(
                             "${state!.clientDonor!.address.city.name} / ${state!.clientDonor!.address.city.state!.name}",
                             textAlign: TextAlign.left),
@@ -125,7 +131,7 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
               Row(
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(top: 5, left: 15),
+                    padding: EdgeInsets.only(top: 5, left: 20),
                     child: Icon(Icons.calendar_month, color: Colors.blueGrey),
                   ),
                   Padding(
@@ -146,8 +152,13 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(3),
+                    side: const BorderSide(
+                      color: Colors.grey,
+                      width: 0.5,
+                    ),
                   ),
+                  elevation: 4,
                   child: Expanded(
                     child: Column(
                       children: [
@@ -196,8 +207,13 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                 margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(3),
+                  side: const BorderSide(
+                    color: Colors.grey,
+                    width: 0.5,
+                  ),
                 ),
+                elevation: 4,
                 child: Column(
                   children: [
                     Row(
@@ -290,11 +306,7 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                       },
                     )
                   },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(3),
-                    ),
-                  ),
+                  style: button,
                   child: const Text("Quero adotar esse aquário"),
                 ),
               )

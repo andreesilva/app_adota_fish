@@ -1,5 +1,6 @@
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/user_profile/controller.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:masked_text_field/masked_text_field.dart';
@@ -31,6 +32,10 @@ class UserProfilePage extends GetView<UserProfileController> {
                 controller: controller.nameController,
                 decoration: const InputDecoration(
                   labelText: "Nome",
+                  labelStyle: TextStyle(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'Roboto'),
                 ),
                 maxLength: 200,
                 validator: (String? value) {
@@ -44,6 +49,10 @@ class UserProfilePage extends GetView<UserProfileController> {
                 controller: controller.emailController,
                 decoration: const InputDecoration(
                   labelText: "Email",
+                  labelStyle: TextStyle(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'Roboto'),
                 ),
                 maxLength: 200,
                 validator: (String? value) {
@@ -55,8 +64,13 @@ class UserProfilePage extends GetView<UserProfileController> {
               ),
               MaskedTextField(
                 textFieldController: controller.phoneController,
+                keyboardType: TextInputType.number,
                 inputDecoration: const InputDecoration(
                   labelText: 'Telefone',
+                  labelStyle: TextStyle(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'Roboto'),
                 ),
                 mask: '(xx)xxxxx-xxxx',
                 maxLength: 14,
@@ -71,11 +85,7 @@ class UserProfilePage extends GetView<UserProfileController> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(3),
-                          ),
-                        ),
+                        style: button,
                         child: AnimatedBuilder(
                           animation: controller.loadingCircular,
                           builder: (context, _) {
@@ -107,11 +117,7 @@ class UserProfilePage extends GetView<UserProfileController> {
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: ElevatedButton(
                           onPressed: () => Navigator.of(context).pop(true),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                          ),
+                          style: button,
                           child: const Text("Cancelar")),
                     ),
                   ),

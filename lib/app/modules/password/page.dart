@@ -1,5 +1,6 @@
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/password/controller.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter_pw_validator/Resource/Strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,10 +52,14 @@ class PasswordPage extends GetView<PasswordController> {
                                   : Icons.visibility),
                             )),
                         labelText: "Nova Senha",
+                        labelStyle: const TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
                       ),
                       validator: (String? value) {
                         if (value != null && value.isEmpty) {
-                          return 'Campo Obrigatório';
+                          return 'Informe  a nova senha';
                         } else {
                           return null;
                         }
@@ -89,10 +94,14 @@ class PasswordPage extends GetView<PasswordController> {
                                   : Icons.visibility),
                             )),
                         labelText: "Confirmar Senha",
+                        labelStyle: const TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Campo Obrigatório';
+                          return 'Confirme a nova senha';
                           // ignore: unrelated_type_equality_checks
                         } else if (controller.newPassword.text !=
                             controller.confirmPassword.text) {
@@ -109,31 +118,8 @@ class PasswordPage extends GetView<PasswordController> {
                       child: Row(
                         children: [
                           Expanded(
-                            /*
                             child: ElevatedButton(
-                                onPressed: () => {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return const Center(
-                                                child:
-                                                    CircularProgressIndicator());
-                                          }),
-                                      controller.submit(),
-                                    },
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                ),
-                                child: const Text("Salvar")),
-*/
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(3),
-                                ),
-                              ),
+                              style: button,
                               child: AnimatedBuilder(
                                 animation: controller.loadingCircular,
                                 builder: (context, _) {
@@ -166,11 +152,7 @@ class PasswordPage extends GetView<PasswordController> {
                             child: ElevatedButton(
                                 onPressed: () =>
                                     Navigator.of(context).pop(true),
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                ),
+                                style: button,
                                 child: const Text("Cancelar")),
                           ),
                         ],

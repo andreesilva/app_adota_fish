@@ -14,8 +14,6 @@ class UserAddressController extends GetxController
 
   UserAddressController(this._repository);
 
-  //String get stateName => '';
-
   final key_dropdown = GlobalKey<FormState>();
 
   final formKey = GlobalKey<FormState>();

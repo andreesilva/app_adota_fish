@@ -15,45 +15,55 @@ class DashboardAquariumPage extends GetView<DashboardAquariumController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: Obx((() => NavigationBar(
-                onDestinationSelected: controller.changePageIndex,
-                selectedIndex: controller.currentPageIndex.value,
-                destinations: [
-                  const NavigationDestination(
-                      icon:
-                          FaIcon(FontAwesomeIcons.fish, color: Colors.blueGrey),
-                      label: "Pets",
-                      selectedIcon: FaIcon(FontAwesomeIcons.fish,
-                          color: Colors.blueAccent)),
-                  const NavigationDestination(
-                    icon: Icon(Icons.crop_5_4, color: Colors.blueGrey),
-                    label: "Aquários",
-                    selectedIcon:
-                        Icon(Icons.crop_5_4, color: Colors.blueAccent),
+        bottomNavigationBar: Obx((() => Container(
+              decoration: const BoxDecoration(
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: Colors.blueGrey,
+                    blurRadius: 9,
                   ),
-                  if (controller.isLogged)
+                ],
+              ),
+              child: NavigationBar(
+                  onDestinationSelected: controller.changePageIndex,
+                  selectedIndex: controller.currentPageIndex.value,
+                  destinations: [
                     const NavigationDestination(
-                      icon: FaIcon(FontAwesomeIcons.handHoldingHeart,
-                          color: Colors.blueGrey),
-                      label: "Doar",
-                      selectedIcon: FaIcon(FontAwesomeIcons.handHoldingHeart,
-                          color: Colors.blueAccent),
-                    ),
-                  if (controller.isLogged) ...[
+                        icon: FaIcon(FontAwesomeIcons.fish,
+                            color: Colors.blueGrey),
+                        label: "Pets",
+                        selectedIcon: FaIcon(FontAwesomeIcons.fish,
+                            color: Colors.blueAccent)),
                     const NavigationDestination(
-                      icon: Icon(Icons.person, color: Colors.blueGrey),
-                      label: "Minha conta",
+                      icon: Icon(Icons.crop_5_4, color: Colors.blueGrey),
+                      label: "Aquários",
                       selectedIcon:
-                          Icon(Icons.person, color: Colors.blueAccent),
+                          Icon(Icons.crop_5_4, color: Colors.blueAccent),
                     ),
-                  ] else
-                    const NavigationDestination(
-                      icon: Icon(Icons.person, color: Colors.blueGrey),
-                      label: "Acessar",
-                      selectedIcon:
-                          Icon(Icons.person, color: Colors.blueAccent),
-                    ),
-                ]))),
+                    if (controller.isLogged)
+                      const NavigationDestination(
+                        icon: FaIcon(FontAwesomeIcons.handHoldingHeart,
+                            color: Colors.blueGrey),
+                        label: "Doar",
+                        selectedIcon: FaIcon(FontAwesomeIcons.handHoldingHeart,
+                            color: Colors.blueAccent),
+                      ),
+                    if (controller.isLogged) ...[
+                      const NavigationDestination(
+                        icon: Icon(Icons.person, color: Colors.blueGrey),
+                        label: "Minha conta",
+                        selectedIcon:
+                            Icon(Icons.person, color: Colors.blueAccent),
+                      ),
+                    ] else
+                      const NavigationDestination(
+                        icon: Icon(Icons.person, color: Colors.blueGrey),
+                        label: "Acessar",
+                        selectedIcon:
+                            Icon(Icons.person, color: Colors.blueAccent),
+                      ),
+                  ]),
+            ))),
         body: Obx(
           () => IndexedStack(
             index: controller.currentPageIndex.value,

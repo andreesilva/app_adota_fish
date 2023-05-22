@@ -1,5 +1,6 @@
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/resetPassword/controller.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter_pw_validator/Resource/Strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -126,11 +127,7 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
                                           }),
                                       controller.submit(),
                                     },
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                ),
+                                style: button,
                                 child: const Text("Salvar")),
                           ),
                         ],
@@ -144,11 +141,7 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
                             child: ElevatedButton(
                                 onPressed: () =>
                                     Navigator.of(context).pop(true),
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                ),
+                                style: button,
                                 child: const Text("Cancelar")),
                           ),
                         ],

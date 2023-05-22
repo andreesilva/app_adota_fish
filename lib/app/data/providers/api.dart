@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:app_adota_fish/app/data/models/photo_donation_request.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get_connect/sockets/src/socket_notifier.dart';
@@ -37,6 +38,7 @@ class Api extends GetConnect {
 
   final _client = http.Client();
   dynamic _url = 'http://3.133.141.235:3333';
+  //dynamic _url = 'http://10.0.0.230:3333';
   bool isInternet = false;
 
   @override
@@ -217,6 +219,38 @@ class Api extends GetConnect {
     try {
       await _client.put(
         Uri.parse('$_url/cliente/foto'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authorization': 'Bearer ${_storageService.token}',
+        },
+        body: jsonEncode(data),
+      );
+    } catch (e) {
+      print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<void> putPhotoPet(PhotoDonationRequestModel data) async {
+    try {
+      await _client.put(
+        Uri.parse('$_url/doacao/pet/foto/${data.id}'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authorization': 'Bearer ${_storageService.token}',
+        },
+        body: jsonEncode(data),
+      );
+    } catch (e) {
+      print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<void> putPet(PetRequestModel data) async {
+    try {
+      await _client.put(
+        Uri.parse('$_url/doacao/pet/foto/${data.id}'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'authorization': 'Bearer ${_storageService.token}',

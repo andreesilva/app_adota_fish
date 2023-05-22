@@ -8,7 +8,7 @@ class MessageGeneralError {
         barrierDismissible: false,
         context: Get.context!,
         title: "",
-        text: "Houve um erro!",
+        text: "Houve um erro! Tente novamente.",
         confirmBtnText: "Ok",
         type: quickAlertType);
   }

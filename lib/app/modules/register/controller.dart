@@ -10,6 +10,7 @@ import 'package:app_adota_fish/app/widgets/message_general_error.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../../data/models/specie_request.dart';
 
@@ -94,6 +95,11 @@ class RegisterController extends GetxController
       password: newPassword.text,
     );
 
+    print(userProfileRequest.name);
+    print(userProfileRequest.email);
+    print(userProfileRequest.phone);
+    print(userProfileRequest.password);
+
     _repository.register(userProfileRequest).then((value) async {
       await _authService.login(UserLoginRequestModel(
         email: emailController.text,
@@ -102,14 +108,18 @@ class RegisterController extends GetxController
 
       if (referenceController.text == '') {
         reference = ' ';
+        print('if referencia ' + reference);
       } else {
         reference = referenceController.text;
+        print('else referencia ' + reference);
       }
 
       if (complementController.text == '') {
         complement = ' ';
+        print('if complmente ' + complement);
       } else {
         complement = complementController.text;
+        print('else complmente ' + complement);
       }
 
       var userAddressRequest = UserAddressRequestModel(
@@ -127,7 +137,7 @@ class RegisterController extends GetxController
       Get.offAllNamed(Routes.photoClient, arguments: 1);
     }, onError: (error) {
       print(error.toString());
-      //MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
+      showAlertError(QuickAlertType.error);
     });
   }
 
@@ -164,5 +174,15 @@ class RegisterController extends GetxController
     key_dropdown.currentState?.reset();
 
     loading(false);
+  }
+
+  void showAlertError(QuickAlertType quickAlertType) {
+    QuickAlert.show(
+        onConfirmBtnTap: () => Get.offAllNamed(Routes.register),
+        barrierDismissible: false,
+        context: Get.context!,
+        text: "Houve um erro! Tente novamente.",
+        confirmBtnText: "Ok",
+        type: quickAlertType);
   }
 }

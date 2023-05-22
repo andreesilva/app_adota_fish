@@ -21,5 +21,8 @@ final ThemeData themeData = ThemeData(
   elevatedButtonTheme: elevatedButtonTheme,
   backgroundColor: Colors.blue,
   appBarTheme: const AppBarTheme(
-      iconTheme: IconThemeData(color: Colors.white), elevation: 5),
+    iconTheme: IconThemeData(color: Colors.white),
+    elevation: 7,
+    shadowColor: Colors.blueGrey,
+  ),
 );

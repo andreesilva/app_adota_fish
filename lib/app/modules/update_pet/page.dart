@@ -29,8 +29,15 @@ class UpdatePetPage extends GetView<UpdatePetController> {
     '6',
   ];
 
+  var nameTypeWater = '';
+
   @override
   Widget build(BuildContext context) {
+    if (controller.watherIdController == 1) {
+      nameTypeWater = "Água doce";
+    } else {
+      nameTypeWater = "Água salgada";
+    }
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
@@ -44,28 +51,10 @@ class UpdatePetPage extends GetView<UpdatePetController> {
           shape: const Border(
               bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
         ),
-        /*
-        Center(
-                            child: CircleAvatar(
-                              radius: 81,
-                              backgroundColor: Colors.blue,
-                              child: CircleAvatar(
-                                backgroundImage: controller
-                                            .isProficPicPath.value ==
-                                        true
-                                    ? FileImage(
-                                        File(controller.profilePicPath.value),
-                                      ) as ImageProvider
-                                    : NetworkImage(controller.photoClient),
-                                radius: 80,
-                              ),
-                            ),
-                          ),
-                          */
         body: controller.obx(
           (state) => SingleChildScrollView(
             padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                const EdgeInsets.symmetric(vertical: 17.0, horizontal: 16.0),
             child: Form(
               key: controller.formKey,
               child: Column(
@@ -83,7 +72,7 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                                 ? Image.file(File(
                                     controller.profilePicPath.value,
                                   ))
-                                : Image.network(controller.photoClient)),
+                                : Image.network(controller.photoPet)),
                       ),
                       Positioned(
                           bottom: 40,
@@ -129,7 +118,8 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                                                 ],
                                               ),
                                               onTap: () {
-                                                takePhoto(ImageSource.gallery);
+                                                takePhoto(ImageSource.gallery,
+                                                    controller.petIdController);
                                               }),
                                           const SizedBox(
                                             width: 80,
@@ -153,7 +143,8 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                                                 ],
                                               ),
                                               onTap: () {
-                                                takePhoto(ImageSource.camera);
+                                                takePhoto(ImageSource.camera,
+                                                    controller.petIdController);
                                               }),
                                         ],
                                       )
@@ -166,16 +157,21 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                     ],
                   ),
                   DropdownButtonFormField(
-                    value: controller.typeWaterId.value,
+                    value: controller.watherIdController.value,
                     items: _valores
                         .asMap()
                         .entries
                         .map((typeWater) => DropdownMenuItem<int>(
-                            value: typeWater.key, child: Text(typeWater.value)))
+                            value: typeWater.key,
+                            child: Text(typeWater.value,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.normal))))
                         .toList(),
                     onChanged: controller.changeTypeWater,
-                    decoration: const InputDecoration(
-                      labelText: 'Tipo da água',
+                    hint: Text(
+                      nameTypeWater,
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.normal),
                     ),
                     validator: (int? value) {
                       if (value == null) {
@@ -185,12 +181,17 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                     },
                   ),
                   SearchChoices.single(
-                    items: state!
+                    key: controller.key_dropdown,
+                    items: state?.state2!
                         .map((specie) => DropdownMenuItem<dynamic>(
                             value: specie.name, child: Text(specie.name)))
                         .toList(),
                     value: controller.changeSpecie,
-                    hint: "Espécie",
+                    hint: Text(
+                      controller.specieController,
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.normal),
+                    ),
                     searchHint: "Espécie",
                     onChanged: controller.changeSpecie,
                     isExpanded: true,
@@ -204,8 +205,10 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                             value: amount.key, child: Text(amount.value)))
                         .toList(),
                     onChanged: controller.changeAmount,
-                    decoration: const InputDecoration(
-                      labelText: 'Quantidade',
+                    hint: Text(
+                      controller.amountIdController.toString(),
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.normal),
                     ),
                     validator: (int? value) {
                       if (value == null) {
@@ -214,20 +217,15 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                       return null;
                     },
                   ),
-                  TextField(
+                  TextFormField(
                     keyboardType: TextInputType.multiline,
                     maxLines: 4,
                     controller: controller.observationController,
                     style: const TextStyle(
-                      fontSize: 12,
                       fontFamily: 'Roboto',
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
                     ),
-                    decoration: const InputDecoration(
-                        hintText:
-                            "Adicione aqui informaçõs adicionais sobre o seu animal",
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.grey))),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -254,7 +252,7 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                                 borderRadius: BorderRadius.circular(3),
                               ),
                             ),
-                            child: const Text('Publicar anúncio'),
+                            child: const Text('Editar anúncio'),
                           ),
                         ),
                       ],
@@ -267,13 +265,13 @@ class UpdatePetPage extends GetView<UpdatePetController> {
         ));
   }
 
-  Future<void> takePhoto(ImageSource source) async {
+  Future<void> takePhoto(ImageSource source, int idPet) async {
     final pickedImage =
         await imagePicker.pickImage(source: source, imageQuality: 100);
 
     pickedFile = File(pickedImage!.path);
 
-    controller.setProfileImagePath(pickedFile!.path);
+    controller.setProfileImagePath(pickedFile!.path, idPet);
 
     Get.back();
   }

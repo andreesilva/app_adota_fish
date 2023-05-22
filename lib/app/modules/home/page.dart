@@ -1,6 +1,7 @@
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/home/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +16,6 @@ class HomePage extends GetView<HomeController> {
 
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
           title: const Text('ADOTA FISH',
               style: TextStyle(
                   fontSize: 17,
@@ -42,7 +42,7 @@ class HomePage extends GetView<HomeController> {
                   if ((donation.clientDonor.address.city.state != null))
                     Card(
                       margin: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
+                          vertical: 17, horizontal: 20),
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -51,7 +51,7 @@ class HomePage extends GetView<HomeController> {
                           width: 0.5,
                         ),
                       ),
-                      elevation: 3,
+                      elevation: 4,
                       child: Column(
                         children: [
                           Stack(
@@ -152,11 +152,7 @@ class HomePage extends GetView<HomeController> {
                                 onPressed: () => Get.toNamed(
                                     Routes.donationAquarium.replaceFirst(
                                         ':id', donation.id.toString())),
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                ),
+                                style: button,
                                 child: const Text("Ver Mais"),
                               ),
                             ),

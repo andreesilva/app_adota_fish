@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/register_pet/controller.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,7 +47,7 @@ class RegistePetPage extends GetView<RegisterPetController> {
         body: controller.obx(
           (state) => SingleChildScrollView(
             padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                const EdgeInsets.symmetric(vertical: 17.0, horizontal: 16.0),
             child: Form(
               key: controller.formKey,
               child: Column(
@@ -58,11 +59,16 @@ class RegistePetPage extends GetView<RegisterPetController> {
                             alignment: Alignment.center,
                             width: double.infinity,
                             height: 180,
-                            //color: Colors.grey[300],
                             child: controller.isProficPicPath.value == true
-                                ? Image.file(File(
-                                    controller.profilePicPath.value,
-                                  ))
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1.4, color: Colors.blueGrey),
+                                    ),
+                                    child: Image.file(File(
+                                      controller.profilePicPath.value,
+                                    )),
+                                  )
                                 : const Text('Insira uma foto do pet'),
                           )),
                       Positioned(
@@ -156,6 +162,10 @@ class RegistePetPage extends GetView<RegisterPetController> {
                     onChanged: controller.changeTypeWater,
                     decoration: const InputDecoration(
                       labelText: 'Tipo da água',
+                      labelStyle: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: 'Roboto'),
                     ),
                     validator: (int? value) {
                       if (value == null) {
@@ -186,6 +196,10 @@ class RegistePetPage extends GetView<RegisterPetController> {
                     onChanged: controller.changeAmount,
                     decoration: const InputDecoration(
                       labelText: 'Quantidade',
+                      labelStyle: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: 'Roboto'),
                     ),
                     validator: (int? value) {
                       if (value == null) {
@@ -229,11 +243,7 @@ class RegistePetPage extends GetView<RegisterPetController> {
                                 },
                               controller.submit(),
                             },
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(3),
-                              ),
-                            ),
+                            style: button,
                             child: const Text('Publicar anúncio'),
                           ),
                         ),

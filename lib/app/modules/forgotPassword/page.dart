@@ -1,6 +1,7 @@
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/forgotPassword/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
+import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,8 +46,11 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                       TextFormField(
                         controller: controller.email,
                         decoration: const InputDecoration(
-                          labelText: "Email",
-                        ),
+                            labelText: "Email",
+                            labelStyle: TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.normal,
+                                fontFamily: 'Roboto')),
                         validator: (String? value) {
                           if (value != null && value.isEmpty) {
                             return 'Informe o seu email';
@@ -62,11 +66,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                                   const EdgeInsets.symmetric(vertical: 16.0),
                               child: ElevatedButton(
                                 onPressed: controller.submit,
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                ),
+                                style: button,
                                 child: const Text("Receber instruções"),
                               ),
                             ),
