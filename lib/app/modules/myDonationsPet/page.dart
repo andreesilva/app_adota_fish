@@ -263,7 +263,7 @@ class MyDonationsPetPage extends GetView<MyDonationsPetController> {
                                       .replaceFirst(
                                           ':id', donation.id.toString())),
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.grey,
+                                      backgroundColor: Colors.blueGrey,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(3),
                                       ),
@@ -403,7 +403,7 @@ class MyDonationsPetPage extends GetView<MyDonationsPetController> {
                                       .replaceFirst(
                                           ':id', donation.id.toString())),
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.grey,
+                                      backgroundColor: Colors.blueGrey,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(3),
                                       ),

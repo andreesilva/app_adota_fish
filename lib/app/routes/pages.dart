@@ -35,6 +35,8 @@ import 'package:app_adota_fish/app/modules/select_state_pet/binding.dart';
 import 'package:app_adota_fish/app/modules/select_state_pet/page.dart';
 import 'package:app_adota_fish/app/modules/splash/binding.dart';
 import 'package:app_adota_fish/app/modules/splash/page.dart';
+import 'package:app_adota_fish/app/modules/update_aquarium/binding.dart';
+import 'package:app_adota_fish/app/modules/update_aquarium/page.dart';
 import 'package:app_adota_fish/app/modules/update_pet/binding.dart';
 import 'package:app_adota_fish/app/modules/update_pet/page.dart';
 import 'package:app_adota_fish/app/modules/user_address/binding.dart';
@@ -147,6 +149,11 @@ abstract class AppPages {
       name: Routes.updatePet,
       page: () => UpdatePetPage(),
       binding: UpdatePetBinding(),
+    ),
+    GetPage(
+      name: Routes.updateAquarium,
+      page: () => UpdateAquariumPage(),
+      binding: UpdateAquariumBinding(),
     ),
     GetPage(
       name: Routes.account,

@@ -1,4 +1,5 @@
 import 'package:app_adota_fish/app/data/models/donations_pet.dart';
+import 'package:app_adota_fish/app/data/models/pet_not_photo_request.dart';
 import 'package:app_adota_fish/app/data/models/photo_client_request.dart';
 import 'package:app_adota_fish/app/data/models/photo_donation_request.dart';
 import 'package:app_adota_fish/app/data/models/specie_request.dart';
@@ -15,10 +16,7 @@ import 'package:get/get.dart';
 
 import 'package:quickalert/quickalert.dart';
 
-//with StateMixin<Tuple2<DonationPetModel, List<SpecieModel>>> {
-
 class MyState<T1, T2> {
-  // you can use more like T3, T4...
   T1? state1;
   T2 state2;
 
@@ -56,14 +54,18 @@ class UpdatePetController
   var observationController = TextEditingController();
 
   var cityController = "".obs;
-  var specieController = "";
+  var specieController = "".obs;
   var specieIdController = 0.obs;
   var amountIdController = 0.obs;
   var petIdController = 0;
   var watherIdController = 0.obs;
 
-  var photoPet =
-      "https://firebasestorage.googleapis.com/v0/b/app-adota-fish.appspot.com/o/images%2Faccount%2FVector_1.png?alt=media&token=a8237bea-4fe5-4a17-9080-8117b78b7458";
+  var _clickedChangeAmount = 0.obs;
+  var _clickedChangeSpecie = 0.obs;
+
+  var photoPet = "";
+
+  dynamic xxxx;
 
   @override
   void onInit() {
@@ -99,11 +101,12 @@ class UpdatePetController
       petIdController = data.petId;
       photoPet = data.pet.photo!;
       specieIdController.value = data.pet.specie!.id!;
-      specieController = data.pet.specie!.name;
+      specieController.value = data.pet.specie!.name;
       amountIdController.value = data.pet.amount!;
       observationController.text = data.pet.observation!;
       watherIdController.value = data.pet.specie!.typeWater!;
 
+      print('QUANTIDADE - ${amountIdController.value}');
       change(MyState(state1: data, state2: []), status: RxStatus.success());
     }, onError: (error) {
       if ((error.toString() == 'Connection failed') ||
@@ -126,14 +129,14 @@ class UpdatePetController
 
   void showAlertSuccess(QuickAlertType quickAlertType) {
     QuickAlert.show(
-      barrierDismissible: false,
-      context: Get.context!,
-      title: "",
-      text: "Anúncio postado com sucesso!",
-      confirmBtnText: "Ok",
-      type: quickAlertType,
-      onConfirmBtnTap: () => Get.offAllNamed(Routes.dashboard, arguments: 0),
-    );
+        context: Get.context!,
+        title: "",
+        text: "Anúncio atualizado com sucesso!",
+        confirmBtnText: "Ok",
+        type: quickAlertType,
+        //onConfirmBtnTap: () => Get.back(result: true),
+        onConfirmBtnTap: () =>
+            Get.offAllNamed(Routes.myDonationsPet, arguments: 0));
   }
 
   void showAlertError(QuickAlertType quickAlertType) {
@@ -179,19 +182,88 @@ class UpdatePetController
       observation = observationController.text;
     }
 
-    var petRequest = PetRequestModel(
-        id: petIdController,
-        photo: photoPet,
-        specie: specieId,
-        amount: amountId.value!,
-        observation: observation);
+    if ((_clickedChangeAmount.value == 1) &&
+        (_clickedChangeSpecie.value == 1)) {
+      var petNotPhotoRequest = PetNotPhotoRequestModel(
+          id: petIdController,
+          specie: specieId,
+          amount: amountId.value!,
+          observation: observation);
 
-    _repository.putPet(petRequest).then((value) async {
-      showAlertSuccess(QuickAlertType.success);
-    }, onError: (error) {
-      print(error.toString());
-      showAlertError(QuickAlertType.error);
-    });
+      print('1 ${petNotPhotoRequest.id}');
+
+      print('1 ${petNotPhotoRequest.specie}');
+      print('1 ${petNotPhotoRequest.amount}');
+      print('1 ${petNotPhotoRequest.observation}');
+
+      _repository.putPet(petNotPhotoRequest).then((value) async {
+        showAlertSuccess(QuickAlertType.success);
+      }, onError: (error) {
+        print(error.toString());
+        showAlertError(QuickAlertType.error);
+      });
+      print("_clickedChangeState = true");
+    } else if (_clickedChangeSpecie.value == 1) {
+      var petNotPhotoRequest = PetNotPhotoRequestModel(
+          id: petIdController,
+          specie: specieId,
+          amount: amountIdController.value,
+          observation: observation);
+
+      print('2 ${petNotPhotoRequest.id}');
+
+      print('2 ${petNotPhotoRequest.specie}');
+      print('2 ${petNotPhotoRequest.amount}');
+      print('2 ${petNotPhotoRequest.observation}');
+
+      _repository.putPet(petNotPhotoRequest).then((value) async {
+        showAlertSuccess(QuickAlertType.success);
+      }, onError: (error) {
+        print(error.toString());
+        showAlertError(QuickAlertType.error);
+      });
+      print("_clickedChangeState = true");
+    } else if (_clickedChangeAmount.value == 1) {
+      var petNotPhotoRequest = PetNotPhotoRequestModel(
+          id: petIdController,
+          specie: specieIdController.value,
+          amount: amountId.value!,
+          observation: observation);
+
+      print('3 ${petNotPhotoRequest.id}');
+
+      print('3 ${petNotPhotoRequest.specie}');
+      print('3 ${petNotPhotoRequest.amount}');
+      print('3 ${petNotPhotoRequest.observation}');
+
+      _repository.putPet(petNotPhotoRequest).then((value) async {
+        showAlertSuccess(QuickAlertType.success);
+      }, onError: (error) {
+        print(error.toString());
+        showAlertError(QuickAlertType.error);
+      });
+      print("_clickedChangeState = true");
+    } else {
+      var petNotPhotoRequest = PetNotPhotoRequestModel(
+          id: petIdController,
+          specie: specieIdController.value,
+          amount: amountIdController.value,
+          observation: observation);
+
+      print('4 ${petNotPhotoRequest.id}');
+
+      print('4 ${petNotPhotoRequest.specie}');
+      print('4 ${petNotPhotoRequest.amount}');
+      print('4 ${petNotPhotoRequest.observation}');
+
+      _repository.putPet(petNotPhotoRequest).then((value) async {
+        showAlertSuccess(QuickAlertType.success);
+      }, onError: (error) {
+        print(error.toString());
+        showAlertError(QuickAlertType.error);
+      });
+      print("_clickedChangeState = false");
+    }
   }
 
   Future<void> setProfileImagePath(String path, int idPet) async {
@@ -217,6 +289,10 @@ class UpdatePetController
     loading(true);
     typeWaterId.value = typeWaterIdSelected;
 
+    specieName.value = null;
+
+    specieController.value = "Selecione a espécie";
+
     _repository.getSpecies(typeWaterIdSelected!).then((data) {
       loading(false);
       //change(data, status: RxStatus.success());
@@ -241,6 +317,10 @@ class UpdatePetController
     }, onError: (error) {
       print(error.toString());
     });
+
+    //Aqui é atribuído o valor um. Identificando que o cliente solicitou pra trocar a quantidade
+    _clickedChangeSpecie.value = 1;
+
     loading(false);
   }
 
@@ -248,6 +328,9 @@ class UpdatePetController
     loading(true);
 
     amountId.value = amountIdSelected;
+
+    //Aqui é atribuído o valor um. Identificando que o cliente solicitou pra trocar a quantidade
+    _clickedChangeAmount.value = 1;
 
     loading(false);
   }

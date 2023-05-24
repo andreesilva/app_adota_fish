@@ -1,3 +1,5 @@
+import 'package:app_adota_fish/app/data/models/aquarium_not_photo_request.dart';
+import 'package:app_adota_fish/app/data/models/donations_aquarium.dart';
 import 'package:app_adota_fish/app/data/models/donations_pet.dart';
 import 'package:app_adota_fish/app/data/models/pet_not_photo_request.dart';
 import 'package:app_adota_fish/app/data/models/photo_client_request.dart';
@@ -9,24 +11,19 @@ import 'package:app_adota_fish/app/data/providers/api.dart';
 
 import '../../data/models/photo_donation_request.dart';
 
-class UpdatePetRepository {
+class UpdateAquariumRepository {
   final Api _api;
 
-  UpdatePetRepository(this._api);
+  UpdateAquariumRepository(this._api);
 
-  Future<DonationPetModel> getDonationPet(int id) => _api.getDonationPet(id);
+  Future<DonationAquariumModel> getDonationAquarium(int id) =>
+      _api.getDonationAquarium(id);
 
-  Future<List<SpecieModel>> getSpecies(int id) => _api.getSpecies(id);
-
-  Future<PetModel> register(PetRequestModel petRequestModel) =>
-      _api.registerPet(petRequestModel);
-
-  Future<SpecieModel> getSpecie(SpecieRequestModel specieRequestModel) =>
-      _api.getSpecie(specieRequestModel);
-
-  Future<void> putPhotoPet(
+  Future<void> putPhotoAquarium(
           PhotoDonationRequestModel photoDonationRequestModel) =>
-      _api.putPhotoPet(photoDonationRequestModel);
-  Future<void> putPet(PetNotPhotoRequestModel petNotPhotoRequestModel) =>
-      _api.putPet(petNotPhotoRequestModel);
+      _api.putPhotoAquarium(photoDonationRequestModel);
+
+  Future<void> putAquarium(
+          AquariumNotPhotoRequestModel aquariumNotPhotoRequestModel) =>
+      _api.putAquarium(aquariumNotPhotoRequestModel);
 }

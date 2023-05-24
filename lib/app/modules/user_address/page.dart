@@ -35,6 +35,7 @@ class UserAddressPage extends GetView<UserAddressController> {
     'São Paulo',
     'Tocantins',
   ];
+  var nameTypeWater = '';
 
   @override
   Widget build(BuildContext context) {

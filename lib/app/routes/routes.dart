@@ -19,6 +19,7 @@ abstract class Routes {
   static const myDonationsAquarium = "/my-donations-aquarium";
   static const myDonationsPet = "/my-donations-pet";
   static const updatePet = "/update-pet/:id";
+  static const updateAquarium = "/update-aquarium/:id";
   static const userAddressList = "/user-address-lis";
   static const account = "/account";
   static const resetPassword = "/reset-password/:email";

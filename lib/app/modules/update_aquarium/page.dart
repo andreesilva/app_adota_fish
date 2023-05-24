@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/register_pet/controller.dart';
+import 'package:app_adota_fish/app/modules/update_aquarium/controller.dart';
 import 'package:app_adota_fish/app/modules/update_pet/controller.dart';
 import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
@@ -8,42 +9,30 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:search_choices/search_choices.dart';
 
-class UpdatePetPage extends GetView<UpdatePetController> {
+class UpdateAquariumPage extends GetView<UpdateAquariumController> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   File? pickedFile;
 
   ImagePicker imagePicker = ImagePicker();
 
   final _valores = [
-    'Selecione',
-    'Água doce',
-    'Água salgada',
+    'Selecione a capacidade',
+    '10',
+    '25',
+    '50',
+    '72',
+    '100',
+    '200',
+    'Acima de 200'
   ];
-
-  final _quatidade = [
-    'Selecione',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-  ];
-
-  var nameTypeWater = '';
 
   @override
   Widget build(BuildContext context) {
-    if (controller.watherIdController == 1) {
-      nameTypeWater = "Água doce";
-    } else {
-      nameTypeWater = "Água salgada";
-    }
-
+    //print(controller.capacityIdController.value);
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
-          title: const Text('EDITAR ANÚNCIO',
+          title: const Text('QUERO DOAR UM AQUÁRIO',
               style: TextStyle(
                   fontSize: 17,
                   fontFamily: 'Roboto',
@@ -84,7 +73,8 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                                       border: Border.all(
                                           width: 1.4, color: Colors.blueGrey),
                                     ),
-                                    child: Image.network(controller.photoPet))),
+                                    child: Image.network(
+                                        controller.photoAquarium))),
                       ),
                       Positioned(
                           bottom: 40,
@@ -100,7 +90,6 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                                   .showBottomSheet((BuildContext context) {
                                 Size size = MediaQuery.of(context).size;
                                 return Container(
-                                  //color: Colors.grey,
                                   width: double.infinity,
                                   height: size.height * 0.2,
                                   margin: const EdgeInsets.symmetric(
@@ -130,8 +119,10 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                                                 ],
                                               ),
                                               onTap: () {
-                                                takePhoto(ImageSource.gallery,
-                                                    controller.petIdController);
+                                                takePhoto(
+                                                    ImageSource.gallery,
+                                                    controller
+                                                        .aquariumIdController);
                                               }),
                                           const SizedBox(
                                             width: 80,
@@ -155,8 +146,10 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                                                 ],
                                               ),
                                               onTap: () {
-                                                takePhoto(ImageSource.camera,
-                                                    controller.petIdController);
+                                                takePhoto(
+                                                    ImageSource.gallery,
+                                                    controller
+                                                        .aquariumIdController);
                                               }),
                                         ],
                                       )
@@ -170,71 +163,25 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                   ),
                   Obx(
                     () => DropdownButtonFormField(
-                      value: controller.watherIdController.value,
+                      value: controller.litrageId.value,
+                      //value: controller.capacityIdController.value,
+
                       items: _valores
                           .asMap()
                           .entries
-                          .map((typeWater) => DropdownMenuItem<int>(
-                              value: typeWater.key,
-                              child: Text(typeWater.value,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.normal))))
+                          .map((litrage) => DropdownMenuItem<int>(
+                              value: litrage.key, child: Text(litrage.value)))
                           .toList(),
-                      onChanged: controller.changeTypeWater,
+                      onChanged: controller.changeLiterage,
+
                       hint: Text(
-                        nameTypeWater,
+                        controller.capacity.value,
                         style: const TextStyle(
                             color: Colors.black, fontWeight: FontWeight.normal),
                       ),
                       validator: (int? value) {
                         if (value == null) {
-                          return 'Selecione o tipo da água';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Obx(
-                    () => SearchChoices.single(
-                      key: controller.key_dropdown,
-                      value: controller.changeSpecie,
-                      items: state?.state2
-                          .map((specie) => DropdownMenuItem<dynamic>(
-                              value: specie.name,
-                              child: Text(specie.name,
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal))))
-                          .toList(),
-                      hint: Text(
-                        controller.specieController.value,
-                        style: const TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.normal),
-                      ),
-                      searchHint: "Espécie",
-                      onChanged: controller.changeSpecie,
-                      isExpanded: true,
-                    ),
-                  ),
-                  Obx(
-                    () => DropdownButtonFormField(
-                      //value: controller.amountId.value,
-                      value: controller.amountIdController.value,
-                      items: _quatidade
-                          .asMap()
-                          .entries
-                          .map((amount) => DropdownMenuItem<int>(
-                              value: amount.key, child: Text(amount.value)))
-                          .toList(),
-                      onChanged: controller.changeAmount,
-                      hint: Text(
-                        controller.amountIdController.toString(),
-                        style: const TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.normal),
-                      ),
-                      validator: (int? value) {
-                        if (value == null) {
-                          return 'Selecione a quantidade';
+                          return 'Selecione a litragem';
                         }
                         return null;
                       },
@@ -243,7 +190,7 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                   TextFormField(
                     keyboardType: TextInputType.multiline,
                     maxLines: 4,
-                    controller: controller.observationController,
+                    controller: controller.descriptionController,
                     style: const TextStyle(
                       fontFamily: 'Roboto',
                       color: Colors.black,
@@ -252,48 +199,27 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Column(
+                    child: Row(
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () => {
-                                  if ((controller.formKey.currentState!
-                                          .validate()) &&
-                                      (controller
-                                          .profilePicPath.value.isNotEmpty))
-                                    {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return const Center(
-                                                child:
-                                                    CircularProgressIndicator());
-                                          }),
-                                    },
-                                  controller.submit(),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () => {
+                              if ((controller.formKey.currentState!
+                                      .validate()) &&
+                                  (controller.profilePicPath.value.isNotEmpty))
+                                {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const Center(
+                                            child: CircularProgressIndicator());
+                                      }),
                                 },
-                                style: button,
-                                child: const Text('Editar anúncio'),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16.0),
-                                child: ElevatedButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(true),
-                                    style: button,
-                                    child: const Text("Cancelar")),
-                              ),
-                            ),
-                          ],
+                              controller.submit(),
+                            },
+                            style: button,
+                            child: const Text('Publicar anúncio'),
+                          ),
                         ),
                       ],
                     ),
@@ -305,13 +231,13 @@ class UpdatePetPage extends GetView<UpdatePetController> {
         ));
   }
 
-  Future<void> takePhoto(ImageSource source, int idPet) async {
+  Future<void> takePhoto(ImageSource source, int idAquarium) async {
     final pickedImage =
         await imagePicker.pickImage(source: source, imageQuality: 100);
 
     pickedFile = File(pickedImage!.path);
 
-    controller.setProfileImagePath(pickedFile!.path, idPet);
+    controller.setProfileImagePath(pickedFile!.path, idAquarium);
 
     Get.back();
   }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:app_adota_fish/app/data/models/aquarium_not_photo_request.dart';
 import 'package:app_adota_fish/app/data/models/photo_donation_request.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/foundation.dart';
@@ -21,6 +22,7 @@ import 'package:app_adota_fish/app/data/models/forgot_password_response.dart';
 import 'package:app_adota_fish/app/data/models/password.dart';
 import 'package:app_adota_fish/app/data/models/pet.dart';
 import 'package:app_adota_fish/app/data/models/pet_request.dart';
+import 'package:app_adota_fish/app/data/models/pet_not_photo_request.dart';
 import 'package:app_adota_fish/app/data/models/photo_client_request.dart';
 import 'package:app_adota_fish/app/data/models/specie.dart';
 import 'package:app_adota_fish/app/data/models/state.dart';
@@ -247,10 +249,42 @@ class Api extends GetConnect {
     }
   }
 
-  Future<void> putPet(PetRequestModel data) async {
+  Future<void> putPet(PetNotPhotoRequestModel data) async {
     try {
       await _client.put(
-        Uri.parse('$_url/doacao/pet/foto/${data.id}'),
+        Uri.parse('$_url/doacao/pet/editar/${data.id}'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authorization': 'Bearer ${_storageService.token}',
+        },
+        body: jsonEncode(data),
+      );
+    } catch (e) {
+      print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<void> putPhotoAquarium(PhotoDonationRequestModel data) async {
+    try {
+      await _client.put(
+        Uri.parse('$_url/doacao/aquario/foto/${data.id}'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authorization': 'Bearer ${_storageService.token}',
+        },
+        body: jsonEncode(data),
+      );
+    } catch (e) {
+      print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<void> putAquarium(AquariumNotPhotoRequestModel data) async {
+    try {
+      await _client.put(
+        Uri.parse('$_url/doacao/aquario/editar/${data.id}'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'authorization': 'Bearer ${_storageService.token}',

@@ -252,6 +252,26 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                               ),
                             ),
                             Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 7, 10),
+                              child: SizedBox(
+                                width: 80,
+                                child: ElevatedButton(
+                                  onPressed: () => Get.toNamed(
+                                      Routes.updateAquarium.replaceFirst(
+                                          ':id', donation.id.toString())),
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blueGrey,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(3),
+                                      ),
+                                      elevation: 2,
+                                      shadowColor: Colors.blueGrey),
+                                  child: const Text("Editar",
+                                      style: TextStyle(fontSize: 13)),
+                                ),
+                              ),
+                            ),
+                            Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 15, 10),
                               child: SizedBox(
                                 width: 80,
@@ -390,6 +410,26 @@ class MyDonationsAquariumPage extends GetView<MyDonationsAquariumController> {
                                       elevation: 2,
                                       shadowColor: Colors.blueGrey),
                                   child: const Text("Ativar"),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 7, 10),
+                              child: SizedBox(
+                                width: 80,
+                                child: ElevatedButton(
+                                  onPressed: () => Get.toNamed(
+                                      Routes.updateAquarium.replaceFirst(
+                                          ':id', donation.id.toString())),
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blueGrey,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(3),
+                                      ),
+                                      elevation: 2,
+                                      shadowColor: Colors.blueGrey),
+                                  child: const Text("Editar",
+                                      style: TextStyle(fontSize: 13)),
                                 ),
                               ),
                             ),
