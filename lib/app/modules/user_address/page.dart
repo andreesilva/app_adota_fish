@@ -143,6 +143,13 @@ class UserAddressPage extends GetView<UserAddressController> {
                             )))
                         .toList(),
                     onChanged: controller.changeState,
+                    decoration: const InputDecoration(
+                      labelText: 'Estado',
+                      labelStyle: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: 'Roboto'),
+                    ),
                     hint: Text(controller.stateController),
                     validator: (int? value) {
                       if (value == null) {
@@ -164,6 +171,13 @@ class UserAddressPage extends GetView<UserAddressController> {
                                     fontWeight: FontWeight.normal))))
                         .toList(),
                     onChanged: controller.changeCity,
+                    decoration: const InputDecoration(
+                      labelText: 'Cidade',
+                      labelStyle: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: 'Roboto'),
+                    ),
                     hint: Text(
                       controller.cityController.value,
                       style: const TextStyle(

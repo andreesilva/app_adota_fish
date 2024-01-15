@@ -1,3 +1,4 @@
+import 'package:app_adota_fish/app/core/theme/errors.dart';
 import 'package:app_adota_fish/app/data/models/city_full.dart';
 import 'package:app_adota_fish/app/data/models/city_request.dart';
 import 'package:app_adota_fish/app/data/models/user_address_request.dart';
@@ -49,21 +50,9 @@ class RegisterController extends GetxController
   @override
   void onInit() {
     _repository.getCitiesState(0).then((data) {
-      print("Cidade 1");
       change(data, status: RxStatus.success());
     }, onError: (error) {
-      print("Cidade 2");
-      if ((error.toString() == 'Connection failed') ||
-          (error.toString() == 'Network is unreachable') ||
-          (error.toString() == 'Connection timed out')) {
-        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
-          content: Text('Sem conexão de rede'),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 15),
-        ));
-      } else {
-        change(null, status: RxStatus.error(error.toString()));
-      }
+      errors(error);
     });
 
     super.onInit();
@@ -95,11 +84,6 @@ class RegisterController extends GetxController
       password: newPassword.text,
     );
 
-    print(userProfileRequest.name);
-    print(userProfileRequest.email);
-    print(userProfileRequest.phone);
-    print(userProfileRequest.password);
-
     _repository.register(userProfileRequest).then((value) async {
       await _authService.login(UserLoginRequestModel(
         email: emailController.text,
@@ -108,18 +92,14 @@ class RegisterController extends GetxController
 
       if (referenceController.text == '') {
         reference = ' ';
-        print('if referencia ' + reference);
       } else {
         reference = referenceController.text;
-        print('else referencia ' + reference);
       }
 
       if (complementController.text == '') {
         complement = ' ';
-        print('if complmente ' + complement);
       } else {
         complement = complementController.text;
-        print('else complmente ' + complement);
       }
 
       var userAddressRequest = UserAddressRequestModel(
@@ -137,7 +117,26 @@ class RegisterController extends GetxController
       Get.offAllNamed(Routes.photoClient, arguments: 1);
     }, onError: (error) {
       print(error.toString());
-      showAlertError(QuickAlertType.error);
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else if (error.toString() == 'Connection refused') {
+        //change(null, status: RxStatus.error('Falha no servidor'));
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Falha no servidor'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+        print(error.toString());
+      } else {
+        print(error.toString());
+        showAlertError(QuickAlertType.error);
+      }
     });
   }
 
@@ -154,8 +153,6 @@ class RegisterController extends GetxController
 
     cityId.value = null;
 
-    print(stateIdSelected);
-
     _repository.getCitiesState(stateIdSelected!).then((data) {
       change(data, status: RxStatus.success());
     }, onError: (error) {
@@ -167,13 +164,17 @@ class RegisterController extends GetxController
   void changeCity(int? cityIdSelected) {
     loading(true);
 
-    print(cityIdSelected);
-
     cityId.value = cityIdSelected;
 
     key_dropdown.currentState?.reset();
 
     loading(false);
+  }
+
+  bool isEmailValid(String email) {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(email);
   }
 
   void showAlertError(QuickAlertType quickAlertType) {

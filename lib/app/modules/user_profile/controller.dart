@@ -1,3 +1,4 @@
+import 'package:app_adota_fish/app/core/theme/errors.dart';
 import 'package:app_adota_fish/app/data/models/user_profile_request.dart';
 import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/user_profile/repository.dart';
@@ -43,18 +44,7 @@ class UserProfileController extends GetxController {
       loading(false);
     }, onError: (error) {
       loading(false);
-      if ((error.toString() == 'Connection failed') ||
-          (error.toString() == 'Network is unreachable') ||
-          (error.toString() == 'Connection timed out')) {
-        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
-          content: Text('Sem conexão de rede'),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 15),
-        ));
-      } else {
-        print(error.toString());
-        //MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
-      }
+      errors(error);
     });
   }
 
@@ -62,25 +52,6 @@ class UserProfileController extends GetxController {
     await _authService.logout();
 
     Get.offAllNamed(Routes.dashboard);
-  }
-
-  void showAlertSuccess(QuickAlertType quickAlertType) {
-    QuickAlert.show(
-      context: Get.context!,
-      title: "",
-      text: "Dados atualizados com sucesso!",
-      confirmBtnText: "Ok",
-      type: quickAlertType,
-    );
-  }
-
-  void showAlertError(QuickAlertType quickAlertType) {
-    QuickAlert.show(
-        context: Get.context!,
-        title: "",
-        text: "Não foi possível atualizar os seus dados",
-        confirmBtnText: "Ok",
-        type: quickAlertType);
   }
 
   void submit() {
@@ -103,8 +74,52 @@ class UserProfileController extends GetxController {
       loadingCircular.value = false;
     }, onError: (error) {
       print(error.toString());
-      showAlertError(QuickAlertType.error);
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else if (error.toString() == 'Connection refused') {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Falha no servidor'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+        print(error.toString());
+      } else {
+        print(error.toString());
+        showAlertError(QuickAlertType.error);
+      }
+
       loadingCircular.value = false;
     });
+  }
+
+  bool isEmailValid(String email) {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(email);
+  }
+
+  void showAlertSuccess(QuickAlertType quickAlertType) {
+    QuickAlert.show(
+      context: Get.context!,
+      title: "",
+      text: "Dados atualizados com sucesso!",
+      confirmBtnText: "Ok",
+      type: quickAlertType,
+    );
+  }
+
+  void showAlertError(QuickAlertType quickAlertType) {
+    QuickAlert.show(
+        context: Get.context!,
+        title: "",
+        text: "Não foi possível atualizar os seus dados",
+        confirmBtnText: "Ok",
+        type: quickAlertType);
   }
 }

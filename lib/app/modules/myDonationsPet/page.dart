@@ -153,15 +153,13 @@ class MyDonationsPetPage extends GetView<MyDonationsPetController> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                       top: 5, left: 20, right: 20),
-                                  child: Expanded(
-                                    child: Text(
-                                      donation.pet.observation!,
-                                      textAlign: TextAlign.left,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Roboto',
-                                      ),
+                                  child: Text(
+                                    donation.pet.observation!,
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Roboto',
                                     ),
                                   ),
                                 ),

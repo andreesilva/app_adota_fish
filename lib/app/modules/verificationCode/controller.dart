@@ -41,7 +41,25 @@ class VerificationCodeController extends GetxController {
         Get.toNamed(Routes.resetPassword.replaceFirst(':email', data.email!));
       }, onError: (error) {
         print(error.toString());
-        showAlertError(QuickAlertType.error);
+        if ((error.toString() == 'Connection failed') ||
+            (error.toString() == 'Network is unreachable') ||
+            (error.toString() == 'Connection timed out')) {
+          ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+            content: Text('Sem conexão de rede'),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 15),
+          ));
+        } else if (error.toString() == 'Connection refused') {
+          ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+            content: Text('Falha no servidor'),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 15),
+          ));
+          print(error.toString());
+        } else {
+          print(error.toString());
+          showAlertError(QuickAlertType.error);
+        }
       });
     }
   }

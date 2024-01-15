@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCV81wBf-GhPuZ6PNmyW2_LSK7tCVl29xg',
-    appId: '1:700757569335:android:381cd08a9ab162cd6a74b2',
+    appId: '1:700757569335:android:1bceb6a72a994f6c6a74b2',
     messagingSenderId: '700757569335',
     projectId: 'app-adota-fish',
     storageBucket: 'app-adota-fish.appspot.com',
@@ -63,12 +63,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyABnFobkHwhAcsHEzypsYHQKz8EzcZedR8',
-    appId: '1:700757569335:ios:431c11ef8d9361816a74b2',
+    appId: '1:700757569335:ios:fe0e130663368a726a74b2',
     messagingSenderId: '700757569335',
     projectId: 'app-adota-fish',
     storageBucket: 'app-adota-fish.appspot.com',
-    iosClientId: '700757569335-a569nre2bn9k9f0e3d24h6bllpr8022q.apps.googleusercontent.com',
-    iosBundleId: 'com.example.appAdotaFish',
+    iosClientId: '700757569335-f4sa0ffs8mhe9q4eiv9kanpn31d7jp27.apps.googleusercontent.com',
+    iosBundleId: 'com.app.appAdotaFish',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(

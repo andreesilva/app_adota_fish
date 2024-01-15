@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:700757569335:android:381cd08a9ab162cd6a74b2",
+        "mobilesdk_app_id": "1:700757569335:android:1bceb6a72a994f6c6a74b2",
         "android_client_info": {
           "package_name": "com.app.app_adota_fish"
         }
@@ -34,7 +34,43 @@
               "client_id": "700757569335-a569nre2bn9k9f0e3d24h6bllpr8022q.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.app.appAdotaFish"
+                "bundle_id": "com.example.appAdotaFish"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700757569335:android:381cd08a9ab162cd6a74b2",
+        "android_client_info": {
+          "package_name": "com.example.app_adota_fish"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700757569335-krvkkh075nk7kv2es912u8at0el4gsp1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV81wBf-GhPuZ6PNmyW2_LSK7tCVl29xg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700757569335-krvkkh075nk7kv2es912u8at0el4gsp1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "700757569335-a569nre2bn9k9f0e3d24h6bllpr8022q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.appAdotaFish"
               }
             }
           ]

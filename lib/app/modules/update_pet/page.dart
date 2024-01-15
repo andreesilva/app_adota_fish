@@ -5,6 +5,7 @@ import 'package:app_adota_fish/app/modules/update_pet/controller.dart';
 import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:search_choices/search_choices.dart';
 
@@ -43,7 +44,7 @@ class UpdatePetPage extends GetView<UpdatePetController> {
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
-          title: const Text('EDITAR ANÚNCIO',
+          title: const Text('EDITAR MEU ANÚNCIO',
               style: TextStyle(
                   fontSize: 17,
                   fontFamily: 'Roboto',
@@ -70,21 +71,31 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                             width: double.infinity,
                             height: 180,
                             child: controller.isProficPicPath.value == true
-                                ? Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1.4, color: Colors.blueGrey),
+                                ? Card(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 0.5, color: Colors.blueGrey),
+                                      ),
+                                      child: Image.file(File(
+                                        controller.profilePicPath.value,
+                                      )),
                                     ),
-                                    child: Image.file(File(
-                                      controller.profilePicPath.value,
-                                    )),
+                                    elevation: 7,
+                                    shadowColor: Colors.blueGrey,
                                   )
-                                : Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1.4, color: Colors.blueGrey),
-                                    ),
-                                    child: Image.network(controller.photoPet))),
+                                : Card(
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              width: 0.5,
+                                              color: Colors.blueGrey),
+                                        ),
+                                        child:
+                                            Image.network(controller.photoPet)),
+                                    elevation: 7,
+                                    shadowColor: Colors.blueGrey,
+                                  )),
                       ),
                       Positioned(
                           bottom: 40,
@@ -181,6 +192,13 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                                       fontWeight: FontWeight.normal))))
                           .toList(),
                       onChanged: controller.changeTypeWater,
+                      decoration: const InputDecoration(
+                        labelText: 'Tipo de água',
+                        labelStyle: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
+                      ),
                       hint: Text(
                         nameTypeWater,
                         style: const TextStyle(
@@ -196,6 +214,7 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                   ),
                   Obx(
                     () => SearchChoices.single(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       key: controller.key_dropdown,
                       value: controller.changeSpecie,
                       items: state?.state2
@@ -214,6 +233,8 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                       searchHint: "Espécie",
                       onChanged: controller.changeSpecie,
                       isExpanded: true,
+                      displayClearIcon: false,
+                      closeButton: "Fechar",
                     ),
                   ),
                   Obx(
@@ -227,6 +248,13 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                               value: amount.key, child: Text(amount.value)))
                           .toList(),
                       onChanged: controller.changeAmount,
+                      decoration: const InputDecoration(
+                        labelText: 'Quantidade',
+                        labelStyle: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Roboto'),
+                      ),
                       hint: Text(
                         controller.amountIdController.toString(),
                         style: const TextStyle(
@@ -248,6 +276,13 @@ class UpdatePetPage extends GetView<UpdatePetController> {
                       fontFamily: 'Roboto',
                       color: Colors.black,
                       fontWeight: FontWeight.normal,
+                    ),
+                    decoration: const InputDecoration(
+                      labelText: 'Observação',
+                      labelStyle: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: 'Roboto'),
                     ),
                   ),
                   Padding(
@@ -306,12 +341,12 @@ class UpdatePetPage extends GetView<UpdatePetController> {
   }
 
   Future<void> takePhoto(ImageSource source, int idPet) async {
-    final pickedImage =
-        await imagePicker.pickImage(source: source, imageQuality: 100);
+    final pickedImage = await controller.imageHelper.pickImage(source: source);
 
-    pickedFile = File(pickedImage!.path);
+    final croppedFile = await controller.imageHelper
+        .crop(file: pickedImage.first, cropStyle: CropStyle.rectangle);
 
-    controller.setProfileImagePath(pickedFile!.path, idPet);
+    controller.setProfileImagePath(croppedFile!.path, idPet);
 
     Get.back();
   }

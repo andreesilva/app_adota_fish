@@ -72,22 +72,20 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                   children: [
                     Stack(
                       children: [
-                        Expanded(
-                          child: Center(
-                            child: SizedBox(
-                              width: 400.0,
-                              height: 270,
-                              child: ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(5),
-                                      topRight: Radius.circular(5),
-                                      bottomLeft: Radius.circular(5),
-                                      bottomRight: Radius.circular(5)),
-                                  child: FadeInImage.memoryNetwork(
-                                      fit: BoxFit.fill,
-                                      placeholder: kTransparentImage,
-                                      image: state!.aquarium!.photo!)),
-                            ),
+                        Center(
+                          child: SizedBox(
+                            width: 400.0,
+                            height: 270,
+                            child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                    bottomRight: Radius.circular(5)),
+                                child: FadeInImage.memoryNetwork(
+                                    fit: BoxFit.fill,
+                                    placeholder: kTransparentImage,
+                                    image: state!.aquarium!.photo!)),
                           ),
                         ),
                         Container(
@@ -159,48 +157,46 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                     ),
                   ),
                   elevation: 4,
-                  child: Expanded(
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              child: const Padding(
-                                padding: EdgeInsets.only(top: 5, left: 20),
-                                child: Text("Descrição",
-                                    textAlign: TextAlign.center),
-                              ),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: const Padding(
+                              padding: EdgeInsets.only(top: 5, left: 20),
+                              child: Text("Descrição",
+                                  textAlign: TextAlign.center),
                             ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 5, left: 20, right: 20),
-                                  child: Text(
-                                    state!.aquarium!.description!,
-                                    textAlign: TextAlign.left,
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Roboto',
-                                    ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 5, left: 20, right: 20),
+                                child: Text(
+                                  state!.aquarium!.description!,
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Roboto',
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 175, top: 5),
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 175, top: 5),
+                      ),
+                    ],
                   ),
                 ),
               Card(
@@ -278,7 +274,8 @@ class DonationAquariumPage extends GetView<DonationAquariumController> {
                                 onTap: () async {
                                   String email =
                                       state.clientDonor!.user.email.toString();
-                                  String subject = "Adoção de aquário";
+                                  String subject =
+                                      "Adoção de aquário - Adota Fish";
                                   String body = "";
 
                                   String? encodeQueryParameters(

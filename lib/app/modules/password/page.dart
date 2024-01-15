@@ -51,7 +51,7 @@ class PasswordPage extends GetView<PasswordController> {
                                   ? Icons.visibility_off
                                   : Icons.visibility),
                             )),
-                        labelText: "Nova Senha",
+                        labelText: "Nova senha",
                         labelStyle: const TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.normal,
@@ -93,7 +93,7 @@ class PasswordPage extends GetView<PasswordController> {
                                   ? Icons.visibility_off
                                   : Icons.visibility),
                             )),
-                        labelText: "Confirmar Senha",
+                        labelText: "Confirmar senha",
                         labelStyle: const TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.normal,

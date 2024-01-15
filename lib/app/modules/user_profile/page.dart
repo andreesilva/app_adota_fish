@@ -47,6 +47,7 @@ class UserProfilePage extends GetView<UserProfileController> {
               ),
               TextFormField(
                 controller: controller.emailController,
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   labelText: "Email",
                   labelStyle: TextStyle(
@@ -58,6 +59,8 @@ class UserProfilePage extends GetView<UserProfileController> {
                 validator: (String? value) {
                   if (value != null && value.isEmpty) {
                     return 'Preencha o email';
+                  } else if (controller.isEmailValid(value!) == false) {
+                    return 'Preencha com um e-mail válido';
                   }
                   return null;
                 },

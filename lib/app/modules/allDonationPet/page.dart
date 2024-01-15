@@ -131,7 +131,7 @@ class AllDonationPetPage extends GetView<AllDonationPetController> {
                                     .replaceFirst(
                                         ':id', donation.id.toString())),
                                 style: button,
-                                child: const Text("Ver Mais"),
+                                child: const Text("Ver mais"),
                               ),
                             ),
                           ),

@@ -5,6 +5,7 @@ import 'package:app_adota_fish/app/modules/register_aquarium/controller.dart';
 import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterAquariumPage extends GetView<RegisterAquariumController> {
@@ -55,16 +56,21 @@ class RegisterAquariumPage extends GetView<RegisterAquariumController> {
                             width: double.infinity,
                             height: 180,
                             child: controller.isProficPicPath.value == true
-                                ? Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1.4, color: Colors.blueGrey),
+                                ? Card(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 0.5, color: Colors.blueGrey),
+                                      ),
+                                      child: Image.file(File(
+                                        controller.profilePicPath.value,
+                                      )),
                                     ),
-                                    child: Image.file(File(
-                                      controller.profilePicPath.value,
-                                    )),
+                                    elevation: 7,
+                                    shadowColor: Colors.blueGrey,
                                   )
-                                : const Text('Insira uma foto do aquário'),
+                                : const Text('Insira uma foto do aquário',
+                                    style: TextStyle(color: Colors.red)),
                           )),
                       Positioned(
                           bottom: 40,
@@ -211,6 +217,19 @@ class RegisterAquariumPage extends GetView<RegisterAquariumController> {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              style: button,
+                              child: const Text("Cancelar")),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -219,12 +238,12 @@ class RegisterAquariumPage extends GetView<RegisterAquariumController> {
   }
 
   Future<void> takePhoto(ImageSource source) async {
-    final pickedImage =
-        await imagePicker.pickImage(source: source, imageQuality: 100);
+    final pickedImage = await controller.imageHelper.pickImage(source: source);
 
-    pickedFile = File(pickedImage!.path);
+    final croppedFile = await controller.imageHelper
+        .crop(file: pickedImage.first, cropStyle: CropStyle.rectangle);
 
-    controller.setProfileImagePath(pickedFile!.path);
+    controller.setProfileImagePath(croppedFile!.path);
 
     Get.back();
   }

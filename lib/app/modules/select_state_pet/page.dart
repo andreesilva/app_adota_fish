@@ -8,7 +8,7 @@ class SelectStatePetPage extends GetView<SelectStatePetController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Selecione um estado',
+          title: const Text('SELECIONE UM ESTADO',
               style: TextStyle(
                   fontSize: 17,
                   fontFamily: 'Roboto',

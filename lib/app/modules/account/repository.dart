@@ -12,4 +12,6 @@ class AccountRepository {
   Future<void> putPhotoClient(
           PhotoClientRequestModel photoClientRequestModel) =>
       _api.putPhotoClient(photoClientRequestModel);
+
+  Future<void> deleteClient() => _api.deleteClient();
 }

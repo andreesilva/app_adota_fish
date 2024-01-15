@@ -32,10 +32,10 @@ class AboutPage extends GetView<AboutController> {
               ),
               Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "O Adota Fish é um aplicativo onde tanto quem adota ou quem quer doar um animal aquático ornalmental ou um aquario, pode utilizar.",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         fontFamily: 'Roboto',
                       ),

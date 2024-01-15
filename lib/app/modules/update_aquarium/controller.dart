@@ -1,3 +1,5 @@
+import 'package:app_adota_fish/app/core/theme/errors.dart';
+import 'package:app_adota_fish/app/core/util/image_helper.dart';
 import 'package:app_adota_fish/app/data/models/aquarium_not_photo_request.dart';
 import 'package:app_adota_fish/app/data/models/donations_aquarium.dart';
 import 'package:app_adota_fish/app/data/models/donations_pet.dart';
@@ -12,7 +14,7 @@ import 'package:app_adota_fish/app/modules/register_pet/repository.dart';
 import 'package:app_adota_fish/app/modules/update_aquarium/repository.dart';
 import 'package:app_adota_fish/app/modules/update_pet/repository.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
-import 'package:app_adota_fish/app/util/firebase_util.dart';
+import 'package:app_adota_fish/app/core/util/firebase_util.dart';
 import 'package:app_adota_fish/app/widgets/message_general_error.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,13 +50,16 @@ class UpdateAquariumController
 
   var aquariumIdController = 0;
 
-  var photoAquarium = "";
+  var photoAquarium =
+      "https://firebasestorage.googleapis.com/v0/b/app-adota-fish.appspot.com/o/images%2Fbackground_white.jpeg?alt=media&token=0ac0f512-b273-49af-9247-0add396c3cb7";
 
   var descriptionController = TextEditingController();
 
   var description = '';
 
   var capacity = "".obs;
+
+  final imageHelper = ImageHelper();
 
   @override
   void onInit() {
@@ -102,64 +107,12 @@ class UpdateAquariumController
 
       change(MyState(state1: data, state2: []), status: RxStatus.success());
     }, onError: (error) {
-      if ((error.toString() == 'Connection failed') ||
-          (error.toString() == 'Network is unreachable') ||
-          (error.toString() == 'Connection timed out')) {
-        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
-          content: Text('Sem conexão de rede'),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 15),
-        ));
-      } else {
-        print(error.toString());
-        //MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
-      }
+      errors(error);
     });
   }
 
   var isProficPicPath = false.obs;
   var profilePicPath = "".obs;
-
-  void showAlertSuccess(QuickAlertType quickAlertType) {
-    QuickAlert.show(
-        context: Get.context!,
-        title: "",
-        text: "Anúncio atualizado com sucesso!",
-        confirmBtnText: "Ok",
-        type: quickAlertType,
-        onConfirmBtnTap: () =>
-            Get.offAllNamed(Routes.myDonationsAquarium, arguments: 0));
-  }
-
-  void showAlertError(QuickAlertType quickAlertType) {
-    QuickAlert.show(
-        barrierDismissible: false,
-        context: Get.context!,
-        title: "",
-        text: "Não foi possível postar o anúncio",
-        confirmBtnText: "Ok",
-        type: quickAlertType);
-  }
-
-  void showPhotoAlertSuccess(QuickAlertType quickAlertType) {
-    QuickAlert.show(
-        barrierDismissible: false,
-        context: Get.context!,
-        title: "",
-        text: "Foto atualizada com sucesso!",
-        confirmBtnText: "Ok",
-        type: quickAlertType);
-  }
-
-  void showPhotoAlertError(QuickAlertType quickAlertType) {
-    QuickAlert.show(
-        barrierDismissible: false,
-        context: Get.context!,
-        title: "",
-        text: "Não foi possível atualizar a suas foto",
-        confirmBtnText: "Ok",
-        type: quickAlertType);
-  }
 
   Future<void> submit() async {
     Get.focusScope!.unfocus();
@@ -207,7 +160,25 @@ class UpdateAquariumController
       showAlertSuccess(QuickAlertType.success);
     }, onError: (error) {
       print(error.toString());
-      showAlertError(QuickAlertType.error);
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else if (error.toString() == 'Connection refused') {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Falha no servidor'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+        print(error.toString());
+      } else {
+        print(error.toString());
+        showAlertError(QuickAlertType.error);
+      }
     });
   }
 
@@ -234,5 +205,46 @@ class UpdateAquariumController
     litrageId.value = literageIdSelected;
 
     loading(false);
+  }
+
+  void showAlertSuccess(QuickAlertType quickAlertType) {
+    QuickAlert.show(
+        context: Get.context!,
+        title: "",
+        text: "Anúncio atualizado com sucesso!",
+        confirmBtnText: "Ok",
+        type: quickAlertType,
+        onConfirmBtnTap: () =>
+            Get.offAllNamed(Routes.myDonationsAquarium, arguments: 0));
+  }
+
+  void showAlertError(QuickAlertType quickAlertType) {
+    QuickAlert.show(
+        barrierDismissible: false,
+        context: Get.context!,
+        title: "",
+        text: "Não foi possível postar o anúncio",
+        confirmBtnText: "Ok",
+        type: quickAlertType);
+  }
+
+  void showPhotoAlertSuccess(QuickAlertType quickAlertType) {
+    QuickAlert.show(
+        barrierDismissible: false,
+        context: Get.context!,
+        title: "",
+        text: "Foto atualizada com sucesso!",
+        confirmBtnText: "Ok",
+        type: quickAlertType);
+  }
+
+  void showPhotoAlertError(QuickAlertType quickAlertType) {
+    QuickAlert.show(
+        barrierDismissible: false,
+        context: Get.context!,
+        title: "",
+        text: "Não foi possível atualizar a suas foto",
+        confirmBtnText: "Ok",
+        type: quickAlertType);
   }
 }

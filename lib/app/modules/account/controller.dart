@@ -1,10 +1,12 @@
+import 'package:app_adota_fish/app/core/theme/errors.dart';
+import 'package:app_adota_fish/app/core/util/image_helper.dart';
 import 'package:app_adota_fish/app/data/models/address.dart';
 import 'package:app_adota_fish/app/data/models/photo.dart';
 import 'package:app_adota_fish/app/data/models/photo_client_request.dart';
 import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/account/repository.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
-import 'package:app_adota_fish/app/util/firebase_util.dart';
+import 'package:app_adota_fish/app/core/util/firebase_util.dart';
 import 'package:app_adota_fish/app/widgets/message_general_error.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,13 +30,13 @@ class AccountController extends GetxController
   var photoClient =
       "https://firebasestorage.googleapis.com/v0/b/app-adota-fish.appspot.com/o/images%2Faccount%2FVector_1.png?alt=media&token=a8237bea-4fe5-4a17-9080-8117b78b7458";
 
+  final imageHelper = ImageHelper();
+
   @override
   void onInit() {
     ever(_authService.user, (_) => fetchUser());
 
     fetchUser();
-
-    //print(photoClient);
 
     super.onInit();
   }
@@ -51,18 +53,7 @@ class AccountController extends GetxController
     }, onError: (error) {
       loading(false);
 
-      if ((error.toString() == 'Connection failed') ||
-          (error.toString() == 'Network is unreachable') ||
-          (error.toString() == 'Connection timed out')) {
-        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
-          content: Text('Sem conexão de rede'),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 15),
-        ));
-      } else {
-        print(error.toString());
-        //MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
-      }
+      errors(error);
     });
   }
 
@@ -84,6 +75,15 @@ class AccountController extends GetxController
   }
 
   void logout() async {
+    await _authService.logout();
+
+    Get.offAllNamed(Routes.dashboard);
+  }
+
+  void delete() async {
+    _repository.deleteClient().then((value) {}, onError: (error) {
+      errors(error);
+    });
     await _authService.logout();
 
     Get.offAllNamed(Routes.dashboard);

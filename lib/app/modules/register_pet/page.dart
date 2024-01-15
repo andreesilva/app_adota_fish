@@ -3,9 +3,12 @@ import 'package:app_adota_fish/app/core/theme/colors.app.dart';
 import 'package:app_adota_fish/app/modules/register_pet/controller.dart';
 import 'package:app_adota_fish/app/widgets/button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pw_validator/Utilities/Validator.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:search_choices/search_choices.dart';
+import 'package:searchfield/searchfield.dart';
 
 class RegistePetPage extends GetView<RegisterPetController> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -31,6 +34,10 @@ class RegistePetPage extends GetView<RegisterPetController> {
 
   @override
   Widget build(BuildContext context) {
+    //final  suggestions = controller.state!
+    //                      .map((specie) => DropdownMenuItem<dynamic>(
+    //                        value: specie.name, child: Text(specie.name)))
+    //                  .toList();
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
@@ -60,16 +67,23 @@ class RegistePetPage extends GetView<RegisterPetController> {
                             width: double.infinity,
                             height: 180,
                             child: controller.isProficPicPath.value == true
-                                ? Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1.4, color: Colors.blueGrey),
+                                ? Card(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 0.5, color: Colors.blueGrey),
+                                      ),
+                                      child: Image.file(File(
+                                        controller.profilePicPath.value,
+                                      )),
                                     ),
-                                    child: Image.file(File(
-                                      controller.profilePicPath.value,
-                                    )),
+                                    elevation: 7,
+                                    shadowColor: Colors.blueGrey,
                                   )
-                                : const Text('Insira uma foto do pet'),
+                                : const Text(
+                                    'Insira uma foto do pet',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
                           )),
                       Positioned(
                           bottom: 40,
@@ -175,15 +189,24 @@ class RegistePetPage extends GetView<RegisterPetController> {
                     },
                   ),
                   SearchChoices.single(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                     items: state!
                         .map((specie) => DropdownMenuItem<dynamic>(
                             value: specie.name, child: Text(specie.name)))
                         .toList(),
                     value: controller.changeSpecie,
                     hint: "Espécie",
+                    displayClearIcon: false,
+                    closeButton: "Fechar",
                     searchHint: "Espécie",
                     onChanged: controller.changeSpecie,
                     isExpanded: true,
+                    validator: (dynamic value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Selecione a espécie após o tipo da água';
+                      }
+                      return null;
+                    },
                   ),
                   DropdownButtonFormField(
                     value: controller.amountId.value,
@@ -203,7 +226,7 @@ class RegistePetPage extends GetView<RegisterPetController> {
                     ),
                     validator: (int? value) {
                       if (value == null) {
-                        return 'Selecione o quantidade';
+                        return 'Selecione a quantidade';
                       }
                       return null;
                     },
@@ -250,6 +273,19 @@ class RegistePetPage extends GetView<RegisterPetController> {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              style: button,
+                              child: const Text("Cancelar")),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -258,12 +294,12 @@ class RegistePetPage extends GetView<RegisterPetController> {
   }
 
   Future<void> takePhoto(ImageSource source) async {
-    final pickedImage =
-        await imagePicker.pickImage(source: source, imageQuality: 100);
+    final pickedImage = await controller.imageHelper.pickImage(source: source);
 
-    pickedFile = File(pickedImage!.path);
+    final croppedFile = await controller.imageHelper
+        .crop(file: pickedImage.first, cropStyle: CropStyle.rectangle);
 
-    controller.setProfileImagePath(pickedFile!.path);
+    controller.setProfileImagePath(croppedFile!.path);
 
     Get.back();
   }

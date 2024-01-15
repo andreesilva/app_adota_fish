@@ -95,8 +95,9 @@ class RegisterPage extends GetView<RegisterController> {
                     ),
                     TextFormField(
                       controller: controller.emailController,
+                      keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
-                        labelText: 'Email',
+                        labelText: 'E-mail',
                         labelStyle: TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.normal,
@@ -105,7 +106,9 @@ class RegisterPage extends GetView<RegisterController> {
                       maxLength: 200,
                       validator: (String? value) {
                         if (value != null && value.isEmpty) {
-                          return 'Preencha o seu email';
+                          return 'Preencha com o seu e-mail';
+                        } else if (controller.isEmailValid(value!) == false) {
+                          return 'Preencha com um e-mail válido';
                         }
 
                         return null;
@@ -210,7 +213,6 @@ class RegisterPage extends GetView<RegisterController> {
                                         fontWeight: FontWeight.normal,
                                         fontFamily: 'Roboto'))))
                             .toList(),
-                        onChanged: controller.changeState,
                         decoration: const InputDecoration(
                           labelText: 'Estado',
                           labelStyle: TextStyle(
@@ -218,6 +220,7 @@ class RegisterPage extends GetView<RegisterController> {
                               fontWeight: FontWeight.normal,
                               fontFamily: 'Roboto'),
                         ),
+                        onChanged: controller.changeState,
                         validator: (int? value) {
                           if (value == null) {
                             return 'Selecione um estado';
@@ -239,10 +242,7 @@ class RegisterPage extends GetView<RegisterController> {
                                         fontWeight: FontWeight.normal,
                                         fontFamily: 'Roboto'))))
                             .toList(),
-                        onChanged:
-                            // reset();
-
-                            controller.changeCity,
+                        onChanged: controller.changeCity,
                         decoration: const InputDecoration(
                           labelText: 'Cidade',
                           labelStyle: TextStyle(
@@ -270,7 +270,7 @@ class RegisterPage extends GetView<RegisterController> {
                                   ? Icons.visibility_off
                                   : Icons.visibility),
                             )),
-                        labelText: "Nova Senha",
+                        labelText: "Nova senha",
                         labelStyle: const TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.normal,
@@ -278,7 +278,7 @@ class RegisterPage extends GetView<RegisterController> {
                       ),
                       validator: (String? value) {
                         if (value != null && value.isEmpty) {
-                          return 'Campo Obrigatório';
+                          return 'Preencha a nova senha';
                         } else {
                           return null;
                         }
@@ -312,7 +312,7 @@ class RegisterPage extends GetView<RegisterController> {
                                   ? Icons.visibility_off
                                   : Icons.visibility),
                             )),
-                        labelText: "Confirmar Senha",
+                        labelText: "Confirmar senha",
                         labelStyle: const TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.normal,
@@ -320,7 +320,7 @@ class RegisterPage extends GetView<RegisterController> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Campo Obrigatório';
+                          return 'Confirme a nova senha';
                           // ignore: unrelated_type_equality_checks
                         } else if (controller.newPassword.text !=
                             controller.confirmPassword.text) {
@@ -354,6 +354,20 @@ class RegisterPage extends GetView<RegisterController> {
                               style: button,
                               child: const Text('Continuar'),
                             ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                                onPressed: () =>
+                                    Navigator.of(context).pop(true),
+                                style: button,
+                                child: const Text("Cancelar")),
                           ),
                         ],
                       ),

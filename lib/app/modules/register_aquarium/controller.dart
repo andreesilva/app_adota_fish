@@ -1,10 +1,12 @@
+import 'package:app_adota_fish/app/core/theme/errors.dart';
+import 'package:app_adota_fish/app/core/util/image_helper.dart';
 import 'package:app_adota_fish/app/data/models/aquarium_request.dart';
 import 'package:app_adota_fish/app/data/models/city_full.dart';
 import 'package:app_adota_fish/app/data/models/photo.dart';
 import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/register_aquarium/repository.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
-import 'package:app_adota_fish/app/util/firebase_util.dart';
+import 'package:app_adota_fish/app/core/util/firebase_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,10 +21,6 @@ class RegisterAquariumController extends GetxController
   final formKey = GlobalKey<FormState>();
   final loading = true.obs;
   final _authService = Get.find<AuthService>();
-  var nameController = TextEditingController();
-  var emailController = TextEditingController();
-  var phoneController = TextEditingController();
-  var passwordController = TextEditingController();
 
   var descriptionController = TextEditingController();
 
@@ -30,30 +28,17 @@ class RegisterAquariumController extends GetxController
 
   var description = '';
 
-  var streetController = TextEditingController();
-  var numberController = TextEditingController();
-  var neighborhoodController = TextEditingController();
-  var referenceController = TextEditingController();
-  var complementController = TextEditingController();
   final litrageId = RxnInt();
   final cityId = RxnInt();
+
+  final imageHelper = ImageHelper();
 
   @override
   void onInit() {
     _repository.getCitiesState(0).then((data) {
       change(data, status: RxStatus.success());
     }, onError: (error) {
-      if ((error.toString() == 'Connection failed') ||
-          (error.toString() == 'Network is unreachable') ||
-          (error.toString() == 'Connection timed out')) {
-        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
-          content: Text('Sem conexão de rede'),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 15),
-        ));
-      } else {
-        change(null, status: RxStatus.error(error.toString()));
-      }
+      errors(error);
     });
 
     super.onInit();
@@ -65,28 +50,6 @@ class RegisterAquariumController extends GetxController
   void setProfileImagePath(String path) {
     profilePicPath.value = path;
     isProficPicPath.value = true;
-  }
-
-  void showAlertSuccess(QuickAlertType quickAlertType) {
-    QuickAlert.show(
-      barrierDismissible: false,
-      context: Get.context!,
-      title: "",
-      text: "Anúncio postado com sucesso!",
-      confirmBtnText: "Ok",
-      type: quickAlertType,
-      onConfirmBtnTap: () => Get.offAllNamed(Routes.dashboard, arguments: 1),
-    );
-  }
-
-  void showAlertError(QuickAlertType quickAlertType) {
-    QuickAlert.show(
-        barrierDismissible: false,
-        context: Get.context!,
-        title: "",
-        text: "Não foi possível postar o anúncio",
-        confirmBtnText: "Ok",
-        type: quickAlertType);
   }
 
   Future<void> submit() async {
@@ -138,7 +101,26 @@ class RegisterAquariumController extends GetxController
       showAlertSuccess(QuickAlertType.success);
     }, onError: (error) {
       print(error.toString());
-      showAlertError(QuickAlertType.error);
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else if (error.toString() == 'Connection refused') {
+        //change(null, status: RxStatus.error('Falha no servidor'));
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Falha no servidor'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+        print(error.toString());
+      } else {
+        print(error.toString());
+        showAlertError(QuickAlertType.error);
+      }
     });
   }
 
@@ -148,5 +130,28 @@ class RegisterAquariumController extends GetxController
     litrageId.value = literageIdSelected;
 
     loading(false);
+  }
+
+  void showAlertError(QuickAlertType quickAlertType) {
+    QuickAlert.show(
+        barrierDismissible: false,
+        context: Get.context!,
+        title: "",
+        text: "Não foi possível postar o anúncio",
+        confirmBtnText: "Ok",
+        type: quickAlertType,
+        onConfirmBtnTap: () => Get.offAllNamed(Routes.dashboard, arguments: 2));
+  }
+
+  void showAlertSuccess(QuickAlertType quickAlertType) {
+    QuickAlert.show(
+      barrierDismissible: false,
+      context: Get.context!,
+      title: "",
+      text: "Anúncio postado com sucesso!",
+      confirmBtnText: "Ok",
+      type: quickAlertType,
+      onConfirmBtnTap: () => Get.offAllNamed(Routes.dashboard, arguments: 1),
+    );
   }
 }

@@ -39,14 +39,15 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                       const Padding(
                         padding: EdgeInsets.only(top: 16.0, bottom: 16),
                         child: Text(
-                          "Não se preocupe! Insira o seu email de cadastro e enviaremos instruções para você'.",
+                          "Não se preocupe! Insira o seu e-mail de cadastro e enviaremos instruções para você.",
                           textAlign: TextAlign.left,
                         ),
                       ),
                       TextFormField(
                         controller: controller.email,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
-                            labelText: "Email",
+                            labelText: "E-mail",
                             labelStyle: TextStyle(
                                 color: Colors.black87,
                                 fontWeight: FontWeight.normal,
@@ -54,6 +55,8 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                         validator: (String? value) {
                           if (value != null && value.isEmpty) {
                             return 'Informe o seu email';
+                          } else if (controller.isEmailValid(value!) == false) {
+                            return 'Informe um e-mail válido';
                           }
                           return null;
                         },

@@ -1,3 +1,4 @@
+import 'package:app_adota_fish/app/core/theme/errors.dart';
 import 'package:app_adota_fish/app/data/models/address.dart';
 import 'package:app_adota_fish/app/data/models/city_full.dart';
 import 'package:app_adota_fish/app/data/models/user_address_request.dart';
@@ -46,18 +47,7 @@ class UserAddressController extends GetxController
     _repository.getCitiesState(0).then((data) {
       change(data, status: RxStatus.success());
     }, onError: (error) {
-      if ((error.toString() == 'Connection failed') ||
-          (error.toString() == 'Network is unreachable') ||
-          (error.toString() == 'Connection timed out')) {
-        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
-          content: Text('Sem conexão de rede'),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 15),
-        ));
-      } else {
-        print(error.toString());
-        //MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
-      }
+      errors(error);
     });
 
     fetchUser();
@@ -91,26 +81,6 @@ class UserAddressController extends GetxController
     }, onError: (error) {
       loading(false);
     });
-  }
-
-  void showAlertSuccess(QuickAlertType quickAlertType) {
-    QuickAlert.show(
-      context: Get.context!,
-      title: "",
-      text: "Endereço atualizado com sucesso!",
-      confirmBtnText: "Ok",
-      type: quickAlertType,
-      onConfirmBtnTap: () => Get.back(result: true),
-    );
-  }
-
-  void showAlertError(QuickAlertType quickAlertType) {
-    QuickAlert.show(
-        context: Get.context!,
-        title: "",
-        text: "Não foi possível atualizar o seu endereço",
-        confirmBtnText: "Ok",
-        type: quickAlertType);
   }
 
   void submit() {
@@ -153,7 +123,26 @@ class UserAddressController extends GetxController
       loadingCircular.value = false;
     }, onError: (error) {
       print(error.toString());
-      showAlertError(QuickAlertType.error);
+      if ((error.toString() == 'Connection failed') ||
+          (error.toString() == 'Network is unreachable') ||
+          (error.toString() == 'Connection timed out')) {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Sem conexão de rede'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+      } else if (error.toString() == 'Connection refused') {
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
+          content: Text('Falha no servidor'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 15),
+        ));
+        print(error.toString());
+      } else {
+        print(error.toString());
+        showAlertError(QuickAlertType.error);
+      }
+
       loadingCircular.value = false;
     });
   }
@@ -189,4 +178,24 @@ class UserAddressController extends GetxController
   }
 
   var currentPageIndex = 0.obs;
+
+  void showAlertSuccess(QuickAlertType quickAlertType) {
+    QuickAlert.show(
+      context: Get.context!,
+      title: "",
+      text: "Endereço atualizado com sucesso!",
+      confirmBtnText: "Ok",
+      type: quickAlertType,
+      onConfirmBtnTap: () => Get.back(result: true),
+    );
+  }
+
+  void showAlertError(QuickAlertType quickAlertType) {
+    QuickAlert.show(
+        context: Get.context!,
+        title: "",
+        text: "Não foi possível atualizar o seu endereço",
+        confirmBtnText: "Ok",
+        type: quickAlertType);
+  }
 }

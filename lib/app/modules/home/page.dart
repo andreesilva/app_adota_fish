@@ -153,7 +153,7 @@ class HomePage extends GetView<HomeController> {
                                     Routes.donationAquarium.replaceFirst(
                                         ':id', donation.id.toString())),
                                 style: button,
-                                child: const Text("Ver Mais"),
+                                child: const Text("Ver mais"),
                               ),
                             ),
                           ),

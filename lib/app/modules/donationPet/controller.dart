@@ -1,3 +1,4 @@
+import 'package:app_adota_fish/app/core/theme/errors.dart';
 import 'package:app_adota_fish/app/data/models/donations_pet.dart';
 import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/donationPet/repository.dart';
@@ -22,10 +23,11 @@ class DonationPetController extends GetxController
 
     int id = int.parse(Get.parameters['id']!);
 
-    print("Msg 1");
     _repository.getDonationPet(id).then((data) {
       change(data, status: RxStatus.success());
     }, onError: (error) {
+      errors(error);
+      /*
       if ((error.toString() == 'Connection failed') ||
           (error.toString() == 'Network is unreachable') ||
           (error.toString() == 'Connection timed out')) {
@@ -38,6 +40,7 @@ class DonationPetController extends GetxController
         print(error.toString());
         //MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
       }
+      */
     });
     super.onInit();
   }

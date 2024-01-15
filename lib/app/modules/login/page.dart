@@ -43,14 +43,16 @@ class LoginPage extends GetView<LoginController> {
                       TextFormField(
                         controller: controller.emailController,
                         decoration: const InputDecoration(
-                            labelText: "Email",
+                            labelText: "E-mail",
                             labelStyle: TextStyle(
                                 color: Colors.black87,
                                 fontWeight: FontWeight.normal,
                                 fontFamily: 'Roboto')),
                         validator: (String? value) {
                           if (value != null && value.isEmpty) {
-                            return 'Informe o seu email';
+                            return 'Informe o seu e-mail';
+                          } else if (controller.isEmailValid(value!) == false) {
+                            return 'Preencha com um e-mail válido';
                           }
                           return null;
                         },

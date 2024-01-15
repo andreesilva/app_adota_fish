@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:app_adota_fish/app/core/theme/colors.app.dart';
+import 'package:app_adota_fish/app/core/util/image_helper.dart';
 import 'package:app_adota_fish/app/modules/account/controller.dart';
 import 'package:app_adota_fish/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -18,13 +20,10 @@ class AccountPage extends GetView<AccountController> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: const Center(
-          child: Text('MINHA CONTA',
-              style: TextStyle(
-                  fontSize: 17,
-                  fontFamily: 'Roboto',
-                  color: ColorsApp.appTitle)),
-        ),
+        title: const Text('MINHA CONTA',
+            style: TextStyle(
+                fontSize: 17, fontFamily: 'Roboto', color: ColorsApp.appTitle)),
+        centerTitle: true,
         backgroundColor: ColorsApp.appBackground,
         shape: const Border(
             bottom: BorderSide(color: ColorsApp.appBorder, width: 0.5)),
@@ -43,8 +42,8 @@ class AccountPage extends GetView<AccountController> {
                         children: [
                           Center(
                             child: CircleAvatar(
-                              radius: 81,
-                              backgroundColor: Colors.blue,
+                              radius: 83,
+                              backgroundColor: Colors.blueGrey,
                               child: CircleAvatar(
                                 backgroundImage: controller
                                             .isProficPicPath.value ==
@@ -231,7 +230,7 @@ class AccountPage extends GetView<AccountController> {
           },
         ),
         ListTile(
-          leading: const Icon(Icons.arrow_back, color: Colors.red),
+          leading: Icon(Icons.arrow_back, color: Colors.blue[800]),
           title: const Text("Sair da minha conta"),
           onTap: () => showDialog(
               barrierDismissible: false,
@@ -278,17 +277,65 @@ class AccountPage extends GetView<AccountController> {
                 );
               }),
         ),
+        ListTile(
+          leading: const Icon(Icons.restore_from_trash, color: Colors.red),
+          title: const Text("Apagar conta"),
+          onTap: () => showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text(
+                    "Deseja realmente excluir a sua conta no Adota Fish? Não será mais possível recuperar nenhuma das informações cadastradas em nossa plataforma.",
+                    style: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'Roboto'),
+                  ),
+                  titleTextStyle:
+                      const TextStyle(color: Colors.black, fontSize: 16),
+                  actionsOverflowButtonSpacing: 20,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  elevation: 7,
+                  actions: [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          elevation: 2.0,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("Não")),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        onPressed: () {
+                          controller.delete();
+                        },
+                        child: const Text("Sim")),
+                  ],
+                );
+              }),
+        ),
       ]),
     );
   }
 
   Future<void> takePhoto(ImageSource source) async {
-    final pickedImage =
-        await imagePicker.pickImage(source: source, imageQuality: 100);
+    final pickedImage = await controller.imageHelper.pickImage(source: source);
 
-    pickedFile = File(pickedImage!.path);
+    final croppedFile = await controller.imageHelper
+        .crop(file: pickedImage.first, cropStyle: CropStyle.circle);
 
-    controller.setProfileImagePath(pickedFile!.path);
+    controller.setProfileImagePath(croppedFile!.path);
 
     Get.back();
   }

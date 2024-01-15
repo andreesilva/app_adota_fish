@@ -1,3 +1,4 @@
+import 'package:app_adota_fish/app/core/theme/errors.dart';
 import 'package:app_adota_fish/app/data/models/donations_aquarium.dart';
 import 'package:app_adota_fish/app/data/models/donations_pet.dart';
 import 'package:app_adota_fish/app/data/services/auth/service.dart';
@@ -26,16 +27,13 @@ class MyDonationsPetController extends GetxController
     loading(true);
     _repository.getMyDonationsPet().then((data) {
       if (data.isEmpty) {
-        print("Msg 1");
         change([], status: RxStatus.empty());
       } else {
-        print("Msg 2");
         change(data, status: RxStatus.success());
       }
     }, onError: (error) {
-      print("Msg 3");
-      print(error.toString());
-
+      errors(error);
+      /*
       if ((error.toString() == 'Connection failed') ||
           (error.toString() == 'Network is unreachable')) {
         ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(const SnackBar(
@@ -47,9 +45,37 @@ class MyDonationsPetController extends GetxController
         print(error.toString());
         MessageGeneralError().showAlertErrorGeneral(QuickAlertType.error);
       }
+      */
     });
     loading(false);
     super.onInit();
+  }
+
+  Future<void> inactivatePet(id) async {
+    _repository.putPetInactivate(id).then((value) {
+      showAlertSuccess(QuickAlertType.success);
+    }, onError: (error) {
+      print(error.toString());
+      showAlertError(QuickAlertType.error);
+    });
+  }
+
+  Future<void> activatePet(id) async {
+    _repository.putActivatePet(id).then((value) {
+      showAlertActivateSuccess(QuickAlertType.success);
+    }, onError: (error) {
+      print(error.toString());
+      showAlertActivateError(QuickAlertType.error);
+    });
+  }
+
+  Future<void> deletePet(id) async {
+    _repository.deletePet(id).then((value) {
+      showAlertDeleteSuccess(QuickAlertType.success);
+    }, onError: (error) {
+      print(error.toString());
+      showAlertDeleteError(QuickAlertType.error);
+    });
   }
 
   void showAlertSuccess(QuickAlertType quickAlertType) {
@@ -113,32 +139,5 @@ class MyDonationsPetController extends GetxController
         text: "Não foi possível excluír o anúncio",
         confirmBtnText: "Ok",
         type: quickAlertType);
-  }
-
-  Future<void> inactivatePet(id) async {
-    _repository.putPetInactivate(id).then((value) {
-      showAlertSuccess(QuickAlertType.success);
-    }, onError: (error) {
-      print(error.toString());
-      showAlertError(QuickAlertType.error);
-    });
-  }
-
-  Future<void> activatePet(id) async {
-    _repository.putActivatePet(id).then((value) {
-      showAlertActivateSuccess(QuickAlertType.success);
-    }, onError: (error) {
-      print(error.toString());
-      showAlertActivateError(QuickAlertType.error);
-    });
-  }
-
-  Future<void> deletePet(id) async {
-    _repository.deletePet(id).then((value) {
-      showAlertDeleteSuccess(QuickAlertType.success);
-    }, onError: (error) {
-      print(error.toString());
-      showAlertDeleteError(QuickAlertType.error);
-    });
   }
 }

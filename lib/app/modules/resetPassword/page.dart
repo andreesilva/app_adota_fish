@@ -61,7 +61,7 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
                       ),
                       validator: (String? value) {
                         if (value != null && value.isEmpty) {
-                          return 'Campo Obrigatório';
+                          return 'Informe a nova senha';
                         } else {
                           return null;
                         }
@@ -95,11 +95,11 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
                                   ? Icons.visibility_off
                                   : Icons.visibility),
                             )),
-                        labelText: "Confirmar Senha",
+                        labelText: "Confirmar senha",
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Campo Obrigatório';
+                          return 'Confirme a nova senha';
                           // ignore: unrelated_type_equality_checks
                         } else if (controller.newPassword.text !=
                             controller.confirmPassword.text) {
@@ -117,18 +117,27 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                                onPressed: () => {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return const Center(
-                                                child:
-                                                    CircularProgressIndicator());
-                                          }),
-                                      controller.submit(),
-                                    },
-                                style: button,
-                                child: const Text("Salvar")),
+                              style: button,
+                              child: AnimatedBuilder(
+                                animation: controller.loadingCircular,
+                                builder: (context, _) {
+                                  return controller.loadingCircular.value
+                                      ? const SizedBox(
+                                          width: 20,
+                                          height: 20,
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : const Text('Salvar');
+                                },
+                              ),
+                              onPressed: () => {
+                                if (controller.formKey.currentState!.validate())
+                                  {
+                                    controller.loadingCircular.value = true,
+                                    controller.submit(),
+                                  },
+                              },
+                            ),
                           ),
                         ],
                       ),

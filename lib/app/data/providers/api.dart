@@ -39,7 +39,7 @@ class Api extends GetConnect {
   final _storageService = Get.find<StorageService>();
 
   final _client = http.Client();
-  dynamic _url = 'http://3.133.141.235:3333';
+  dynamic _url = 'https://apiadotafish.a2hosted.com';
   //dynamic _url = 'http://10.0.0.230:3333';
   bool isInternet = false;
 
@@ -51,7 +51,7 @@ class Api extends GetConnect {
     //httpClient.baseUrl = "http://192.168.192.19:3333/";
 
     //Produção
-    httpClient.baseUrl = "http://3.133.141.235:3333/";
+    httpClient.baseUrl = "https://apiadotafish.a2hosted.com/";
 
     httpClient.addRequestModifier((Request request) {
       request.headers['Accept'] = 'application/json';
@@ -226,6 +226,21 @@ class Api extends GetConnect {
           'authorization': 'Bearer ${_storageService.token}',
         },
         body: jsonEncode(data),
+      );
+    } catch (e) {
+      print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<void> deleteClient() async {
+    try {
+      await _client.delete(
+        Uri.parse('$_url/cliente/excluir'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authorization': 'Bearer ${_storageService.token}',
+        },
       );
     } catch (e) {
       print(e);

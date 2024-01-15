@@ -68,22 +68,20 @@ class DonationPetPage extends GetView<DonationPetController> {
                   children: [
                     Stack(
                       children: [
-                        Expanded(
-                          child: Center(
-                            child: SizedBox(
-                              width: 400.0,
-                              height: 270,
-                              child: ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(5),
-                                      topRight: Radius.circular(5),
-                                      bottomLeft: Radius.circular(5),
-                                      bottomRight: Radius.circular(5)),
-                                  child: FadeInImage.memoryNetwork(
-                                      fit: BoxFit.fill,
-                                      placeholder: kTransparentImage,
-                                      image: state!.pet!.photo!)),
-                            ),
+                        Center(
+                          child: SizedBox(
+                            width: 400.0,
+                            height: 270,
+                            child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                    bottomRight: Radius.circular(5)),
+                                child: FadeInImage.memoryNetwork(
+                                    fit: BoxFit.fill,
+                                    placeholder: kTransparentImage,
+                                    image: state!.pet!.photo!)),
                           ),
                         ),
                         Container(
@@ -265,15 +263,13 @@ class DonationPetPage extends GetView<DonationPetController> {
                               child: Padding(
                                 padding: const EdgeInsets.only(
                                     top: 5, left: 20, right: 20),
-                                child: Expanded(
-                                  child: Text(
-                                    state!.pet!.observation!,
-                                    textAlign: TextAlign.left,
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Roboto',
-                                    ),
+                                child: Text(
+                                  state!.pet!.observation!,
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Roboto',
                                   ),
                                 ),
                               ),
@@ -318,7 +314,7 @@ class DonationPetPage extends GetView<DonationPetController> {
                                 onTap: () async {
                                   String email =
                                       state.clientDonor!.user.email.toString();
-                                  String subject = "Adoção de pet aquático";
+                                  String subject = "Adoção de pet - Adota Fish";
                                   String body = "";
 
                                   String? encodeQueryParameters(

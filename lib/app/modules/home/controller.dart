@@ -1,3 +1,4 @@
+import 'package:app_adota_fish/app/core/theme/errors.dart';
 import 'package:app_adota_fish/app/data/models/donations_aquarium.dart';
 import 'package:app_adota_fish/app/data/services/auth/service.dart';
 import 'package:app_adota_fish/app/modules/home/repository.dart';
@@ -29,19 +30,14 @@ class HomeController extends GetxController
     }
 
     _repository.getDonations(id).then((data) {
-      print(data);
-      print("pulo aquario");
       if (data.isEmpty) {
-        print("Msg aquario 1");
         change([], status: RxStatus.empty());
       } else {
-        print("Msg aquario 2");
         change(data.cast<DonationAquariumModel>(), status: RxStatus.success());
       }
     }, onError: (error) {
-      print("Msg pet 3");
-      print(error);
-
+      errors(error);
+      /*
       if ((error.toString() == 'Connection failed') ||
           (error.toString() == 'Network is unreachable') ||
           (error.toString() == 'Connection timed out')) {
@@ -57,6 +53,7 @@ class HomeController extends GetxController
 
         change(null, status: RxStatus.error(error.toString()));
       }
+      */
     });
 
     super.onInit();
