@@ -1,16 +1,41 @@
-# app_adota_fish
+<h1 align="center"> Adota Fish </h1>
 
-A new Flutter project.
+<h1 align="center">
+    <img alt="Adota Fish" title="#Adota Fish" src="assets/recurso_grafico.png" />
+</h1>
 
-## Getting Started
+<p align="center">
+	<img alt="Status Concluído" src="https://img.shields.io/badge/STATUS-CONCLU%C3%8DDO-brightgreen">
+</p>
 
-This project is a starting point for a Flutter application.
+## 💻 Sobre o Adota Fish
 
-A few resources to get you started if this is your first Flutter project:
+📄 O aplicativo Adota Fish foi desenvolvido com o objetivo de ajudar peixes ornamentais, que por algum motivo, necessitam de novos donos. A plataforma conecta adotantes e doadores de peixes ornamentais e aquários de forma rápida e fácil, permitindo encontrar o animal perfeito para adotar.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<h1 align="center">
+    <img alt="Busque Empresa" title="#Adota Fish" src="assets/screenshort/Screenshot_1705438015.png" />
+</h1>
+
+## 🛠 Tecnologias
+
+- **[Flutter](https://flutter.dev/)**
+
+---
+
+## 🧙‍♂️ Autor
+
+<a href="https://www.linkedin.com/in/andr%C3%A9-erm%C3%ADnio-04b7a66b/">
+ <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/47976648?s=400&u=0d11578ca2d3a07826c0a05bdafd9e3f5b01ab3a&v=4" width="100px;" alt=""/>
+ <br />
+ <sub><b>André Ermínio da Silva</b></sub></a> 
+ <br />
+
+---
+
+## 📝 Licença
+
+<!-- Este projeto esta sobe a licença [MIT](./LICENSE). -->
+
+Feito por André Ermínio 👋🏽 [Entre em contato!](https://www.linkedin.com/in/andr%C3%A9-erm%C3%ADnio/)
