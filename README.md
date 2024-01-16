@@ -15,7 +15,7 @@
 ---
 
 <h1 align="center">
-    <img alt="Busque Empresa" title="#Adota Fish" src="assets/screenshort/Screenshot_1705438015.png" />
+    <img alt="Adota Fish" title="#Adota Fish" src="assets/screenshot/image-git.jpeg" />
 </h1>
 
 ## 🛠 Tecnologias
