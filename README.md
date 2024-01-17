@@ -38,4 +38,4 @@
 
 <!-- Este projeto esta sobe a licença [MIT](./LICENSE). -->
 
-Feito por André Ermínio 👋🏽 [Entre em contato!](https://www.linkedin.com/in/andr%C3%A9-erm%C3%ADnio/)
+Feito por André Ermínio 👋🏽 [Entre em contato!](https://www.linkedin.com/in/andr%C3%A9-erm%C3%ADnio-04b7a66b/)
